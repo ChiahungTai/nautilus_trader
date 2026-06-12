@@ -15,31 +15,29 @@
 
 from typing import Any
 
-# -- Cross-module types annotated as Any to keep stub self-contained --
+from nautilus_trader.model.data import Bar
+from nautilus_trader.model.data import BarType
+from nautilus_trader.model.data import QuoteTick
+from nautilus_trader.model.data import TradeTick
+from nautilus_trader.model.identifiers import AccountId
+from nautilus_trader.model.identifiers import ClientId
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.identifiers import PositionId
+from nautilus_trader.model.identifiers import StrategyId
+from nautilus_trader.model.identifiers import TraderId
+from nautilus_trader.model.identifiers import Venue
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.objects import Quantity
+
+# -- Types without .pyi stubs remain as Any --
 _StrategyConfig = Any
 _ImportableStrategyConfig = Any
-_StrategyId = Any
-_TraderId = Any
-_InstrumentId = Any
-_ClientId = Any
-_ClientOrderId = Any
-_PositionId = Any
-_AccountId = Any
 _OrderId = Any
 _Order = Any
 _OrderList = Any
 _Position = Any
-_Price = Any
-_Quantity = Any
-_BarType = Any
-_Bar = Any
-_QuoteTick = Any
-_TradeTick = Any
 _Instrument = Any
 _Indicator = Any
-_Venue = Any
-_BookType = Any
-_DataType = Any
 _Clock = Any
 _Logger = Any
 _MessageBus = Any
@@ -88,9 +86,9 @@ class Strategy:
     # -- Properties ----------------------------------------------------------
 
     @property
-    def id(self) -> _StrategyId: ...
+    def id(self) -> StrategyId: ...
     @property
-    def trader_id(self) -> _TraderId: ...
+    def trader_id(self) -> TraderId: ...
     @property
     def state(self) -> _ComponentState: ...
     @property
@@ -147,9 +145,9 @@ class Strategy:
     # -- Data Event Handlers -------------------------------------------------
 
     def on_instrument(self, instrument: _Instrument) -> None: ...
-    def on_bar(self, bar: _Bar) -> None: ...
-    def on_quote_tick(self, tick: _QuoteTick) -> None: ...
-    def on_trade_tick(self, tick: _TradeTick) -> None: ...
+    def on_bar(self, bar: Bar) -> None: ...
+    def on_quote_tick(self, tick: QuoteTick) -> None: ...
+    def on_trade_tick(self, tick: TradeTick) -> None: ...
 
     # -- Order Event Handlers ------------------------------------------------
 
@@ -190,55 +188,55 @@ class Strategy:
     def submit_order(
         self,
         order: _Order,
-        position_id: _PositionId | None = ...,
-        client_id: _ClientId | None = ...,
+        position_id: PositionId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def submit_order_list(
         self,
         order_list: _OrderList,
-        position_id: _PositionId | None = ...,
-        client_id: _ClientId | None = ...,
+        position_id: PositionId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def modify_order(
         self,
         order: _Order,
-        quantity: _Quantity | None = ...,
-        price: _Price | None = ...,
-        trigger_price: _Price | None = ...,
-        client_id: _ClientId | None = ...,
+        quantity: Quantity | None = ...,
+        price: Price | None = ...,
+        trigger_price: Price | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def cancel_order(
         self,
         order: _Order,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def cancel_orders(
         self,
         orders: list[_Order],
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def cancel_all_orders(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         order_side: _OrderSide = ...,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def close_position(
         self,
         position: _Position,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         tags: list[str] | None = ...,
         time_in_force: _TimeInForce = ...,
         reduce_only: bool = ...,
@@ -248,9 +246,9 @@ class Strategy:
 
     def close_all_positions(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         position_side: _PositionSide = ...,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         tags: list[str] | None = ...,
         time_in_force: _TimeInForce = ...,
         reduce_only: bool = ...,
@@ -260,15 +258,15 @@ class Strategy:
 
     def query_account(
         self,
-        account_id: _AccountId,
-        client_id: _ClientId | None = ...,
+        account_id: AccountId,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def query_order(
         self,
         order: _Order,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
@@ -276,69 +274,69 @@ class Strategy:
 
     def subscribe_bars(
         self,
-        bar_type: _BarType,
-        client_id: _ClientId | None = ...,
+        bar_type: BarType,
+        client_id: ClientId | None = ...,
         update_catalog: bool = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def subscribe_quote_ticks(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         update_catalog: bool = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def subscribe_trade_ticks(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         update_catalog: bool = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def subscribe_instrument(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         update_catalog: bool = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def subscribe_instruments(
         self,
-        venue: _Venue,
-        client_id: _ClientId | None = ...,
+        venue: Venue,
+        client_id: ClientId | None = ...,
         update_catalog: bool = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def unsubscribe_bars(
         self,
-        bar_type: _BarType,
-        client_id: _ClientId | None = ...,
+        bar_type: BarType,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def unsubscribe_quote_ticks(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def unsubscribe_trade_ticks(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
     def unsubscribe_instrument(
         self,
-        instrument_id: _InstrumentId,
-        client_id: _ClientId | None = ...,
+        instrument_id: InstrumentId,
+        client_id: ClientId | None = ...,
         params: dict[str, Any] | None = ...,
     ) -> None: ...
 
@@ -346,11 +344,11 @@ class Strategy:
 
     def request_bars(
         self,
-        bar_type: _BarType,
+        bar_type: BarType,
         start: Any,  # datetime
         end: Any = ...,  # datetime
         limit: int = ...,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         callback: Any = ...,
         update_catalog: bool = ...,
         join_request: bool = ...,
@@ -360,10 +358,10 @@ class Strategy:
 
     def request_instrument(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         start: Any = ...,  # datetime
         end: Any = ...,  # datetime
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         callback: Any = ...,
         update_catalog: bool = ...,
         join_request: bool = ...,
@@ -373,11 +371,11 @@ class Strategy:
 
     def request_quote_ticks(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         start: Any,  # datetime
         end: Any = ...,  # datetime
         limit: int = ...,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         callback: Any = ...,
         update_catalog: bool = ...,
         join_request: bool = ...,
@@ -387,11 +385,11 @@ class Strategy:
 
     def request_trade_ticks(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         start: Any,  # datetime
         end: Any = ...,  # datetime
         limit: int = ...,
-        client_id: _ClientId | None = ...,
+        client_id: ClientId | None = ...,
         callback: Any = ...,
         update_catalog: bool = ...,
         join_request: bool = ...,
@@ -403,19 +401,19 @@ class Strategy:
 
     def register_indicator_for_bars(
         self,
-        bar_type: _BarType,
+        bar_type: BarType,
         indicator: _Indicator,
     ) -> None: ...
 
     def register_indicator_for_quote_ticks(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         indicator: _Indicator,
     ) -> None: ...
 
     def register_indicator_for_trade_ticks(
         self,
-        instrument_id: _InstrumentId,
+        instrument_id: InstrumentId,
         indicator: _Indicator,
     ) -> None: ...
 

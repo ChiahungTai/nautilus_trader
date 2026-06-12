@@ -16,14 +16,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BASELINE_FILE = Path(__file__).resolve().parent / ".stubs-baseline.json"
 
-# Modules with hand-written stubs
-STUBBED_MODULES = [
-    "nautilus_trader.model.objects",
-    "nautilus_trader.model.data",
-    "nautilus_trader.model.identifiers",
-    "nautilus_trader.trading.strategy",
-    "nautilus_trader.core.correctness",
-]
+# Modules with hand-written stubs (value = min acceptable score, None = use default 50)
+STUBBED_MODULES: dict[str, int | None] = {
+    "nautilus_trader.model.objects": None,
+    "nautilus_trader.model.data": None,
+    "nautilus_trader.model.identifiers": None,
+    "nautilus_trader.trading.strategy": None,
+    "nautilus_trader.core.correctness": None,
+    "nautilus_trader.persistence.wranglers": 40,  # heavy pandas/numpy deps
+}
 
 
 def run_pyright_verifytypes(module: str) -> dict:
@@ -151,6 +152,7 @@ def main():
 
         prev = baseline.get(module, {})
         prev_score = prev.get("score", 0)
+        min_score = STUBBED_MODULES[module] or 50
 
         status = "OK"
         if info["score"] < prev_score - 5:
@@ -160,9 +162,9 @@ def main():
                 f"(was {prev.get('exported_known', '?')} known / {prev.get('exported_total', '?')} total, "
                 f"now {info['exported_known']} / {info['exported_total']})"
             )
-        elif info["score"] < 50:
+        elif info["score"] < min_score:
             status = "LOW"
-            issues.append(f"  {module}: {info['score']:.1f}% (below 50% threshold)")
+            issues.append(f"  {module}: {info['score']:.1f}% (below {min_score}% threshold)")
 
         symbol = "OK" if status == "OK" else "!!"
         print(f"  [{symbol}] {module}: {info['score']:.1f}% ({info['exported_known']}/{info['exported_total']} known)")

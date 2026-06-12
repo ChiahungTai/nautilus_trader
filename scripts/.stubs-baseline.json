@@ -19,9 +19,14 @@
     "exported_known": 104,
     "exported_total": 153
   },
+  "nautilus_trader.persistence.wranglers": {
+    "score": 45.8,
+    "exported_known": 11,
+    "exported_total": 24
+  },
   "nautilus_trader.trading.strategy": {
-    "score": 100.0,
-    "exported_known": 80,
+    "score": 97.5,
+    "exported_known": 78,
     "exported_total": 80
   }
 }
