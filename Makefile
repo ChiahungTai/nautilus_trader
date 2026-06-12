@@ -925,6 +925,20 @@ pre-flight-v2:  #-- Run comprehensive v2 pre-flight checks (format, check-code, 
 install-cli:  #-- Install Nautilus CLI tool from source
 	cargo install --path crates/cli --bin nautilus --locked --force
 
+#== LSP Stubs
+
+.PHONY: verify-stubs
+verify-stubs:  #-- Verify .pyi stubs completeness against baseline
+	@uv run python scripts/verify_stubs.py
+
+.PHONY: verify-stubs-diff
+verify-stubs-diff:  #-- Verify only stubs affected by .pyx changes since last rebase
+	@uv run python scripts/verify_stubs.py --diff
+
+.PHONY: update-stubs-baseline
+update-stubs-baseline:  #-- Update baseline scores after stub changes
+	@uv run python scripts/verify_stubs.py --update
+
 #== Internal
 
 .PHONY: help

@@ -1,0 +1,27 @@
+{
+  "nautilus_trader.core.correctness": {
+    "score": 87.5,
+    "exported_known": 42,
+    "exported_total": 48
+  },
+  "nautilus_trader.model.data": {
+    "score": 97.1,
+    "exported_known": 67,
+    "exported_total": 69
+  },
+  "nautilus_trader.model.identifiers": {
+    "score": 100.0,
+    "exported_known": 88,
+    "exported_total": 88
+  },
+  "nautilus_trader.model.objects": {
+    "score": 68.0,
+    "exported_known": 104,
+    "exported_total": 153
+  },
+  "nautilus_trader.trading.strategy": {
+    "score": 100.0,
+    "exported_known": 80,
+    "exported_total": 80
+  }
+}

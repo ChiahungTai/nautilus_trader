@@ -1,0 +1,20 @@
+{
+  "include": [
+    "nautilus_trader",
+    "examples",
+    "lab"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    ".venv",
+    "python",
+    "nautilus_trader/adapters"
+  ],
+  "typeCheckingMode": "basic",
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.12",
+  "pythonPlatform": "Darwin",
+  "venvPath": ".",
+  "venv": ".venv"
+}
