@@ -5,9 +5,9 @@
     "exported_total": 48
   },
   "nautilus_trader.model.data": {
-    "score": 97.1,
-    "exported_known": 67,
-    "exported_total": 69
+    "score": 97.8,
+    "exported_known": 88,
+    "exported_total": 90
   },
   "nautilus_trader.model.identifiers": {
     "score": 100.0,
@@ -25,8 +25,8 @@
     "exported_total": 24
   },
   "nautilus_trader.trading.strategy": {
-    "score": 97.5,
-    "exported_known": 78,
-    "exported_total": 80
+    "score": 97.6,
+    "exported_known": 83,
+    "exported_total": 85
   }
 }

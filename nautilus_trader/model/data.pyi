@@ -60,6 +60,7 @@ class BookOrder:
     price: Any  # Price
     side: Any  # OrderSide
     size: Any  # Quantity
+    def __init__(self, side: Any, price: Any, size: Any, order_id: int) -> None: ...
 
 
 class QuoteTick:
@@ -70,6 +71,16 @@ class QuoteTick:
     ask_size: Any  # Quantity
     ts_event: int
     ts_init: int
+    def __init__(
+        self,
+        instrument_id: Any,
+        bid_price: Any,
+        ask_price: Any,
+        bid_size: Any,
+        ask_size: Any,
+        ts_event: int,
+        ts_init: int,
+    ) -> None: ...
 
 
 class TradeTick:
@@ -80,6 +91,16 @@ class TradeTick:
     trade_id: Any  # TradeId
     ts_event: int
     ts_init: int
+    def __init__(
+        self,
+        instrument_id: Any,
+        price: Any,
+        size: Any,
+        aggressor_side: Any,
+        trade_id: Any,
+        ts_event: int,
+        ts_init: int,
+    ) -> None: ...
 
 
 class OrderBookDelta:
@@ -88,6 +109,22 @@ class OrderBookDelta:
     instrument_id: Any  # InstrumentId
     order: BookOrder
     sequence: int
+    ts_event: int
+    ts_init: int
+    is_add: Any  # BookAction
+    is_update: Any  # BookAction
+    is_delete: Any  # BookAction
+    is_clear: Any  # BookAction
+    def __init__(
+        self,
+        instrument_id: Any,
+        action: Any,
+        order: Any,
+        flags: int,
+        sequence: int,
+        ts_event: int,
+        ts_init: int,
+    ) -> None: ...
 
 
 class OrderBookDeltas:
@@ -95,6 +132,10 @@ class OrderBookDeltas:
     flags: int
     instrument_id: Any  # InstrumentId
     sequence: int
+    ts_event: int
+    ts_init: int
+    is_snapshot: Any  # bool
+    def __init__(self, instrument_id: Any, deltas: list[Any]) -> None: ...
 
 
 class InstrumentStatus:
@@ -102,6 +143,23 @@ class InstrumentStatus:
     action: Any  # MarketStatusAction
     is_trading: bool
     is_quoting: bool
+    is_short_sell_restricted: Any  # bool | None
+    ts_event: int
+    ts_init: int
+    reason: Any  # str | None
+    trading_event: Any  # str | None
+    def __init__(
+        self,
+        instrument_id: Any,
+        action: Any,
+        ts_event: int,
+        ts_init: int,
+        reason: Any = ...,
+        trading_event: Any = ...,
+        is_trading: Any = ...,
+        is_quoting: Any = ...,
+        is_short_sell_restricted: Any = ...,
+    ) -> None: ...
 
 
 class DataType:
@@ -109,3 +167,4 @@ class DataType:
     topic: Any
     metadata: dict
     identifier: Any
+    def __init__(self, type: Any, metadata: Any = ..., identifier: Any = ...) -> None: ...
