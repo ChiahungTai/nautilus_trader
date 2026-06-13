@@ -67,7 +67,7 @@ def get_changed_pyx_files() -> list[str]:
     """Find .pyx files changed since the merge-base with upstream."""
     try:
         merge_base = subprocess.run(
-            ["git", "merge-base", "HEAD", "origin/master"],
+            ["git", "merge-base", "HEAD", "upstream/master"],
             capture_output=True,
             text=True,
             cwd=str(ROOT),
