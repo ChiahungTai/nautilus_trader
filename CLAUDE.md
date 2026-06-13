@@ -8,7 +8,7 @@ Production-grade algorithmic trading platform。mosaic_alpha 以 Python API 層�
 |------|------|------|
 | **User API** | Python | mosaic_alpha 唯一直接操作的層 |
 | **Bindings** | Cython | `core/rust/*.pxd` 為自動產生，**禁止手動編輯**；pyright 無法解析，需 `.pyi` 補位 |
-| **Engine** | Rust | 指標計算和效能關鍵路徑；透過 Cython 或 PyO3 綁定暴露至 Python |
+| **Engine** | Rust | 核心資料模型、order/event、networking 等效能關鍵路徑；透過 `core/rust/*.pxd`（Cython）或 PyO3 綁定暴露。**指標例外：純 Cython** |
 
 ## 建置
 
@@ -75,7 +75,7 @@ mosaic_alpha 使用 1-min 基礎 bars，透過 NT DataEngine 自動聚合。格�
 1. **NT streaming indicators**（`indicators/base.pyx:Indicator`）— `register_indicator_for_bars()` 連接 bar 訂閱，bar 到達時自動更新。適合 Strategy 內的即時運算。
 2. **Polars batch computation** — 高效能批次計算，用於 feature engineering 和離線分析。
 
-指標在 `crates/indicators/` 以 Rust 實作。
+指標實作為純 Cython（`nautilus_trader/indicators/*.pyx`），runtime 載入編譯後的 `.cpython-*.so`（已驗證 `averages` 載入自 `averages.cpython-312-darwin.so`）。平行的 `crates/indicators/` Rust crate（含 PyO3 bindings）存在但**尚未接上 Python API**（ROADMAP v2.0 migration 進行中）— 所以 stub 對照的是 `.pyx`，不是 Rust crate。
 
 ### Actor 模式
 
@@ -106,7 +106,7 @@ mosaic_alpha 使用 1-min 基礎 bars，透過 NT DataEngine 自動聚合。格�
 
 ### 資料與分析
 
-- `indicators/` → [CLAUDE.md](nautilus_trader/indicators/CLAUDE.md) — Technical indicators（Rust 實作）
+- `indicators/` → [CLAUDE.md](nautilus_trader/indicators/CLAUDE.md) — Technical indicators（純 Cython；Rust crate migration 中）
 - `persistence/` → [CLAUDE.md](nautilus_trader/persistence/CLAUDE.md) — ParquetDataCatalog、wranglers
 - `analysis/` → [CLAUDE.md](nautilus_trader/analysis/CLAUDE.md) — PortfolioAnalyzer、tearsheet
 
