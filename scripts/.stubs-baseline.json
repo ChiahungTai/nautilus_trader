@@ -4,10 +4,35 @@
     "exported_known": 42,
     "exported_total": 48
   },
+  "nautilus_trader.indicators.averages": {
+    "score": 100.0,
+    "exported_known": 83,
+    "exported_total": 83
+  },
+  "nautilus_trader.indicators.momentum": {
+    "score": 100.0,
+    "exported_known": 55,
+    "exported_total": 55
+  },
+  "nautilus_trader.indicators.trend": {
+    "score": 100.0,
+    "exported_known": 85,
+    "exported_total": 85
+  },
+  "nautilus_trader.indicators.volatility": {
+    "score": 100.0,
+    "exported_known": 52,
+    "exported_total": 52
+  },
+  "nautilus_trader.indicators.volume": {
+    "score": 100.0,
+    "exported_known": 26,
+    "exported_total": 26
+  },
   "nautilus_trader.model.data": {
     "score": 97.8,
-    "exported_known": 88,
-    "exported_total": 90
+    "exported_known": 89,
+    "exported_total": 91
   },
   "nautilus_trader.model.identifiers": {
     "score": 100.0,
@@ -25,8 +50,8 @@
     "exported_total": 24
   },
   "nautilus_trader.trading.strategy": {
-    "score": 97.6,
-    "exported_known": 83,
-    "exported_total": 85
+    "score": 97.7,
+    "exported_known": 84,
+    "exported_total": 86
   }
 }

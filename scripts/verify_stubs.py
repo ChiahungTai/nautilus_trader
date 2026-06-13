@@ -24,6 +24,11 @@ STUBBED_MODULES: dict[str, int | None] = {
     "nautilus_trader.trading.strategy": None,
     "nautilus_trader.core.correctness": None,
     "nautilus_trader.persistence.wranglers": 40,  # heavy pandas/numpy deps
+    "nautilus_trader.indicators.averages": None,
+    "nautilus_trader.indicators.momentum": None,
+    "nautilus_trader.indicators.trend": None,
+    "nautilus_trader.indicators.volatility": None,
+    "nautilus_trader.indicators.volume": None,
 }
 
 

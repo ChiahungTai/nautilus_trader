@@ -429,6 +429,15 @@ class Strategy:
 
     def indicators_initialized(self) -> bool: ...
 
+    # -- Data Publishing (inherited from Actor) -----------------------------
+
+    def publish_signal(
+        self,
+        name: str,
+        value: Any,
+        ts_event: int = ...,
+    ) -> None: ...
+
     # -- GTD Expiry ----------------------------------------------------------
 
     def cancel_gtd_expiry(self, order: _Order) -> None: ...
