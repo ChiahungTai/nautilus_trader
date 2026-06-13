@@ -32,9 +32,10 @@ class MovingAverage:
     has_inputs: bool
     initialized: bool
     def __init__(self, period: int, params: list[Any], price_type: Any) -> None: ...
+    def update_raw(self, value: float) -> None: ...
 
 
-class SimpleMovingAverage:
+class SimpleMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -44,7 +45,7 @@ class SimpleMovingAverage:
     def __init__(self, period: int, price_type: Any = ...) -> None: ...
 
 
-class ExponentialMovingAverage:
+class ExponentialMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -54,7 +55,7 @@ class ExponentialMovingAverage:
     def __init__(self, period: int, price_type: Any = ...) -> None: ...
 
 
-class DoubleExponentialMovingAverage:
+class DoubleExponentialMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -64,7 +65,7 @@ class DoubleExponentialMovingAverage:
     def __init__(self, period: int, price_type: Any = ...) -> None: ...
 
 
-class WeightedMovingAverage:
+class WeightedMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -74,7 +75,7 @@ class WeightedMovingAverage:
     def __init__(self, period: int, weights: Any = ..., price_type: Any = ...) -> None: ...
 
 
-class HullMovingAverage:
+class HullMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -84,7 +85,7 @@ class HullMovingAverage:
     def __init__(self, period: int, price_type: Any = ...) -> None: ...
 
 
-class AdaptiveMovingAverage:
+class AdaptiveMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -100,7 +101,7 @@ class AdaptiveMovingAverage:
     ) -> None: ...
 
 
-class WilderMovingAverage:
+class WilderMovingAverage(MovingAverage):
     period: int
     value: float
     count: int
@@ -110,7 +111,7 @@ class WilderMovingAverage:
     def __init__(self, period: int, price_type: Any = ...) -> None: ...
 
 
-class VariableIndexDynamicAverage:
+class VariableIndexDynamicAverage(MovingAverage):
     period: int
     value: float
     count: int

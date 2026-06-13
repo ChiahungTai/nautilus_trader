@@ -6,8 +6,8 @@
   },
   "nautilus_trader.indicators.averages": {
     "score": 100.0,
-    "exported_known": 83,
-    "exported_total": 83
+    "exported_known": 84,
+    "exported_total": 84
   },
   "nautilus_trader.indicators.momentum": {
     "score": 100.0,
