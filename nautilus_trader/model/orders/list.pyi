@@ -1,0 +1,61 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+
+class OrderList:
+    """
+    Represents a list of bulk or related contingent orders.
+
+    All orders must be for the same instrument ID.
+
+    Parameters
+    ----------
+    order_list_id : OrderListId
+        The order list ID.
+    orders : list[Order]
+        The contained orders list.
+
+    Raises
+    ------
+    ValueError
+        If `orders` is empty.
+    ValueError
+        If `orders` contains a type other than `Order`.
+    ValueError
+        If orders contain different instrument IDs (must all be the same instrument).
+
+    """
+    id: Any
+    instrument_id: Any
+    strategy_id: Any
+    orders: list
+    first: Any
+    ts_init: int
+
+    def __init__(self, order_list_id: Any, orders: list) -> None:
+        ...
+
+    def __eq__(self, other: OrderList) -> bool:
+        ...
+
+    def __hash__(self) -> int:
+        ...
+
+    def __len__(self) -> int:
+        ...
+
+    def __repr__(self) -> str:
+        ...
+
+    def is_bracket(self) -> bool:
+        """
+        Return whether this order list represents a bracket order.
+
+        A bracket order has exactly 3 orders: an entry order (OTO contingency)
+        with exactly 2 child orders (OUO contingency, not OCO) that are
+        reduce-only TP/SL orders.
+
+        Returns
+        -------
+        bool
+
+        """

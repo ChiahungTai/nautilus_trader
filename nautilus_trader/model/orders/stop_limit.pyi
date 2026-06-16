@@ -1,0 +1,143 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+
+class StopLimitOrder(Any):
+    """
+    Represents a `Stop-Limit` conditional order.
+
+    A Stop-Limit order is an instruction to submit a BUY (or SELL) limit order
+    when the specified stop trigger price is attained or penetrated. The
+    order has two basic components: the stop price and the limit price. When a
+    trade has occurred at or through the stop price, the order becomes executable
+    and enters the market as a limit order, which is an order to BUY (or SELL)
+    at a specified price or better.
+
+    A Stop-Limit eliminates the price risk associated with a stop order where
+    the execution price cannot be guaranteed, but exposes the trader to the
+    risk that the order may never fill, even if the stop price is reached.
+
+    Parameters
+    ----------
+    trader_id : TraderId
+        The trader ID associated with the order.
+    strategy_id : StrategyId
+        The strategy ID associated with the order.
+    instrument_id : InstrumentId
+        The order instrument ID.
+    client_order_id : ClientOrderId
+        The client order ID.
+    order_side : OrderSide {``BUY``, ``SELL``}
+        The order side.
+    quantity : Quantity
+        The order quantity (> 0).
+    price : Price
+        The order price (LIMIT).
+    trigger_price : Price
+        The order trigger price (STOP).
+    trigger_type : TriggerType
+        The order trigger type.
+    init_id : UUID4
+        The order initialization event ID.
+    ts_init : uint64_t
+        UNIX timestamp (nanoseconds) when the object was initialized.
+    time_in_force : TimeInForce {``GTC``, ``IOC``, ``FOK``, ``GTD``, ``DAY``}, default ``GTC``
+        The order time in force.
+    expire_time_ns : uint64_t, default 0 (no expiry)
+        UNIX timestamp (nanoseconds) when the order will expire.
+    post_only : bool, default False
+        If the ``LIMIT`` order will only provide liquidity (once triggered).
+    reduce_only : bool, default False
+        If the ``LIMIT`` order carries the 'reduce-only' execution instruction.
+    quote_quantity : bool, default False
+        If the order quantity is denominated in the quote currency.
+    display_qty : Quantity, optional
+        The quantity of the ``LIMIT`` order to display on the public book (iceberg).
+    emulation_trigger : EmulationTrigger, default ``NO_TRIGGER``
+        The emulation trigger for the order.
+    trigger_instrument_id : InstrumentId, optional
+        The emulation trigger instrument ID for the order (if ``None`` then will be the `instrument_id`).
+    contingency_type : ContingencyType, default ``NO_CONTINGENCY``
+        The order contingency type.
+    order_list_id : OrderListId, optional
+        The order list ID associated with the order.
+    linked_order_ids : list[ClientOrderId], optional
+        The order linked client order ID(s).
+    parent_order_id : ClientOrderId, optional
+        The order parent client order ID.
+    exec_algorithm_id : ExecAlgorithmId, optional
+        The execution algorithm ID for the order.
+    exec_algorithm_params : dict[str, Any], optional
+        The execution algorithm parameters for the order.
+    exec_spawn_id : ClientOrderId, optional
+        The execution algorithm spawning primary client order ID.
+    tags : list[str], optional
+        The custom user tags for the order.
+
+    Raises
+    ------
+    ValueError
+        If `order_side` is ``NO_ORDER_SIDE``.
+    ValueError
+        If `quantity` is not positive (> 0).
+    ValueError
+        If `trigger_type` is ``NO_TRIGGER``.
+    ValueError
+        If `time_in_force` is ``AT_THE_OPEN`` or ``AT_THE_CLOSE``.
+    ValueError
+        If `time_in_force` is ``GTD`` and `expire_time_ns` <= UNIX epoch.
+    ValueError
+        If `display_qty` is negative (< 0) or greater than `quantity`.
+
+    References
+    ----------
+    https://www.interactivebrokers.com/en/trading/orders/stop-limit.php
+    """
+    price: Any
+    trigger_price: Any
+    trigger_type: Any
+    expire_time_ns: int
+    display_qty: Any
+    is_triggered: bool
+    ts_triggered: int
+
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, price: Any, trigger_price: Any, trigger_type: Any, init_id: Any, ts_init: int, time_in_force: Any=..., expire_time_ns: int=0, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None):
+        ...
+
+    @property
+    def expire_time(self):
+        """
+        Return the expire time for the order (UTC).
+
+        Returns
+        -------
+        datetime or ``None``
+
+        """
+
+    def info(self) -> str:
+        """
+        Return a summary description of the order.
+
+        Returns
+        -------
+        str
+
+        """
+
+    @staticmethod
+    def from_pyo3(pyo3_order):
+        ...
+
+    def to_dict(self) -> dict:
+        """
+        Return a dictionary representation of this object.
+
+        Returns
+        -------
+        dict[str, object]
+
+        """
+
+    @staticmethod
+    def create(init):
+        ...

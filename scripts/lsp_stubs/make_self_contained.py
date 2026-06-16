@@ -39,6 +39,8 @@ class SelfContainedTransformer(ast.NodeTransformer):
             return ast.copy_location(
                 ast.Name(id=self.typing_aliases[node.id], ctx=node.ctx), node
             )
+        if node.id == "callable":
+            return ast.copy_location(ast.Name(id="Callable", ctx=node.ctx), node)
         return node
 
     def visit_Attribute(self, node: ast.Attribute) -> ast.AST:
@@ -49,6 +51,16 @@ class SelfContainedTransformer(ast.NodeTransformer):
         self.generic_visit(node)
         if isinstance(node.value, ast.Name) and node.value.id == "Any":
             return ast.copy_location(ast.Name(id="Any", ctx=node.ctx), node)
+        return node
+
+    def visit_Call(self, node: ast.Call) -> ast.AST:
+        """
+        Cross-Cython class instantiation (e.g. ``Price('0.00001')``) is
+        unresolvable -> collapse the whole call to a bare Any.
+        """
+        self.generic_visit(node)
+        if isinstance(node.func, ast.Name) and node.func.id == "Any":
+            return ast.copy_location(ast.Name(id="Any", ctx=ast.Load()), node)
         return node
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> ast.AST:
@@ -97,6 +109,7 @@ def _merge_typing_and_drop_imports(tree: ast.Module) -> None:
         kept.append(node)
 
     typing_names.add("Any")
+    typing_names.add("Callable")
     typing_import = ast.ImportFrom(
         module="typing", names=[ast.alias(n) for n in sorted(typing_names)], level=0
     )

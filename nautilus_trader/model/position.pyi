@@ -1,0 +1,477 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+
+class Position:
+    """
+    Represents a position in a market.
+
+    The position ID may be assigned at the trading venue, or can be system
+    generated depending on a strategies OMS (Order Management System) settings.
+
+    Parameters
+    ----------
+    instrument : Instrument
+        The trading instrument for the position.
+    fill : OrderFilled
+        The order fill event which opened the position.
+
+    Raises
+    ------
+    ValueError
+        If `instrument.id` is not equal to `fill.instrument_id`.
+    ValueError
+        If `fill.position_id` is ``None``.
+    """
+    trader_id: Any
+    strategy_id: Any
+    instrument_id: Any
+    id: Any
+    account_id: Any
+    opening_order_id: Any
+    closing_order_id: Any
+    entry: Any
+    side: Any
+    signed_qty: float
+    quantity: Any
+    peak_qty: Any
+    price_precision: int
+    size_precision: int
+    multiplier: Any
+    is_inverse: bool
+    is_spot_currency: bool
+    instrument_class: Any
+    quote_currency: Any
+    base_currency: Any
+    settlement_currency: Any
+    ts_init: int
+    ts_opened: int
+    ts_last: int
+    ts_closed: int
+    duration_ns: int
+    avg_px_open: float
+    avg_px_close: float
+    realized_return: float
+    realized_pnl: Any
+
+    def __init__(self, instrument: Any, fill: Any) -> None:
+        ...
+
+    def __eq__(self, other: Position) -> bool:
+        ...
+
+    def __hash__(self) -> int:
+        ...
+
+    def __repr__(self) -> str:
+        ...
+
+    def purge_events_for_order(self, client_order_id: Any) -> None:
+        """
+        Purge all order events for the given client order ID.
+
+        After purging, the position is rebuilt from remaining fills. If no fills
+        remain, the position is reset to an empty shell with all history cleared
+        (including timestamps), making it eligible for immediate cache cleanup.
+
+        Parameters
+        ----------
+        client_order_id : ClientOrderId
+            The client order ID for the events to purge.
+
+        """
+
+    def info(self) -> str:
+        """
+        Return a summary description of the position.
+
+        Returns
+        -------
+        str
+
+        """
+
+    def to_dict(self) -> dict:
+        """
+        Return a dictionary representation of this object.
+
+        Returns
+        -------
+        dict[str, object]
+
+        """
+
+    @property
+    def symbol(self):
+        """
+        Return the positions ticker symbol.
+
+        Returns
+        -------
+        Symbol
+
+        """
+
+    @property
+    def venue(self):
+        """
+        Return the positions trading venue.
+
+        Returns
+        -------
+        Venue
+
+        """
+
+    @property
+    def client_order_ids(self):
+        """
+        Return the client order IDs associated with the position.
+
+        Returns
+        -------
+        list[ClientOrderId]
+
+        Notes
+        -----
+        Guaranteed not to contain duplicate IDs.
+
+        """
+
+    @property
+    def venue_order_ids(self):
+        """
+        Return the venue order IDs associated with the position.
+
+        Returns
+        -------
+        list[VenueOrderId]
+
+        Notes
+        -----
+        Guaranteed not to contain duplicate IDs.
+
+        """
+
+    @property
+    def trade_ids(self):
+        """
+        Return the trade match IDs associated with the position.
+
+        Returns
+        -------
+        list[TradeId]
+
+        """
+
+    @property
+    def events(self):
+        """
+        Return the order fill events for the position.
+
+        Returns
+        -------
+        list[Event]
+
+        """
+
+    @property
+    def adjustments(self):
+        """
+        Return the position adjustment events.
+
+        Returns
+        -------
+        list[PositionAdjusted]
+
+        """
+
+    @property
+    def last_event(self):
+        """
+        Return the last order fill event (if any after purging).
+
+        Returns
+        -------
+        OrderFilled or ``None``
+
+        """
+
+    @property
+    def last_trade_id(self):
+        """
+        Return the last trade match ID for the position (if any after purging).
+
+        Returns
+        -------
+        TradeId or ``None``
+
+        """
+
+    @property
+    def event_count(self):
+        """
+        Return the count of order fill events applied to the position.
+
+        Returns
+        -------
+        int
+
+        """
+
+    @property
+    def is_open(self):
+        """
+        Return whether the position side is **not** ``FLAT``.
+
+        Returns
+        -------
+        bool
+
+        """
+
+    @property
+    def is_closed(self):
+        """
+        Return whether the position side is ``FLAT``.
+
+        Returns
+        -------
+        bool
+
+        """
+
+    @property
+    def is_long(self):
+        """
+        Return whether the position side is ``LONG``.
+
+        Returns
+        -------
+        bool
+
+        """
+
+    @property
+    def is_short(self):
+        """
+        Return whether the position side is ``SHORT``.
+
+        Returns
+        -------
+        bool
+
+        """
+
+    @staticmethod
+    def side_from_order_side(side: Any):
+        """
+        Return the position side resulting from the given order side (from ``FLAT``).
+
+        Parameters
+        ----------
+        side : OrderSide {``BUY``, ``SELL``}
+            The order side
+
+        Returns
+        -------
+        PositionSide
+
+        """
+
+    def closing_order_side(self) -> Any:
+        """
+        Return the closing order side for the position.
+
+        If the position is ``FLAT`` then will return ``NO_ORDER_SIDE``.
+
+        Returns
+        -------
+        OrderSide
+
+        """
+
+    def signed_decimal_qty(self):
+        """
+        Return a signed decimal representation of the position quantity.
+
+         - If the position is LONG, the value is positive (e.g. Decimal('10.25'))
+         - If the position is SHORT, the value is negative (e.g. Decimal('-10.25'))
+         - If the position is FLAT, the value is zero (e.g. Decimal('0'))
+
+        Returns
+        -------
+        Decimal
+
+        """
+
+    def is_opposite_side(self, side: Any) -> bool:
+        """
+        Return a value indicating whether the given order side is opposite to
+        the current position side.
+
+        Parameters
+        ----------
+        side : OrderSide {``BUY``, ``SELL``}
+
+        Returns
+        -------
+        bool
+            True if side is opposite, else False.
+
+        """
+
+    def apply(self, fill: Any) -> None:
+        """
+        Applies the given order fill event to the position.
+
+        If the position is FLAT prior to applying `fill`, the position state is reset
+        (clearing existing events, commissions, etc.) before processing the new fill.
+
+        Parameters
+        ----------
+        fill : OrderFilled
+            The order fill event to apply.
+
+        Raises
+        ------
+        KeyError
+            If `fill.trade_id` already applied to the position.
+
+        """
+
+    def apply_adjustment(self, adjustment: Any) -> None:
+        """
+        Applies a position adjustment event.
+
+        This method handles adjustments to position quantity or realized PnL that occur
+        outside of normal order fills, such as:
+        - Commission adjustments in base currency (crypto spot markets)
+        - Funding payments (perpetual futures)
+
+        The adjustment event is stored in the position's adjustment history for full audit trail.
+
+        Parameters
+        ----------
+        adjustment : PositionAdjusted
+            The position adjustment event to apply.
+
+        """
+
+    def notional_value(self, price: Any, target_currency: Any=None, conversion_price: Any=None) -> Any:
+        """
+        Return the current notional value of the position, using a reference
+        price for the calculation (e.g., bid, ask, mid, last, or mark).
+
+        - For a standard (non-inverse) instrument, the notional is returned in the quote currency.
+        - For an inverse instrument, the notional is returned in the base currency, with
+          the calculation scaled by 1 / price.
+
+        If `target_currency` and `conversion_price` are provided, the notional
+        value will be converted to the target currency.
+
+        Parameters
+        ----------
+        price : Price
+            The reference price for the calculation. This could be the last, mid, bid, ask,
+            a mark-to-market price, or any other suitably representative value.
+        target_currency : Currency, optional
+            The target currency for conversion.
+        conversion_price : Price, optional
+            The price to use for currency conversion.
+
+        Returns
+        -------
+        Money
+            Denominated in quote currency for standard instruments, or base currency if inverse.
+
+        """
+
+    def cross_notional_value(self, price: Any, quote_price: Any, base_price: Any, target_currency: Any) -> Any:
+        """
+        Return the current notional value of the position in a cross/target currency.
+
+        The `quote_price` is the Quote/Target conversion price, and `base_price`
+        is the Base/Target conversion price.
+
+        Parameters
+        ----------
+        price : Price
+            The reference price for the calculation.
+        quote_price : Price
+            The Quote/Target conversion price.
+        base_price : Price
+            The Base/Target conversion price.
+        target_currency : Currency
+            The target currency for conversion.
+
+        Returns
+        -------
+        Money
+
+        """
+
+    def calculate_pnl(self, avg_px_open: float, avg_px_close: float, quantity: Any) -> Any:
+        """
+        Return a calculated PnL in the instrument's settlement currency.
+
+        Parameters
+        ----------
+        avg_px_open : double
+            The average open price.
+        avg_px_close : double
+            The average close price.
+        quantity : Quantity
+            The quantity for the calculation.
+
+        Returns
+        -------
+        Money
+            Denominated in settlement currency.
+
+        """
+
+    def unrealized_pnl(self, price: Any) -> Any:
+        """
+        Return the unrealized PnL for the position, using a reference
+        price for the calculation (e.g., bid, ask, mid, last, or mark).
+
+        Parameters
+        ----------
+        price : Price
+            The reference price for the calculation. This could be the last, mid, bid, ask,
+            a mark-to-market price, or any other suitably representative value.
+
+        Returns
+        -------
+        Money
+            Denominated in settlement currency.
+
+        """
+
+    def total_pnl(self, price: Any) -> Any:
+        """
+        Return the total PnL for the position, using a reference
+        price for the calculation (e.g., bid, ask, mid, last, or mark).
+
+        Parameters
+        ----------
+        price : Price
+            The reference price for the calculation. This could be the last, mid, bid, ask,
+            a mark-to-market price, or any other suitably representative value.
+
+        Returns
+        -------
+        Money
+            Denominated in settlement currency.
+
+        """
+
+    def commissions(self) -> list:
+        """
+        Return the total commissions generated by the position.
+
+        Returns
+        -------
+        list[Money]
+
+        """
