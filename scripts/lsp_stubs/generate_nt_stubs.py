@@ -31,11 +31,15 @@ def _run(*cmd: str) -> None:
     subprocess.run(cmd, check=True, cwd=ROOT)  # noqa: S603 - trusted: fixed CLI + user-supplied pyx paths
 
 
-def main(pyx_rels: list[str]) -> int:
+def main(pyx_rels: list[str], skip_existing: bool = False) -> int:
     _run("uv", "run", "python", str(SD / "patch_stubgen_pyx.py"), str(ROOT / ".venv"))
 
     for pyx_rel in pyx_rels:
         pyx = ROOT / pyx_rel
+        dst = pyx.with_suffix(".pyi")
+        if skip_existing and dst.exists():
+            print(f"[SKIP] {pyx_rel} (existing .pyi)")
+            continue
         print(f">>> {pyx_rel}")
         with tempfile.NamedTemporaryFile(suffix=".pyi", delete=False) as tmp:
             raw = Path(tmp.name)
@@ -44,7 +48,6 @@ def main(pyx_rels: list[str]) -> int:
                 "uv", "run", "stubgen-pyx", str(pyx.parent), "--file", pyx.name,
                 "--output-file", str(raw), "--continue-on-error",
             )
-            dst = pyx.with_suffix(".pyi")
             _run("uv", "run", "python", str(SD / "make_self_contained.py"), str(raw), str(dst))
             print(f"[DONE] {pyx_rel} -> {dst.relative_to(ROOT)}")
         finally:
@@ -55,4 +58,9 @@ def main(pyx_rels: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    args = sys.argv[1:]
+    skip = False
+    if "--skip-existing" in args:
+        skip = True
+        args = [a for a in args if a != "--skip-existing"]
+    sys.exit(main(args, skip_existing=skip))

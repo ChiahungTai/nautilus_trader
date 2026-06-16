@@ -115,12 +115,17 @@ class SelfContainedTransformer(ast.NodeTransformer):
         for i, arg in enumerate(positional):
             if i < n_defaultless:
                 continue
-            default = args.defaults[i - n_defaultless]
+            j = i - n_defaultless
+            default = args.defaults[j]
             self._maybe_optional(arg, default)
+            if isinstance(default, ast.Name) and default.id == "Any":
+                args.defaults[j] = ast.copy_location(ast.Constant(value=...), default)
         for i, arg in enumerate(args.kwonlyargs):
             default = args.kw_defaults[i]
             if default is not None:
                 self._maybe_optional(arg, default)
+                if isinstance(default, ast.Name) and default.id == "Any":
+                    args.kw_defaults[i] = ast.copy_location(ast.Constant(value=...), default)
         return node
 
     def _maybe_optional(self, arg: ast.arg, default: ast.AST) -> None:

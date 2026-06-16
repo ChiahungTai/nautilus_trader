@@ -1,0 +1,78 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+
+class SimulationModule(Any):
+    """
+    The base class for all simulation modules.
+
+    Warnings
+    --------
+    This class should not be used directly, but through a concrete subclass.
+    """
+    exchange: Any
+
+    def __init__(self, config: Any):
+        ...
+
+    def __repr__(self) -> str:
+        ...
+
+    def register_venue(self, exchange: Any) -> None:
+        """
+        Register the given simulated exchange with the module.
+
+        Parameters
+        ----------
+        exchange : SimulatedExchange
+            The exchange to register.
+
+        """
+
+    def pre_process(self, data: Any) -> None:
+        """Abstract method `pre_process` (implement in subclass)."""
+
+    def process(self, ts_now: int) -> None:
+        """Abstract method (implement in subclass)."""
+
+    def log_diagnostics(self, logger: Any) -> None:
+        """Abstract method (implement in subclass)."""
+
+    def reset(self) -> None:
+        """Abstract method (implement in subclass)."""
+
+class FXRolloverInterestModule(SimulationModule):
+    """
+    Provides an FX rollover interest simulation module.
+
+    Parameters
+    ----------
+    config  : FXRolloverInterestConfig
+    """
+
+    def __init__(self, config: Any):
+        ...
+
+    def process(self, ts_now: int) -> None:
+        """
+        Process the given tick through the module.
+
+        Parameters
+        ----------
+        ts_now : uint64_t
+            The current UNIX timestamp (nanoseconds) in the simulated exchange.
+
+        """
+
+    def log_diagnostics(self, logger: Any) -> None:
+        """
+        Log diagnostics out to the `BacktestEngine` logger.
+
+        Parameters
+        ----------
+        logger : Logger
+            The logger to log to.
+
+        """
+
+    def reset(self) -> None:
+        ...
