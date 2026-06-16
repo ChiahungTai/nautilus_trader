@@ -24,9 +24,11 @@ NT 有 `py.typed` marker，pyright 優先從原始碼目錄讀型別（`stubPath
 
 **Stub 自給自足約束**：禁止 import 其他 Cython 模組（整條依賴鏈都是 .pyx，pyright 無法解析）。用 `Any` 標注跨模組型別。唯一例外：同 package 內已有 `.pyi` 的模組可互相 import。
 
-**已覆蓋模組**：model/objects, model/data, model/identifiers, trading/strategy, core/correctness, persistence/wranglers
+**已覆蓋模組**：model/objects, model/data, model/identifiers, trading/strategy, core/correctness, persistence/wranglers, indicators/{averages,momentum,trend,volatility,volume}
 
-**Rebase upstream 後流程**：`make build-debug` → `make verify-stubs-diff` → REGRESSION 時更新 `.pyi` → `make update-stubs-baseline`
+**巨檔自動生成（stubgen-pyx 工作流）**：cache/cache、common/actor、backtest/engine、portfolio/portfolio 等大模組手寫不現實，用 `scripts/lsp_stubs/generate_nt_stubs.py`（stubgen-pyx + readonly patch + 自給自足後處理）自動生成 `.pyi`。手寫的 11 模組維持不動。詳見 `scripts/lsp_stubs/README.md`。readonly patch 必要：stubgen-pyx 預設只抓 `cdef public`，NT 慣例 `cdef readonly`（`indicator.value`、`cache.has_backing`）會漏。
+
+**Rebase upstream 後流程**：`make build-debug` → `make verify-stubs-diff` → REGRESSION 時更新 `.pyi` → `make update-stubs-baseline`；巨檔模組重跑 `scripts/lsp_stubs/generate_nt_stubs.py`
 
 ## 核心模式
 
