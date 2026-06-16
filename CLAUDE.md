@@ -28,6 +28,8 @@ NT 有 `py.typed` marker，pyright 優先從原始碼目錄讀型別（`stubPath
 
 **巨檔自動生成（stubgen-pyx 工作流）**：cache/cache、common/actor、backtest/engine、portfolio/portfolio 等大模組手寫不現實，用 `scripts/lsp_stubs/generate_nt_stubs.py`（stubgen-pyx + readonly patch + 自給自足後處理）自動生成 `.pyi`。手寫的 11 模組維持不動。詳見 `scripts/lsp_stubs/README.md`。readonly patch 必要：stubgen-pyx 預設只抓 `cdef public`，NT 慣例 `cdef readonly`（`indicator.value`、`cache.has_backing`）會漏。
 
+**為何 stubgen-pyx 而非 upstream `generate_stubs.py`**：NT 有兩條 Python 介面 — Cython（legacy，mosaic runtime 用）與 PyO3（Rust → Python，v2 未來）。`python.md` 官方標 Cython 為 legacy。`generate_stubs.py`（upstream `py-stubs-v2`）從 Rust bindings 生成 **PyO3 介面** stub，但 PyO3 class 跟 Cython 是不同 Python 物件（`is` False）、API 可能差異（v2 設計）。mosaic 用 Cython → stubgen-pyx（讀 .pyx）生成的 stub 才對應 runtime；generate_stubs.py 是 PyO3 介面，不適用。migration 收斂（mosaic 轉 PyO3）才改用。
+
 **Rebase upstream 後流程**：`make build-debug` → `make verify-stubs-diff` → REGRESSION 時更新 `.pyi` → `make update-stubs-baseline`；巨檔模組重跑 `scripts/lsp_stubs/generate_nt_stubs.py`
 
 ## 核心模式
