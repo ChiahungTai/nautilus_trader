@@ -32,7 +32,7 @@ class Actor(Any):
     cache: Any
     greeks: Any
 
-    def __init__(self, config: Any | None=None) -> None:
+    def __init__(self, config: Any | None | None=None) -> None:
         ...
 
     def to_importable_config(self) -> Any:
@@ -1531,7 +1531,7 @@ class Actor(Any):
 
         """
 
-    def request_data(self, data_type: Any, client_id: Any, instrument_id: Any=None, start: datetime | None=None, end: datetime | None=None, limit: int=0, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_data(self, data_type: Any, client_id: Any, instrument_id: Any=None, start: datetime | None=None, end: datetime | None=None, limit: int=0, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request custom data for the given data type from the given data client.
 
@@ -1588,7 +1588,7 @@ class Actor(Any):
 
         """
 
-    def request_instrument(self, instrument_id: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_instrument(self, instrument_id: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request `Instrument` data for the given instrument ID.
 
@@ -1642,7 +1642,7 @@ class Actor(Any):
 
         """
 
-    def request_instruments(self, venue: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_instruments(self, venue: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request all `Instrument` data for the given venue.
 
@@ -1697,7 +1697,7 @@ class Actor(Any):
 
         """
 
-    def request_order_book_deltas(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_deltas(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `OrderBookDeltas` data.
 
@@ -1745,7 +1745,7 @@ class Actor(Any):
 
         """
 
-    def request_order_book_depth(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, depth: int=10, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_depth(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, depth: int=10, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `OrderBookDepth10` snapshots.
 
@@ -1795,7 +1795,7 @@ class Actor(Any):
 
         """
 
-    def request_order_book_snapshot(self, instrument_id: Any, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_snapshot(self, instrument_id: Any, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request an order book snapshot.
 
@@ -1836,7 +1836,7 @@ class Actor(Any):
 
         """
 
-    def request_quote_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_quote_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `QuoteTick` data.
 
@@ -1898,7 +1898,7 @@ class Actor(Any):
 
         """
 
-    def request_trade_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_trade_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `TradeTick` data.
 
@@ -1957,7 +1957,7 @@ class Actor(Any):
 
         """
 
-    def request_funding_rates(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_funding_rates(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `FundingRateUpdate` data.
 
@@ -2016,7 +2016,7 @@ class Actor(Any):
 
         """
 
-    def request_bars(self, bar_type: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_bars(self, bar_type: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical `Bar` data.
 
@@ -2075,7 +2075,7 @@ class Actor(Any):
 
         """
 
-    def request_aggregated_bars(self, bar_types: list, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None=None, include_external_data: bool=False, update_subscriptions: bool=False, update_catalog: bool=False, aggregate_spread_quotes: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_aggregated_bars(self, bar_types: list, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, include_external_data: bool=False, update_subscriptions: bool=False, update_catalog: bool=False, aggregate_spread_quotes: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request historical aggregated `Bar` data for multiple bar types.
         The first bar is used to determine which market data type will be queried.
@@ -2157,7 +2157,7 @@ class Actor(Any):
 
         """
 
-    def request_join(self, request_ids: tuple, start: datetime, end: datetime | None=None, client_id: Any=None, venue: Any=None, callback: Callable[[Any], None] | None=None, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_join(self, request_ids: tuple, start: datetime, end: datetime | None=None, client_id: Any=None, venue: Any=None, callback: Callable[[Any], None] | None | None=None, request_id: Any=None, params: dict | None=None) -> Any:
         """
         Request a join of multiple data requests.
 

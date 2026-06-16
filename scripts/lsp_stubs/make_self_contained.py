@@ -24,7 +24,35 @@ def _is_any(node: ast.AST) -> bool:
 
 
 def _is_already_optional(node: ast.AST) -> bool:
-    return isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr)
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr):
+        return any(
+            isinstance(s, ast.Name) and s.id == "None" for s in (node.left, node.right)
+        )
+    return False
+
+
+def _collapse_ellipsis(annotation: ast.expr) -> ast.expr:
+    """
+    stubgen-pyx trims undefined names to ``...``; in a type annotation the
+    Ellipsis is invalid (e.g. ``... | None``) -> replace with Any.
+    """
+    if isinstance(annotation, ast.Constant) and annotation.value is ...:
+        return ast.copy_location(ast.Name(id="Any", ctx=ast.Load()), annotation)
+    if isinstance(annotation, ast.BinOp):
+        annotation.left = _collapse_ellipsis(annotation.left)
+        annotation.right = _collapse_ellipsis(annotation.right)
+    return annotation
+
+
+def _collapse_ellipsis_annotations(tree: ast.Module) -> None:
+    """Apply _collapse_ellipsis to all annotations (arg/return/AnnAssign)."""
+    for node in ast.walk(tree):
+        if isinstance(node, ast.arg) and node.annotation is not None:
+            node.annotation = _collapse_ellipsis(node.annotation)
+        elif isinstance(node, ast.FunctionDef) and node.returns is not None:
+            node.returns = _collapse_ellipsis(node.returns)
+        elif isinstance(node, ast.AnnAssign) and node.annotation is not None:
+            node.annotation = _collapse_ellipsis(node.annotation)
 
 
 class SelfContainedTransformer(ast.NodeTransformer):
@@ -61,6 +89,22 @@ class SelfContainedTransformer(ast.NodeTransformer):
         self.generic_visit(node)
         if isinstance(node.func, ast.Name) and node.func.id == "Any":
             return ast.copy_location(ast.Name(id="Any", ctx=ast.Load()), node)
+        return node
+
+    def visit_BinOp(self, node: ast.BinOp) -> ast.AST:
+        """
+        stubgen-pyx trims undefined names to ``...``; in a type union like
+        ``... | None`` the Ellipsis is invalid -> replace with Any.
+        """
+        self.generic_visit(node)
+        for attr in ("left", "right"):
+            operand = getattr(node, attr)
+            if isinstance(operand, ast.Constant) and operand.value is ...:
+                setattr(
+                    node,
+                    attr,
+                    ast.copy_location(ast.Name(id="Any", ctx=ast.Load()), operand),
+                )
         return node
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> ast.AST:
@@ -132,6 +176,10 @@ def make_self_contained(src: str, dst: str) -> int:
                         typing_aliases[alias.asname] = alias.name
 
     SelfContainedTransformer(cross, typing_aliases).visit(tree)
+    ast.fix_missing_locations(tree)
+    # Collapse Ellipsis (stubgen-pyx undefined-name trim) in all annotations —
+    # the transformer's visit_BinOp doesn't reach arg.annotation in the visit chain.
+    _collapse_ellipsis_annotations(tree)
     ast.fix_missing_locations(tree)
     _merge_typing_and_drop_imports(tree)
     ast.fix_missing_locations(tree)
