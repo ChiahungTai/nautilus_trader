@@ -41,6 +41,16 @@ class SelfContainedTransformer(ast.NodeTransformer):
             )
         return node
 
+    def visit_Attribute(self, node: ast.Attribute) -> ast.AST:
+        """
+        Cross-Cython symbol's attribute access (e.g. ``AccountType.CASH``)
+        is unresolvable to pyright -> collapse the whole chain to Any.
+        """
+        self.generic_visit(node)
+        if isinstance(node.value, ast.Name) and node.value.id == "Any":
+            return ast.copy_location(ast.Name(id="Any", ctx=node.ctx), node)
+        return node
+
     def visit_FunctionDef(self, node: ast.FunctionDef) -> ast.AST:
         self.generic_visit(node)
         args = node.args

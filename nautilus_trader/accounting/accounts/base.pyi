@@ -1,0 +1,351 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any
+
+class Account:
+    """
+    The base class for all trading accounts.
+    """
+    id: Any
+    type: Any
+    base_currency: Any
+    is_cash_account: bool
+    is_margin_account: bool
+    calculate_account_state: bool
+
+    def __init__(self, event: Any, calculate_account_state: bool):
+        ...
+
+    def __eq__(self, other: Account) -> bool:
+        ...
+
+    def __hash__(self) -> int:
+        ...
+
+    def __repr__(self) -> str:
+        ...
+
+    @property
+    def last_event(self):
+        """
+        Return the accounts last state event.
+
+        Returns
+        -------
+        AccountState
+
+        """
+
+    @property
+    def events(self):
+        """
+        Return all events received by the account.
+
+        Returns
+        -------
+        list[AccountState]
+
+        """
+
+    @property
+    def event_count(self):
+        """
+        Return the count of events.
+
+        Returns
+        -------
+        int
+
+        """
+
+    def currencies(self) -> list:
+        """
+        Return the account currencies.
+
+        Returns
+        -------
+        list[Currency]
+
+        """
+
+    def starting_balances(self) -> dict:
+        """
+        Return the account starting balances.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def balances(self) -> dict:
+        """
+        Return the account balances totals.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def balances_total(self) -> dict:
+        """
+        Return the account balances totals.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def balances_free(self) -> dict:
+        """
+        Return the account balances free.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def balances_locked(self) -> dict:
+        """
+        Return the account balances locked.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def commissions(self) -> dict:
+        """
+        Return the total commissions for the account.
+        """
+
+    def balance(self, currency: Any=None) -> Any:
+        """
+        Return the current account balance total.
+
+        For multi-currency accounts, specify the currency for the query.
+
+        Parameters
+        ----------
+        currency : Currency, optional
+            The currency for the query. If ``None`` then will use the default
+            currency (if set).
+
+        Returns
+        -------
+        AccountBalance or ``None``
+
+        Raises
+        ------
+        ValueError
+            If `currency` is ``None`` and `base_currency` is ``None``.
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def balance_total(self, currency: Any=None) -> Any:
+        """
+        Return the current account balance total.
+
+        For multi-currency accounts, specify the currency for the query.
+
+        Parameters
+        ----------
+        currency : Currency, optional
+            The currency for the query. If ``None`` then will use the default
+            currency (if set).
+
+        Returns
+        -------
+        Money or ``None``
+
+        Raises
+        ------
+        ValueError
+            If `currency` is ``None`` and `base_currency` is ``None``.
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def balance_free(self, currency: Any=None) -> Any:
+        """
+        Return the account balance free.
+
+        For multi-currency accounts, specify the currency for the query.
+
+        Parameters
+        ----------
+        currency : Currency, optional
+            The currency for the query. If ``None`` then will use the default
+            currency (if set).
+
+        Returns
+        -------
+        Money or ``None``
+
+        Raises
+        ------
+        ValueError
+            If `currency` is ``None`` and `base_currency` is ``None``.
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def balance_locked(self, currency: Any=None) -> Any:
+        """
+        Return the account balance locked.
+
+        For multi-currency accounts, specify the currency for the query.
+
+        Parameters
+        ----------
+        currency : Currency, optional
+            The currency for the query. If ``None`` then will use the default
+            currency (if set).
+
+        Returns
+        -------
+        Money or ``None``
+
+        Raises
+        ------
+        ValueError
+            If `currency` is ``None`` and `base_currency` is ``None``.
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def commission(self, currency: Any) -> Any:
+        """
+        Return the total commissions for the given currency.
+
+        Parameters
+        ----------
+        currency : Currency
+            The currency for the commission.
+
+        Returns
+        -------
+        Money or ``None``
+
+        """
+
+    def apply(self, event: Any) -> None:
+        """
+        Apply the given account event to the account.
+
+        Parameters
+        ----------
+        event : AccountState
+            The account event to apply.
+
+        Raises
+        ------
+        ValueError
+            If `event.account_type` is not equal to `self.type`.
+        ValueError
+            If `event.account_id` is not equal to `self.id`.
+        ValueError
+            If `event.base_currency` is not equal to `self.base_currency`.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def update_balances(self, balances: list) -> None:
+        """
+        Update the account balances.
+
+        There is no guarantee that every account currency is included in the
+        given balances, therefore we only update included balances.
+
+        Parameters
+        ----------
+        balances : list[AccountBalance]
+            The balances for the update. An empty list is treated as a no-op.
+
+        Raises
+        ------
+        AccountBalanceNegative
+            If account type is ``CASH``, and balance is negative.
+
+        """
+
+    def update_commissions(self, commission: Any) -> None:
+        """
+        Update the commissions.
+
+        Can be negative which represents credited commission.
+
+        Parameters
+        ----------
+        commission : Money
+            The commission to update with.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def purge_account_events(self, ts_now: int, lookback_secs: int=0) -> None:
+        """
+        Purge all account state events which are outside the lookback window.
+
+        Guaranteed to retain at least the latest event.
+
+        Parameters
+        ----------
+        ts_now : uint64_t
+            The current UNIX timestamp (nanoseconds).
+        lookback_secs : uint64_t, default 0
+            The purge lookback window (seconds) from when the account state event occurred.
+            Only events which are outside the lookback window will be purged.
+            A value of 0 means purge all account state events.
+
+        """
+
+    def is_unleveraged(self, instrument_id: Any) -> bool:
+        """
+        Return whether the given instrument is leveraged for this account (leverage == 1).
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID to check.
+
+        Returns
+        -------
+        bool
+
+        """
+
+    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
+        ...
+
+    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None=None) -> list:
+        ...
+
+    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+        ...

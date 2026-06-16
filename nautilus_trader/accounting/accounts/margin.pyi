@@ -1,0 +1,557 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any
+'\nA margin account capable of holding leveraged positions and tracking instrument-specific\nleverage ratios.\n\nPnL calculation\n---------------\nThe account calculates PnL differently based on instrument type:\n\n- **Premium instruments** (options, option spreads, binary options, warrants): Realize\n  the notional value as a cash flow on every fill. BUY = negative (premium paid),\n  SELL = positive (premium received).\n\n- **Other instruments**: Only realize PnL on position reduction (fill side opposite to\n  entry). Use the minimum of fill and position quantity to avoid double-counting.\n\n'
+from decimal import Decimal
+
+class MarginAccount(Any):
+    """
+    Provides a margin account.
+
+    Parameters
+    ----------
+    event : AccountState
+        The initial account state event.
+    calculate_account_state : bool, optional
+        If the account state should be calculated from order fills.
+
+    Raises
+    ------
+    ValueError
+        If `event.account_type` is not equal to ``MARGIN``.
+    """
+    default_leverage: Any
+
+    def __init__(self, event: Any, calculate_account_state: bool=False):
+        ...
+
+    @staticmethod
+    def to_dict(obj: MarginAccount):
+        ...
+
+    @staticmethod
+    def from_dict(values: dict):
+        ...
+
+    def margins(self) -> dict:
+        """
+        Return the per-instrument margin balances for the account.
+
+        Returns
+        -------
+        dict[InstrumentId, MarginBalance]
+
+        """
+
+    def margins_init(self) -> dict:
+        """
+        Return the per-instrument initial (order) margins for the account.
+
+        Returns
+        -------
+        dict[InstrumentId, Money]
+
+        """
+
+    def margins_maint(self) -> dict:
+        """
+        Return the per-instrument maintenance (position) margins for the account.
+
+        Returns
+        -------
+        dict[InstrumentId, Money]
+
+        """
+
+    def account_margins(self) -> dict:
+        """
+        Return the account-wide (cross-margin) margin balances keyed by collateral currency.
+
+        Returns
+        -------
+        dict[Currency, MarginBalance]
+
+        """
+
+    def account_margins_init(self) -> dict:
+        """
+        Return the account-wide initial (order) margins keyed by collateral currency.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def account_margins_maint(self) -> dict:
+        """
+        Return the account-wide maintenance (position) margins keyed by collateral currency.
+
+        Returns
+        -------
+        dict[Currency, Money]
+
+        """
+
+    def leverages(self) -> dict:
+        """
+        Return the account leverages.
+
+        Returns
+        -------
+        dict[InstrumentId, Decimal]
+
+        """
+
+    def leverage(self, instrument_id: Any) -> object:
+        """
+        Return the leverage for the given instrument (if found).
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the leverage.
+
+        Returns
+        -------
+        Decimal or ``None``
+
+        """
+
+    def margin_init(self, instrument_id: Any) -> Any:
+        """
+        Return the current initial (order) margin.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the query.
+
+        Returns
+        -------
+        Money or ``None``
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def margin_maint(self, instrument_id: Any) -> Any:
+        """
+        Return the current maintenance (position) margin.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the query.
+
+        Returns
+        -------
+        Money or ``None``
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `Money` of zero amount.
+
+        """
+
+    def margin(self, instrument_id: Any) -> Any:
+        """
+        Return the current margin balance.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the query.
+
+        Returns
+        -------
+        MarginBalance or ``None``
+
+        Warnings
+        --------
+        Returns ``None`` if there is no applicable information for the query,
+        rather than `MarginBalance` with zero amounts.
+
+        """
+
+    def margin_for_currency(self, currency: Any) -> Any:
+        """
+        Return the account-wide (cross-margin) balance for the given collateral currency.
+
+        Parameters
+        ----------
+        currency : Currency
+            The collateral currency for the query.
+
+        Returns
+        -------
+        MarginBalance or ``None``
+
+        """
+
+    def margin_init_for_currency(self, currency: Any) -> Any:
+        """
+        Return the account-wide initial (order) margin for the given collateral currency.
+
+        Parameters
+        ----------
+        currency : Currency
+            The collateral currency for the query.
+
+        Returns
+        -------
+        Money or ``None``
+
+        """
+
+    def margin_maint_for_currency(self, currency: Any) -> Any:
+        """
+        Return the account-wide maintenance (position) margin for the given collateral currency.
+
+        Parameters
+        ----------
+        currency : Currency
+            The collateral currency for the query.
+
+        Returns
+        -------
+        Money or ``None``
+
+        """
+
+    def total_margin_init(self, currency: Any) -> Any:
+        """
+        Return the total initial margin reserved in the given currency.
+
+        Sums per-instrument and account-wide entries whose currency matches.
+
+        Parameters
+        ----------
+        currency : Currency
+            The currency to total.
+
+        Returns
+        -------
+        Money
+
+        """
+
+    def total_margin_maint(self, currency: Any) -> Any:
+        """
+        Return the total maintenance margin reserved in the given currency.
+
+        Sums per-instrument and account-wide entries whose currency matches.
+
+        Parameters
+        ----------
+        currency : Currency
+            The currency to total.
+
+        Returns
+        -------
+        Money
+
+        """
+
+    def set_default_leverage(self, leverage: Decimal) -> None:
+        """
+        Set the default leverage for the account (if not specified by instrument).
+
+        Parameters
+        ----------
+        leverage : Decimal
+            The default leverage value
+
+        Returns
+        -------
+        TypeError
+            If leverage is not of type `Decimal`.
+        ValueError
+            If leverage is not >= 1.
+
+        """
+
+    def set_leverage(self, instrument_id: Any, leverage: Decimal) -> None:
+        """
+        Set the leverage for the given instrument.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument for the leverage.
+        leverage : Decimal
+            The leverage value
+
+        Returns
+        -------
+        TypeError
+            If leverage is not of type `Decimal`.
+        ValueError
+            If leverage is not >= 1.
+
+        """
+
+    def set_margin_model(self, margin_model: Any) -> None:
+        """
+        Set the margin calculation model for the account.
+
+        Parameters
+        ----------
+        margin_model : MarginModel
+            The margin model to use for calculations.
+
+        """
+
+    def apply(self, event: Any) -> None:
+        """
+        Apply the given account event to the account.
+
+        Replaces the stored margin balances with the event margins, routing
+        per-instrument entries (``instrument_id`` set) and account-wide entries
+        (``instrument_id`` is ``None``, keyed by currency) into their respective
+        buckets.
+
+        Parameters
+        ----------
+        event : AccountState
+            The account event to apply.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def update_margin_init(self, instrument_id: Any, margin_init: Any) -> None:
+        """
+        Update the initial (order) margin.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the update.
+        margin_init : Money
+            The current initial (order) margin for the instrument.
+
+        Raises
+        ------
+        ValueError
+            If `margin_init` is negative (< 0).
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def update_margin_maint(self, instrument_id: Any, margin_maint: Any) -> None:
+        """
+        Update the maintenance (position) margin.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the update.
+        margin_maint : Money
+            The current maintenance (position) margin for the instrument.
+
+        Raises
+        ------
+        ValueError
+            If `margin_maint` is negative (< 0).
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def update_margin(self, margin: Any) -> None:
+        """
+        Update the margin balance.
+
+        When `margin.instrument_id` is set, the entry is stored as a per-instrument
+        margin. When `None`, the entry is stored as an account-wide margin keyed
+        by `margin.currency`.
+
+        Parameters
+        ----------
+        margin : MarginBalance
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def clear_margin_init(self, instrument_id: Any) -> None:
+        """
+        Clear the initial (order) margins for the given instrument ID.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument for the initial margin to clear.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def clear_margin_maint(self, instrument_id: Any) -> None:
+        """
+        Clear the maintenance (position) margins for the given instrument ID.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument for the maintenance margin to clear.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def clear_margin(self, instrument_id: Any) -> None:
+        """
+        Clear the maintenance (position) margins for the given instrument ID.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument for the maintenance margin to clear.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def clear_account_margin(self, currency: Any) -> None:
+        """
+        Clear the account-wide (cross-margin) margin for the given collateral currency.
+
+        Parameters
+        ----------
+        currency : Currency
+            The collateral currency to clear.
+
+        Warnings
+        --------
+        System method (not intended to be called by user code).
+
+        """
+
+    def is_unleveraged(self, instrument_id: Any) -> bool:
+        ...
+
+    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
+        """
+        Calculate the commission generated from a transaction with the given
+        parameters.
+
+        Result will be in quote currency for standard instruments, or base
+        currency for inverse instruments.
+
+        Parameters
+        ----------
+        instrument : Instrument
+            The instrument for the calculation.
+        last_qty : Quantity
+            The transaction quantity.
+        last_px : Price
+            The transaction price.
+        liquidity_side : LiquiditySide {``MAKER``, ``TAKER``}
+            The liquidity side for the transaction.
+        use_quote_for_inverse : bool
+            If inverse instrument calculations use quote currency (instead of base).
+
+        Returns
+        -------
+        Money
+
+        Raises
+        ------
+        ValueError
+            If `liquidity_side` is ``NO_LIQUIDITY_SIDE``.
+
+        """
+
+    def calculate_margin_init(self, instrument: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+        """
+        Calculate the initial (order) margin.
+
+        Result will be in quote currency for standard instruments, or base
+        currency for inverse instruments.
+
+        Parameters
+        ----------
+        instrument : Instrument
+            The instrument for the calculation.
+        quantity : Quantity
+            The order quantity.
+        price : Price
+            The order price.
+        use_quote_for_inverse : bool
+            If inverse instrument calculations use quote currency (instead of base).
+
+        Returns
+        -------
+        Money
+
+        """
+
+    def calculate_margin_maint(self, instrument: Any, side: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+        """
+        Calculate the maintenance (position) margin.
+
+        Result will be in quote currency for standard instruments, or base
+        currency for inverse instruments.
+
+        Parameters
+        ----------
+        instrument : Instrument
+            The instrument for the calculation.
+        side : PositionSide {``LONG``, ``SHORT``}
+            The currency position side.
+        quantity : Quantity
+            The currency position quantity.
+        price : Price
+            The positions current price.
+        use_quote_for_inverse : bool
+            If inverse instrument calculations use quote currency (instead of base).
+
+        Returns
+        -------
+        Money
+
+        """
+
+    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None=None) -> list:
+        """
+        Return the calculated PnL.
+
+        The calculation does not include any commissions.
+
+        Parameters
+        ----------
+        instrument : Instrument
+            The instrument for the calculation.
+        fill : OrderFilled
+            The fill for the calculation.
+        position : Position, optional
+            The position for the calculation.
+
+        Returns
+        -------
+        list[Money]
+
+        """
+
+    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+        ...
