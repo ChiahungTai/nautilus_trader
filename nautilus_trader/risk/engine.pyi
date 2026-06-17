@@ -1,0 +1,140 @@
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+
+class RiskEngine(Any):
+    """
+    Provides a high-performance risk engine.
+
+    The `RiskEngine` is responsible for global strategy and portfolio risk
+    within the platform. This includes both pre-trade risk checks and post-trade
+    risk monitoring.
+
+    Possible trading states:
+     - ``ACTIVE`` (trading is enabled).
+     - ``REDUCING`` (only new orders or updates which reduce an open position are allowed).
+     - ``HALTED`` (all trading commands except cancels are denied).
+
+    Parameters
+    ----------
+    portfolio : PortfolioFacade
+        The portfolio for the engine.
+    msgbus : MessageBus
+        The message bus for the engine.
+    cache : Cache
+        The cache for the engine.
+    clock : Clock
+        The clock for the engine.
+    config : RiskEngineConfig, optional
+        The configuration for the instance.
+
+    Raises
+    ------
+    TypeError
+        If `config` is not of type `RiskEngineConfig`.
+    """
+    trading_state: Any
+    is_bypassed: bool
+    debug: bool
+    command_count: int
+    event_count: int
+
+    def __init__(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+        ...
+
+    def execute(self, command: Any) -> None:
+        """
+        Execute the given command.
+
+        Parameters
+        ----------
+        command : Command
+            The command to execute.
+
+        """
+
+    def process(self, event: Any) -> None:
+        """
+        Process the given event.
+
+        Parameters
+        ----------
+        event : Event
+            The event to process.
+
+        """
+
+    def set_trading_state(self, state: Any) -> None:
+        """
+        Set the trading state for the engine.
+
+        Parameters
+        ----------
+        state : TradingState
+            The state to set.
+
+        """
+
+    def set_max_notional_per_order(self, instrument_id: Any, new_value) -> None:
+        """
+        Set the maximum notional value per order for the given instrument ID.
+
+        Passing a new_value of ``None`` will disable the pre-trade risk max
+        notional check.
+
+        Parameters
+        ----------
+        instrument_id : InstrumentId
+            The instrument ID for the max notional.
+        new_value : integer, float, string or Decimal
+            The max notional value to set.
+
+        Raises
+        ------
+        decimal.InvalidOperation
+            If `new_value` not a valid input for `decimal.Decimal`.
+        ValueError
+            If `new_value` is not ``None`` and not positive.
+
+        """
+
+    def max_order_submit_rate(self) -> tuple:
+        """
+        Return the current maximum order submit rate limit setting.
+
+        Returns
+        -------
+        (int, timedelta)
+            The limit per timedelta interval.
+
+        """
+
+    def max_order_modify_rate(self) -> tuple:
+        """
+        Return the current maximum order modify rate limit setting.
+
+        Returns
+        -------
+        (int, timedelta)
+            The limit per timedelta interval.
+
+        """
+
+    def max_notionals_per_order(self) -> dict:
+        """
+        Return the current maximum notionals per order settings.
+
+        Returns
+        -------
+        dict[InstrumentId, Decimal]
+
+        """
+
+    def max_notional_per_order(self, instrument_id: Any) -> object:
+        """
+        Return the current maximum notional per order for the given instrument ID.
+
+        Returns
+        -------
+        Decimal or ``None``
+
+        """
