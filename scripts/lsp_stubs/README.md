@@ -31,7 +31,8 @@ uv run pyright nautilus_trader/<module>/<file>.pyi   # 應 0 errors
 ## 已覆蓋模組
 
 - **手寫**(11,維持不動):`model/{data,objects,identifiers}`、`core/correctness`、`trading/strategy`、`persistence/wranglers`、`indicators/{averages,momentum,trend,volatility,volume}`
-- **自動生成**(4 巨檔,pyright 0 errors):`cache/cache`、`common/actor`、`backtest/engine`、`portfolio/portfolio`
+- **自動生成**(~90,pyright 0 errors):所有其餘 `.pyx` 模組 — cache/actor/engine/portfolio + accounting + model/* + data/execution/common + core/config/risk/persistence/serialization/system/backtest/indicators 其餘
+- **gap**:`core/rust/{common,model}.pyx`(stubgen-pyx 對 `cimport` Rust enum 失敗;mosaic 僅用 `LogColor` via sj,PriceType 等已 Any 化 via cache)
 
 ## 設計決策
 
