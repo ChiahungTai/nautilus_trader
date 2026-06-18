@@ -1,6 +1,6 @@
 # nautilus_trader/accounting/
 
-金融會計層：餘額、鎖定資金、佣金、保證金、損益實現。完全以 Cython 實作（Rust `nautilus-model` 提供的是 FFI 邊界的 `Account` struct，類型層級和餘額邏輯不在 Rust 中）。
+金融會計層：餘額、鎖定資金、佣金、保證金、損益實現。**此 fork 的 runtime 走 Cython**（`accounts/{cash,margin,base,betting}.pyx`、`manager.pyx`、`margin_models.pyx`），但 **Rust `crates/model/src/accounts/` 有等價實作**（`cash.rs`/`margin.rs` 的 `calculate_pnls`、`margin_model.rs` 的 `Standard/LeveragedMarginModel`）——是 PyO3 路徑（未來 Rust-native runtime），**不被 Cython `Portfolio` 執行**。兩層邏輯相同；runtime 查證讀 `.pyx`，詳見 nt-query `account-model.md` Layer 段。
 
 ## 設計決策
 
