@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.backtest.engine import SimulatedExchange
 
 class BacktestExecClient(Any):
     """
@@ -23,7 +24,7 @@ class BacktestExecClient(Any):
         If cash accounts should allow borrowing (negative balances).
     """
 
-    def __init__(self, exchange: Any, msgbus: Any, cache: Any, clock: Any, routing: bool=False, frozen_account: bool=False, allow_cash_borrowing: bool=False) -> None:
+    def __init__(self, exchange: SimulatedExchange, msgbus: Any, cache: Any, clock: Any, routing: bool=False, frozen_account: bool=False, allow_cash_borrowing: bool=False) -> None:
         ...
 
     def submit_order(self, command: Any) -> None:

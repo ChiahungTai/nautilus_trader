@@ -1,5 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.execution.matching_core import MatchingCore
+from nautilus_trader.execution.messages import SubmitOrder, TradingCommand
 
 class OrderEmulator(Any):
     """
@@ -48,7 +50,7 @@ class OrderEmulator(Any):
 
         """
 
-    def get_submit_order_commands(self) -> dict[Any, Any]:
+    def get_submit_order_commands(self) -> dict[Any, SubmitOrder]:
         """
         Return the emulators cached submit order commands.
 
@@ -58,7 +60,7 @@ class OrderEmulator(Any):
 
         """
 
-    def get_matching_core(self, instrument_id: Any) -> Any | None:
+    def get_matching_core(self, instrument_id: Any) -> MatchingCore | None:
         """
         Return the emulators matching core for the given instrument ID.
 
@@ -91,7 +93,7 @@ class OrderEmulator(Any):
     def on_dispose(self) -> None:
         ...
 
-    def execute(self, command: Any) -> None:
+    def execute(self, command: TradingCommand) -> None:
         """
         Execute the given command.
 
@@ -102,7 +104,7 @@ class OrderEmulator(Any):
 
         """
 
-    def create_matching_core(self, instrument_id: Any, price_increment: Any) -> Any:
+    def create_matching_core(self, instrument_id: Any, price_increment: Any) -> MatchingCore:
         """
         Create an internal matching core for the given `instrument`.
 

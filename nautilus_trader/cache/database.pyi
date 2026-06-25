@@ -1,8 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.cache.facade import CacheDatabaseFacade
 
-class CacheDatabaseAdapter(Any):
+class CacheDatabaseAdapter(CacheDatabaseFacade):
     """
     Provides a generic cache database adapter.
 

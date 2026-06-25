@@ -1,6 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 '\nThe `ExecutionEngine` is the central component of the entire execution stack.\n\nThe execution engines primary responsibility is to orchestrate interactions\nbetween the `ExecutionClient` instances, and the rest of the platform. This\nincludes sending commands to, and receiving events from, the trading venue\nendpoints via its registered execution clients.\n\nThe engine employs a simple fan-in fan-out messaging pattern to execute\n`TradingCommand` messages and `OrderEvent` messages.\n\nAlternative implementations can be written on top of the generic engine - which\njust need to override the `execute` and `process` methods.\n'
+from nautilus_trader.execution.client import ExecutionClient
 
 class ExecutionEngine(Any):
     """
@@ -209,7 +210,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_client(self, client: Any) -> None:
+    def register_client(self, client: ExecutionClient) -> None:
         """
         Register the given execution client with the execution engine.
 
@@ -228,7 +229,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_default_client(self, client: Any) -> None:
+    def register_default_client(self, client: ExecutionClient) -> None:
         """
         Register the given client as the default routing client (when a specific
         venue routing cannot be found).
@@ -242,7 +243,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_venue_routing(self, client: Any, venue: Any) -> None:
+    def register_venue_routing(self, client: ExecutionClient, venue: Any) -> None:
         """
         Register the given client to route orders to the given venue.
 
@@ -285,7 +286,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def deregister_client(self, client: Any) -> None:
+    def deregister_client(self, client: ExecutionClient) -> None:
         """
         Deregister the given execution client from the execution engine.
 

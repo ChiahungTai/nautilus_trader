@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
+from nautilus_trader.accounting.accounts.cash import CashAccount
 
-class BettingAccount(Any):
+class BettingAccount(CashAccount):
     """
     Provides a betting account.
     """

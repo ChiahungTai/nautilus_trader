@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
+from nautilus_trader.portfolio.base import PortfolioFacade
 
-class Portfolio(Any):
+class Portfolio(PortfolioFacade):
     """
     Provides a trading portfolio.
 
@@ -25,7 +26,7 @@ class Portfolio(Any):
         If `config` is not of type `PortfolioConfig`.
     """
 
-    def __init__(self, msgbus: Any, cache: Any, clock: Any, config: Any | None=None) -> None:
+    def __init__(self, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
         ...
 
     def set_use_mark_prices(self, value: bool) -> None:

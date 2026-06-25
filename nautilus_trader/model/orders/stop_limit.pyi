@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.orders.base import Order
 
-class StopLimitOrder(Any):
+class StopLimitOrder(Order):
     """
     Represents a `Stop-Limit` conditional order.
 

@@ -1,6 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.execution.messages import TradingCommand
 
 class ExecAlgorithm(Any):
     """
@@ -59,7 +60,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def execute(self, command: Any) -> None:
+    def execute(self, command: TradingCommand) -> None:
         """
         Handle the given trading command by processing it with the execution algorithm.
 

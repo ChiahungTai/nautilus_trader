@@ -2,8 +2,9 @@
 from typing import Any, Callable
 from decimal import Decimal
 from datetime import datetime
+from nautilus_trader.model.instruments.base import Instrument
 
-class BettingInstrument(Any):
+class BettingInstrument(Instrument):
     """
     Represents an instrument in a betting market.
     """
@@ -24,7 +25,7 @@ class BettingInstrument(Any):
     selection_name: str
     selection_handicap: float
 
-    def __init__(self, venue_name: str, event_type_id: int, event_type_name: str, competition_id: int, competition_name: str, event_id: int, event_name: str, event_country_code: str, event_open_date: datetime, betting_type: str, market_id: str, market_name: str, market_start_time: datetime, market_type: str, selection_id: int, selection_name: str, currency: str, selection_handicap: float, price_precision: int, size_precision: int, ts_event: int, ts_init: int, max_quantity: Any | None=None, min_quantity: Any | None=None, max_notional: Any | None=None, min_notional: Any | None=None, max_price: Any | None=None, min_price: Any | None=None, margin_init: Decimal | None=None, margin_maint: Decimal | None=None, maker_fee: Decimal | None=None, taker_fee: Decimal | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, venue_name: str, event_type_id: int, event_type_name: str, competition_id: int, competition_name: str, event_id: int, event_name: str, event_country_code: str, event_open_date: datetime, betting_type: str, market_id: str, market_name: str, market_start_time: datetime, market_type: str, selection_id: int, selection_name: str, currency: str, selection_handicap: float, price_precision: int, size_precision: int, ts_event: int, ts_init: int, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod

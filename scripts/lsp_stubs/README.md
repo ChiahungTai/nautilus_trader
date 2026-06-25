@@ -11,7 +11,7 @@ NT 核心模組(cache/engine/actor/portfolio)是 `.pyx`,編譯成 `.so` 後對 p
 | 工具 | 職責 |
 |------|------|
 | `patch_stubgen_pyx.py` | 修 stubgen-pyx 的 readonly 缺口(預設只抓 `cdef public`,NT 慣例是 `cdef readonly`)。idempotent,`uv sync` 後重跑 |
-| `make_self_contained.py` | 後處理 stubgen-pyx 輸出:跨 Cython 模組型別 → `Any`(自給自足)、`cpython.X` → stdlib、None 預設參數加 `\| None` |
+| `make_self_contained.py` | 後處理 stubgen-pyx 輸出:**保留同 package `.pyi` 基底(還原真實繼承,如 `Cache(CacheFacade)`)**、跨 package 型別 → `Any`(自給自足)、`cpython.X` → stdlib、None 預設參數加 `\| None` |
 | `generate_nt_stubs.py` | 一鍵 orchestrator:patch + stubgen-pyx + 後處理 + 放定位(全 subprocess,不 import 同目錄工具) |
 
 ## 何時跑
@@ -38,6 +38,7 @@ uv run pyright nautilus_trader/<module>/<file>.pyi   # 應 0 errors
 
 - **stubgen-pyx 讀 `.pyx` 而非 `.so`**:mypy `stubgen` 對 `.so` 只能 runtime introspect,型別全流失;stubgen-pyx 讀 Cython AST,保留完整型別/簽名/屬性/docstring
 - **local patch 而非 fork**:雙向門、self-contained。readonly 是一行修復;upstream stubgen-pyx 未收,`uv sync` 會蓋掉故需 patch script。fork/PR upstream 是長期可選
-- **自給自足(stub 禁 import 其他 Cython 模組)**:pyright 無法解析 `.pyx` 依賴鏈;跨模組型別用 `Any`,同模組 `.pxd` 定義的 enum 則直接在 stub 定義
+- **自給自足(stub 禁 import 其他 Cython 模組)**:pyright 無法解析 `.pyx` 依賴鏈;**跨 package** 型別用 `Any`。例外由 generator 自動處理:同 package 且有 co-located `.pyi` 的基底會保留(還原 `Cache(CacheFacade)`/`MarketOrder(Order)`/`CashAccount(Account)` 等繼承,讓下游 `isinstance` narrow 與 LSP 合法)。剩 `class X(Any)` 是跨 package 基底(如 `ExecutionEngine(Component)`)或基底無 `.pyi`(如 `PositionEvent(Event)`,events/base 未 stub)——legitimate。同模組 `.pxd` enum 直接在 stub 定義
+- **同 package 基底保留的實作陷阱**(`make_self_contained.py:_same_package_pyi_exports` + `_pyi_exports`,改這兩函式必讀):(1) package root 須**依名稱**查找 `nautilus_trader` 目錄(`next(p for p in dst.parents if p.name == "nautilus_trader")`),不能硬編碼深度——stub 有 2 層(`cache/cache.pyi`)也有 3 層(`model/orders/market.pyi`);(2) package 比對須走 `Path`(`Path(*"model.orders".split(".")) != dst_pkg_rel`),不能比 dot-form 字串 vs slash-form Path——多層 package 永遠不相等;(3) **只保留 target `.pyi` 實際 export 的 symbol**——incomplete 手寫 stub(如 `model/data.pyi` 沒 re-export `OrderBookDepth10`)會讓整條 import 報 `unknown import symbol`,故須 parse target exports、只保留 exported symbol、其餘 Any。前兩個 bug 曾讓多層 package stub(orders/accounts/instruments)基底沒還原、單層(cache/portfolio)卻正常,DEPTH-MIN(只測單層)測不出來;第三個只在 pyright 全量驗證時浮現(book.pyi)
 - **readonly patch 為何必要**:NT 用 `cdef readonly` 暴露屬性給 Python 讀(`indicator.value`、`cache.has_backing`),未 patch 的 stubgen-pyx 漏掉這些 → 下游讀屬性全報 attr-defined
 - **orchestrator 全 subprocess**:`generate_nt_stubs.py` 不 import 同目錄工具(避免 `sys.path.insert` 觸發 pyright `reportMissingImports`),改用 subprocess 呼叫各 CLI,職責清晰、pyright 零警告

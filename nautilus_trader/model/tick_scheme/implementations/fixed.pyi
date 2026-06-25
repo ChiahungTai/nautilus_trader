@@ -28,7 +28,7 @@ class FixedTickScheme(Any):
     price_precision: int
     increment: Any
 
-    def __init__(self, name: str, price_precision: int, min_tick: Any, max_tick: Any, increment: float | None=None):
+    def __init__(self, name: str, price_precision: int, min_tick: Any, max_tick: Any, increment: float | None | None=None):
         ...
 
     def next_ask_price(self, value: float, n: int=0) -> Any:

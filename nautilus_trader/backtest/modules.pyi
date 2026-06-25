@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.backtest.engine import SimulatedExchange
 
 class SimulationModule(Any):
     """
@@ -9,7 +10,7 @@ class SimulationModule(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    exchange: Any
+    exchange: SimulatedExchange
 
     def __init__(self, config: Any):
         ...
@@ -17,7 +18,7 @@ class SimulationModule(Any):
     def __repr__(self) -> str:
         ...
 
-    def register_venue(self, exchange: Any) -> None:
+    def register_venue(self, exchange: SimulatedExchange) -> None:
         """
         Register the given simulated exchange with the module.
 

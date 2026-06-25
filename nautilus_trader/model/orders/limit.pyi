@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.orders.base import Order
 
-class LimitOrder(Any):
+class LimitOrder(Order):
     """
     Represents a `Limit` order.
 
@@ -130,5 +131,5 @@ class LimitOrder(Any):
         ...
 
     @staticmethod
-    def transform_py(order: Any, ts_init: int, price: Any=None) -> LimitOrder:
+    def transform_py(order: Order, ts_init: int, price: Any=None) -> LimitOrder:
         ...

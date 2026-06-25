@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.events.order import OrderFilled
 
 class PositionEvent(Any):
     """
@@ -188,7 +189,7 @@ class PositionOpened(PositionEvent):
         ...
 
     @staticmethod
-    def create(position: Any, fill: Any, event_id: Any, ts_init: int):
+    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
         """
         Return a position opened event from the given params.
 
@@ -296,7 +297,7 @@ class PositionChanged(PositionEvent):
         ...
 
     @staticmethod
-    def create(position: Any, fill: Any, event_id: Any, ts_init: int):
+    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
         """
         Return a position changed event from the given params.
 
@@ -406,7 +407,7 @@ class PositionClosed(PositionEvent):
         ...
 
     @staticmethod
-    def create(position: Any, fill: Any, event_id: Any, ts_init: int):
+    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
         """
         Return a position closed event from the given params.
 

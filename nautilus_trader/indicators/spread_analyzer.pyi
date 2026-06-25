@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.indicators.base import Indicator
 
-class SpreadAnalyzer(Any):
+class SpreadAnalyzer(Indicator):
     """
     Provides various spread analysis metrics.
 

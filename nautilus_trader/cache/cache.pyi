@@ -1,8 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.cache.facade import CacheDatabaseFacade
 
-class Cache(Any):
+class Cache(CacheFacade):
     """
     Provides a common object cache for market and execution related data.
 
@@ -23,7 +25,7 @@ class Cache(Any):
     tick_capacity: int
     bar_capacity: int
 
-    def __init__(self, database: Any | None=None, config: Any | None=None) -> None:
+    def __init__(self, database: CacheDatabaseFacade | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def set_specific_venue(self, venue: Any) -> None:

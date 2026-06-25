@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.orders.base import Order
 
-class MarketToLimitOrder(Any):
+class MarketToLimitOrder(Order):
     """
     Represents a `Market-To-Limit` (MTL) order.
 

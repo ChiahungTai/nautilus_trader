@@ -2,8 +2,9 @@
 from typing import Any, Callable
 from decimal import Decimal
 import pandas as pd
+from nautilus_trader.model.instruments.base import Instrument
 
-class CryptoFuture(Any):
+class CryptoFuture(Instrument):
     """
     Represents a deliverable futures contract instrument, with crypto assets
     as underlying and for settlement.
@@ -107,7 +108,7 @@ class CryptoFuture(Any):
     activation_ns: int
     expiration_ns: int
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, underlying: Any, quote_currency: Any, settlement_currency: Any, is_inverse: bool, activation_ns: int, expiration_ns: int, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, multiplier=..., lot_size=..., max_quantity: Any | None=None, min_quantity: Any | None=None, max_notional: Any | None=None, min_notional: Any | None=None, max_price: Any | None=None, min_price: Any | None=None, margin_init: Decimal | None=None, margin_maint: Decimal | None=None, maker_fee: Decimal | None=None, taker_fee: Decimal | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: Any, raw_symbol: Any, underlying: Any, quote_currency: Any, settlement_currency: Any, is_inverse: bool, activation_ns: int, expiration_ns: int, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, multiplier=..., lot_size=..., max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     def __repr__(self) -> str:

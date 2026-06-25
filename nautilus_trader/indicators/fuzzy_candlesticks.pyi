@@ -1,5 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.indicators.base import Indicator
+from nautilus_trader.indicators.fuzzy_enums import CandleBodySize, CandleDirection, CandleSize, CandleWickSize
 
 class FuzzyCandle:
     """
@@ -18,13 +20,13 @@ class FuzzyCandle:
     lower_wick_size : CandleWickSize
         The candle fuzzy lower wick size.
     """
-    direction: Any
-    size: Any
-    body_size: Any
-    upper_wick_size: Any
-    lower_wick_size: Any
+    direction: CandleDirection
+    size: CandleSize
+    body_size: CandleBodySize
+    upper_wick_size: CandleWickSize
+    lower_wick_size: CandleWickSize
 
-    def __init__(self, direction: Any, size: Any, body_size: Any, upper_wick_size: Any, lower_wick_size: Any):
+    def __init__(self, direction: CandleDirection, size: CandleSize, body_size: CandleBodySize, upper_wick_size: CandleWickSize, lower_wick_size: CandleWickSize):
         ...
 
     def __eq__(self, other: FuzzyCandle) -> bool:
@@ -36,7 +38,7 @@ class FuzzyCandle:
     def __repr__(self) -> str:
         ...
 
-class FuzzyCandlesticks(Any):
+class FuzzyCandlesticks(Indicator):
     """
     An indicator which fuzzifies bar data to produce fuzzy candlesticks.
     Bar data is dimensionally reduced via fuzzy feature extraction.

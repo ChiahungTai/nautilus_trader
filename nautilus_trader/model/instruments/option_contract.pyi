@@ -2,8 +2,9 @@
 from typing import Any, Callable
 from decimal import Decimal
 import pandas as pd
+from nautilus_trader.model.instruments.base import Instrument
 
-class OptionContract(Any):
+class OptionContract(Instrument):
     """
     Represents a generic option contract instrument.
 
@@ -79,7 +80,7 @@ class OptionContract(Any):
     activation_ns: int
     expiration_ns: int
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, currency: Any, price_precision: int, price_increment: Any, multiplier: Any, lot_size: Any, underlying: str, option_kind: Any, strike_price: Any, activation_ns: int, expiration_ns: int, ts_event: int, ts_init: int, margin_init: Decimal | None=None, margin_maint: Decimal | None=None, maker_fee: Decimal | None=None, taker_fee: Decimal | None=None, exchange: str | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, currency: Any, price_precision: int, price_increment: Any, multiplier: Any, lot_size: Any, underlying: str, option_kind: Any, strike_price: Any, activation_ns: int, expiration_ns: int, ts_event: int, ts_init: int, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, exchange: str | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     def __repr__(self) -> str:

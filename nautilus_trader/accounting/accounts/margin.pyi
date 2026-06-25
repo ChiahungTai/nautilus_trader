@@ -1,9 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 '\nA margin account capable of holding leveraged positions and tracking instrument-specific\nleverage ratios.\n\nPnL calculation\n---------------\nThe account calculates PnL differently based on instrument type:\n\n- **Premium instruments** (options, option spreads, binary options, warrants): Realize\n  the notional value as a cash flow on every fill. BUY = negative (premium paid),\n  SELL = positive (premium received).\n\n- **Other instruments**: Only realize PnL on position reduction (fill side opposite to\n  entry). Use the minimum of fill and position quantity to avoid double-counting.\n\n'
 from decimal import Decimal
+from nautilus_trader.accounting.accounts.base import Account
 
-class MarginAccount(Any):
+class MarginAccount(Account):
     """
     Provides a margin account.
 
@@ -532,7 +533,7 @@ class MarginAccount(Any):
 
         """
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None=None) -> list:
+    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
         """
         Return the calculated PnL.
 

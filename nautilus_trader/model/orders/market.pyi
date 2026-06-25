@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.orders.base import Order
 
-class MarketOrder(Any):
+class MarketOrder(Order):
     """
     Represents a `Market` order.
 
@@ -101,5 +102,5 @@ class MarketOrder(Any):
         ...
 
     @staticmethod
-    def transform_py(order: Any, ts_init: int) -> MarketOrder:
+    def transform_py(order: Order, ts_init: int) -> MarketOrder:
         ...

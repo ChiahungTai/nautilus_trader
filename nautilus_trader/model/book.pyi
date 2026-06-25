@@ -1,5 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.data import BookOrder, OrderBookDelta, OrderBookDeltas, QuoteTick, TradeTick
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.objects import Price, Quantity
 
 class OrderBook(Any):
     """
@@ -14,7 +17,7 @@ class OrderBook(Any):
 
     """
 
-    def __init__(self, instrument_id: Any, book_type: Any) -> None:
+    def __init__(self, instrument_id: InstrumentId, book_type: Any) -> None:
         ...
 
     def __del__(self) -> None:
@@ -30,7 +33,7 @@ class OrderBook(Any):
         ...
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         Return the books instrument ID.
 
@@ -111,7 +114,7 @@ class OrderBook(Any):
         Reset the order book (clear all stateful values).
         """
 
-    def add(self, order: Any, ts_event: int, flags: int=0, sequence: int=0) -> None:
+    def add(self, order: BookOrder, ts_event: int, flags: int=0, sequence: int=0) -> None:
         """
         Add the given order to the book.
 
@@ -133,7 +136,7 @@ class OrderBook(Any):
 
         """
 
-    def update(self, order: Any, ts_event: int, flags: int=0, sequence: int=0) -> None:
+    def update(self, order: BookOrder, ts_event: int, flags: int=0, sequence: int=0) -> None:
         """
         Update the given order in the book.
 
@@ -150,7 +153,7 @@ class OrderBook(Any):
 
         """
 
-    def delete(self, order: Any, ts_event: int, flags: int=0, sequence: int=0) -> None:
+    def delete(self, order: BookOrder, ts_event: int, flags: int=0, sequence: int=0) -> None:
         """
         Cancel the given order in the book.
 
@@ -182,7 +185,7 @@ class OrderBook(Any):
         Clear the asks from the order book.
         """
 
-    def apply_delta(self, delta: Any) -> None:
+    def apply_delta(self, delta: OrderBookDelta) -> None:
         """
         Apply the order book delta.
 
@@ -198,7 +201,7 @@ class OrderBook(Any):
 
         """
 
-    def apply_deltas(self, deltas: Any) -> None:
+    def apply_deltas(self, deltas: OrderBookDeltas) -> None:
         """
         Apply the bulk deltas to the order book.
 
@@ -327,7 +330,7 @@ class OrderBook(Any):
 
         """
 
-    def get_avg_px_for_quantity(self, quantity: Any, order_side: Any) -> float:
+    def get_avg_px_for_quantity(self, quantity: Quantity, order_side: Any) -> float:
         """
         Return the average price expected for the given `quantity` based on the current state
         of the order book.
@@ -354,7 +357,7 @@ class OrderBook(Any):
 
         """
 
-    def get_worst_px_for_quantity(self, quantity: Any, order_side: Any):
+    def get_worst_px_for_quantity(self, quantity: Quantity, order_side: Any):
         """
         Return the worst (last-touched) price required to fill the given `quantity`
         based on the current state of the order book.
@@ -381,7 +384,7 @@ class OrderBook(Any):
 
         """
 
-    def get_quantity_for_price(self, price: Any, order_side: Any) -> float:
+    def get_quantity_for_price(self, price: Price, order_side: Any) -> float:
         """
         Return the cumulative quantity at or better than the given `price`.
 
@@ -406,7 +409,7 @@ class OrderBook(Any):
 
         """
 
-    def get_quantity_at_level(self, price: Any, order_side: Any, size_precision: int) -> Any:
+    def get_quantity_at_level(self, price: Price, order_side: Any, size_precision: int) -> Quantity:
         """
         Return the quantity at a specific price level only.
 
@@ -450,7 +453,7 @@ class OrderBook(Any):
 
         """
 
-    def get_all_crossed_levels(self, order_side: Any, price: Any, size_prec: int) -> list:
+    def get_all_crossed_levels(self, order_side: Any, price: Price, size_prec: int) -> list:
         """
         Return all price levels that would be crossed by an order at the given price.
 
@@ -473,7 +476,7 @@ class OrderBook(Any):
 
         """
 
-    def update_quote_tick(self, tick: Any) -> None:
+    def update_quote_tick(self, tick: QuoteTick) -> None:
         """
         Update the order book with the given quote tick.
 
@@ -491,7 +494,7 @@ class OrderBook(Any):
 
         """
 
-    def update_trade_tick(self, tick: Any) -> None:
+    def update_trade_tick(self, tick: TradeTick) -> None:
         """
         Update the order book with the given trade tick.
 
@@ -507,7 +510,7 @@ class OrderBook(Any):
 
         """
 
-    def to_quote_tick(self) -> Any:
+    def to_quote_tick(self) -> QuoteTick:
         """
         Return a `QuoteTick` created from the top of book levels.
 
@@ -520,7 +523,7 @@ class OrderBook(Any):
 
         """
 
-    def to_deltas_c(self, ts_event: int, ts_init: int) -> Any:
+    def to_deltas_c(self, ts_event: int, ts_init: int) -> OrderBookDeltas:
         ...
 
     def pprint(self, num_levels: int=3) -> str:
@@ -592,7 +595,7 @@ class BookLevel:
         """
 
     @property
-    def price(self) -> Any:
+    def price(self) -> Price:
         """
         Return the price for the level.
 

@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.serialization.base import Serializer
 
-class MsgSpecSerializer(Any):
+class MsgSpecSerializer(Serializer):
     """
     Provides a serializer for either the 'MessagePack' or 'JSON' specifications.
 

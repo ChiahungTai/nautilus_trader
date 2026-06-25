@@ -3,6 +3,8 @@ from typing import Any, Callable, Generator
 '\nThe `DataEngine` is the central component of the entire data stack.\n\nThe data engines primary responsibility is to orchestrate interactions between\nthe `DataClient` instances, and the rest of the platform. This includes sending\nrequests to, and receiving responses from, data endpoints via its registered\ndata clients.\n\nThe engine employs a simple fan-in fan-out messaging pattern to execute\n`DataCommand` type messages, and process `DataResponse` messages or market data\nobjects.\n\nAlternative implementations can be written on top of the generic engine - which\njust need to override the `execute`, `process`, `send` and `receive` methods.\n'
 from dataclasses import dataclass
 from datetime import datetime
+from nautilus_trader.data.client import DataClient
+from nautilus_trader.data.messages import DataCommand, DataResponse, RequestData
 TimeRangeGenerator = Callable[[int, dict[str, Any]], Generator[int, bool, None]]
 
 class DataEngine(Any):
@@ -53,7 +55,7 @@ class DataEngine(Any):
         """
 
     @property
-    def routing_map(self) -> dict[Any, Any]:
+    def routing_map(self) -> dict[Any, DataClient]:
         """
         Return the default data client registered with the engine.
 
@@ -118,7 +120,7 @@ class DataEngine(Any):
 
         """
 
-    def register_client(self, client: Any) -> None:
+    def register_client(self, client: DataClient) -> None:
         """
         Register the given data client with the data engine.
 
@@ -134,7 +136,7 @@ class DataEngine(Any):
 
         """
 
-    def register_default_client(self, client: Any) -> None:
+    def register_default_client(self, client: DataClient) -> None:
         """
         Register the given client as the default routing client (when a specific
         venue routing cannot be found).
@@ -148,7 +150,7 @@ class DataEngine(Any):
 
         """
 
-    def register_venue_routing(self, client: Any, venue: Any) -> None:
+    def register_venue_routing(self, client: DataClient, venue: Any) -> None:
         """
         Register the given client to route messages to the given venue.
 
@@ -164,7 +166,7 @@ class DataEngine(Any):
 
         """
 
-    def deregister_client(self, client: Any) -> None:
+    def deregister_client(self, client: DataClient) -> None:
         """
         Deregister the given data client from the data engine.
 
@@ -330,7 +332,7 @@ class DataEngine(Any):
         Stop the registered clients.
         """
 
-    def execute(self, command: Any) -> None:
+    def execute(self, command: DataCommand) -> None:
         """
         Execute the given data command.
 
@@ -362,7 +364,7 @@ class DataEngine(Any):
             The historical data to process.
         """
 
-    def request(self, request: Any) -> None:
+    def request(self, request: RequestData) -> None:
         """
         Handle the given request.
 
@@ -373,7 +375,7 @@ class DataEngine(Any):
 
         """
 
-    def response(self, response: Any) -> None:
+    def response(self, response: DataResponse) -> None:
         """
         Handle the given response.
 
@@ -419,7 +421,7 @@ def register_time_range_generator(name: str, function: TimeRangeGenerator):
 def get_time_range_generator(name: str):
     ...
 
-def default_time_range_generator(request: Any):
+def default_time_range_generator(request: RequestData):
     """
     Generator that yields (request_start_ns, request_end_ns) tuples for subrequests.
 

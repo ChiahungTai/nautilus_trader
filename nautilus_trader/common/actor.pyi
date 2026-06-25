@@ -4,8 +4,9 @@ from typing import Any, Callable
 import asyncio
 from concurrent.futures import Executor
 from datetime import datetime
+from nautilus_trader.common.component import Clock, Component, Logger, MessageBus
 
-class Actor(Any):
+class Actor(Component):
     """
     The base class for all actor components.
 
@@ -26,9 +27,9 @@ class Actor(Any):
     """
     portfolio: Any
     config: Any
-    clock: Any
-    log: Any
-    msgbus: Any
+    clock: Clock
+    log: Logger
+    msgbus: MessageBus
     cache: Any
     greeks: Any
 
@@ -498,7 +499,7 @@ class Actor(Any):
 
         """
 
-    def register_base(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any) -> None:
+    def register_base(self, portfolio: Any, msgbus: MessageBus, cache: Any, clock: Clock) -> None:
         """
         Register with a trader.
 

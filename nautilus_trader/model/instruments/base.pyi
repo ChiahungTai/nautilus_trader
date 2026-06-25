@@ -132,7 +132,7 @@ class Instrument(Any):
     ts_event: int
     ts_init: int
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, instrument_class: Any, quote_currency: Any, is_inverse: bool, price_precision: int, size_precision: int, size_increment: Any, multiplier: Any, margin_init: Decimal, margin_maint: Decimal, maker_fee: Decimal, taker_fee: Decimal, ts_event: int, ts_init: int, price_increment: Any | None=None, lot_size: Any | None=None, max_quantity: Any | None=None, min_quantity: Any | None=None, max_notional: Any | None=None, min_notional: Any | None=None, max_price: Any | None=None, min_price: Any | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, instrument_class: Any, quote_currency: Any, is_inverse: bool, price_precision: int, size_precision: int, size_increment: Any, multiplier: Any, margin_init: Decimal, margin_maint: Decimal, maker_fee: Decimal, taker_fee: Decimal, ts_event: int, ts_init: int, price_increment: Any | None | None=None, lot_size: Any | None | None=None, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     def __eq__(self, other: Instrument) -> bool:

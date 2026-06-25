@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.data.messages import RequestBars, RequestData, RequestForwardPrices, RequestFundingRates, RequestInstrument, RequestInstruments, RequestOrderBookDeltas, RequestOrderBookSnapshot, RequestQuoteTicks, RequestTradeTicks, SubscribeBars, SubscribeData, SubscribeFundingRates, SubscribeIndexPrices, SubscribeInstrument, SubscribeInstrumentClose, SubscribeInstruments, SubscribeInstrumentStatus, SubscribeMarkPrices, SubscribeOptionGreeks, SubscribeOrderBook, SubscribeQuoteTicks, SubscribeTradeTicks, UnsubscribeBars, UnsubscribeData, UnsubscribeFundingRates, UnsubscribeIndexPrices, UnsubscribeInstrument, UnsubscribeInstrumentClose, UnsubscribeInstruments, UnsubscribeInstrumentStatus, UnsubscribeMarkPrices, UnsubscribeOptionGreeks, UnsubscribeOrderBook, UnsubscribeQuoteTicks, UnsubscribeTradeTicks
 
 class DataClient(Any):
     """
@@ -41,7 +42,7 @@ class DataClient(Any):
 
         """
 
-    def subscribe(self, command: Any) -> None:
+    def subscribe(self, command: SubscribeData) -> None:
         """
         Subscribe to data for the given data type.
 
@@ -52,7 +53,7 @@ class DataClient(Any):
 
         """
 
-    def unsubscribe(self, command: Any) -> None:
+    def unsubscribe(self, command: UnsubscribeData) -> None:
         """
         Unsubscribe from data for the given data type.
 
@@ -63,7 +64,7 @@ class DataClient(Any):
 
         """
 
-    def request(self, request: Any) -> None:
+    def request(self, request: RequestData) -> None:
         """
         Request data for the given data type.
 
@@ -231,7 +232,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe(self, command: Any) -> None:
+    def subscribe(self, command: SubscribeData) -> None:
         """
         Subscribe to data for the given data type.
 
@@ -244,7 +245,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_instruments(self, command: Any) -> None:
+    def subscribe_instruments(self, command: SubscribeInstruments) -> None:
         """
         Subscribe to all `Instrument` data.
 
@@ -255,7 +256,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_instrument(self, command: Any) -> None:
+    def subscribe_instrument(self, command: SubscribeInstrument) -> None:
         """
         Subscribe to the `Instrument` with the given instrument ID.
 
@@ -266,7 +267,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_order_book_deltas(self, command: Any) -> None:
+    def subscribe_order_book_deltas(self, command: SubscribeOrderBook) -> None:
         """
         Subscribe to `OrderBookDeltas` data for the given instrument ID.
 
@@ -283,7 +284,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_order_book_depth(self, command: Any) -> None:
+    def subscribe_order_book_depth(self, command: SubscribeOrderBook) -> None:
         """
         Subscribe to `OrderBookDepth10` data for the given instrument ID.
 
@@ -298,7 +299,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_quote_ticks(self, command: Any) -> None:
+    def subscribe_quote_ticks(self, command: SubscribeQuoteTicks) -> None:
         """
         Subscribe to `QuoteTick` data for the given instrument ID.
 
@@ -311,7 +312,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_trade_ticks(self, command: Any) -> None:
+    def subscribe_trade_ticks(self, command: SubscribeTradeTicks) -> None:
         """
         Subscribe to `TradeTick` data for the given instrument ID.
 
@@ -324,7 +325,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_mark_prices(self, command: Any) -> None:
+    def subscribe_mark_prices(self, command: SubscribeMarkPrices) -> None:
         """
         Subscribe to `MarkPriceUpdate` data for the given instrument ID.
 
@@ -337,7 +338,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_index_prices(self, command: Any) -> None:
+    def subscribe_index_prices(self, command: SubscribeIndexPrices) -> None:
         """
         Subscribe to `IndexPriceUpdate` data for the given instrument ID.
 
@@ -350,7 +351,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_funding_rates(self, command: Any) -> None:
+    def subscribe_funding_rates(self, command: SubscribeFundingRates) -> None:
         """
         Subscribe to `FundingRateUpdate` data for the given instrument ID.
 
@@ -363,7 +364,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_instrument_status(self, command: Any) -> None:
+    def subscribe_instrument_status(self, command: SubscribeInstrumentStatus) -> None:
         """
         Subscribe to `InstrumentStatus` data for the given instrument ID.
 
@@ -376,7 +377,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_instrument_close(self, command: Any) -> None:
+    def subscribe_instrument_close(self, command: SubscribeInstrumentClose) -> None:
         """
         Subscribe to `InstrumentClose` updates for the given instrument ID.
 
@@ -389,7 +390,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_option_greeks(self, command: Any) -> None:
+    def subscribe_option_greeks(self, command: SubscribeOptionGreeks) -> None:
         """
         Subscribe to `OptionGreeks` data for the given instrument ID.
 
@@ -400,7 +401,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def subscribe_bars(self, command: Any) -> None:
+    def subscribe_bars(self, command: SubscribeBars) -> None:
         """
         Subscribe to `Bar` data for the given bar type.
 
@@ -413,7 +414,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe(self, command: Any) -> None:
+    def unsubscribe(self, command: UnsubscribeData) -> None:
         """
         Unsubscribe from data for the given data type.
 
@@ -426,7 +427,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_instruments(self, command: Any) -> None:
+    def unsubscribe_instruments(self, command: UnsubscribeInstruments) -> None:
         """
         Unsubscribe from all `Instrument` data.
 
@@ -437,7 +438,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_instrument(self, command: Any) -> None:
+    def unsubscribe_instrument(self, command: UnsubscribeInstrument) -> None:
         """
         Unsubscribe from `Instrument` data for the given instrument ID.
 
@@ -450,7 +451,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_order_book_deltas(self, command: Any) -> None:
+    def unsubscribe_order_book_deltas(self, command: UnsubscribeOrderBook) -> None:
         """
         Unsubscribe from `OrderBookDeltas` data for the given instrument ID.
 
@@ -463,7 +464,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_order_book_depth(self, command: Any) -> None:
+    def unsubscribe_order_book_depth(self, command: UnsubscribeOrderBook) -> None:
         """
         Unsubscribe from `OrderBookDepth10` data for the given instrument ID.
 
@@ -476,7 +477,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_quote_ticks(self, command: Any) -> None:
+    def unsubscribe_quote_ticks(self, command: UnsubscribeQuoteTicks) -> None:
         """
         Unsubscribe from `QuoteTick` data for the given instrument ID.
 
@@ -489,7 +490,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_trade_ticks(self, command: Any) -> None:
+    def unsubscribe_trade_ticks(self, command: UnsubscribeTradeTicks) -> None:
         """
         Unsubscribe from `TradeTick` data for the given instrument ID.
 
@@ -502,7 +503,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_mark_prices(self, command: Any) -> None:
+    def unsubscribe_mark_prices(self, command: UnsubscribeMarkPrices) -> None:
         """
         Unsubscribe from `MarkPriceUpdate` data for the given instrument ID.
 
@@ -515,7 +516,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_index_prices(self, command: Any) -> None:
+    def unsubscribe_index_prices(self, command: UnsubscribeIndexPrices) -> None:
         """
         Unsubscribe from `IndexPriceUpdate` data for the given instrument ID.
 
@@ -528,7 +529,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_funding_rates(self, command: Any) -> None:
+    def unsubscribe_funding_rates(self, command: UnsubscribeFundingRates) -> None:
         """
         Unsubscribe from `FundingRateUpdate` data for the given instrument ID.
 
@@ -541,7 +542,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_bars(self, command: Any) -> None:
+    def unsubscribe_bars(self, command: UnsubscribeBars) -> None:
         """
         Unsubscribe from `Bar` data for the given bar type.
 
@@ -554,7 +555,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_instrument_status(self, command: Any) -> None:
+    def unsubscribe_instrument_status(self, command: UnsubscribeInstrumentStatus) -> None:
         """
         Unsubscribe from `InstrumentStatus` data for the given instrument ID.
 
@@ -567,7 +568,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_instrument_close(self, command: Any) -> None:
+    def unsubscribe_instrument_close(self, command: UnsubscribeInstrumentClose) -> None:
         """
         Unsubscribe from `InstrumentClose` data for the given instrument ID.
 
@@ -580,7 +581,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def unsubscribe_option_greeks(self, command: Any) -> None:
+    def unsubscribe_option_greeks(self, command: UnsubscribeOptionGreeks) -> None:
         """
         Unsubscribe from `OptionGreeks` data for the given instrument ID.
 
@@ -591,7 +592,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_instrument(self, request: Any) -> None:
+    def request_instrument(self, request: RequestInstrument) -> None:
         """
         Request `Instrument` data for the given instrument ID.
 
@@ -602,7 +603,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_instruments(self, request: Any) -> None:
+    def request_instruments(self, request: RequestInstruments) -> None:
         """
         Request all `Instrument` data for the given venue.
 
@@ -613,7 +614,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_order_book_deltas(self, request: Any) -> None:
+    def request_order_book_deltas(self, request: RequestOrderBookDeltas) -> None:
         """
         Request historical `OrderBookDeltas` data.
 
@@ -624,7 +625,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_order_book_snapshot(self, request: Any) -> None:
+    def request_order_book_snapshot(self, request: RequestOrderBookSnapshot) -> None:
         """
         Request order book snapshot data.
 
@@ -635,7 +636,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_quote_ticks(self, request: Any) -> None:
+    def request_quote_ticks(self, request: RequestQuoteTicks) -> None:
         """
         Request historical `QuoteTick` data.
 
@@ -646,7 +647,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_trade_ticks(self, request: Any) -> None:
+    def request_trade_ticks(self, request: RequestTradeTicks) -> None:
         """
         Request historical `TradeTick` data.
 
@@ -657,7 +658,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_funding_rates(self, request: Any) -> None:
+    def request_funding_rates(self, request: RequestFundingRates) -> None:
         """
         Request historical `FundingRateUpdate` data.
 
@@ -668,7 +669,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_bars(self, request: Any) -> None:
+    def request_bars(self, request: RequestBars) -> None:
         """
         Request historical `Bar` data. To load historical data from a catalog, you can pass a list[DataCatalogConfig] to the TradingNodeConfig or the BacktestEngineConfig.
 
@@ -679,7 +680,7 @@ class MarketDataClient(DataClient):
 
         """
 
-    def request_forward_prices(self, request: Any) -> None:
+    def request_forward_prices(self, request: RequestForwardPrices) -> None:
         """
         Request forward prices for option chain ATM determination.
 

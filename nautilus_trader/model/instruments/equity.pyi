@@ -1,8 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.instruments.base import Instrument
 
-class Equity(Any):
+class Equity(Instrument):
     """
     Represents a generic equity instrument.
 
@@ -57,11 +58,11 @@ class Equity(Any):
     """
     isin: str
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, currency: Any, price_precision: int, price_increment: Any, lot_size: Any, ts_event: int, ts_init: int, max_quantity: Any | None=None, min_quantity: Any | None=None, margin_init: Decimal | None=None, margin_maint: Decimal | None=None, maker_fee: Decimal | None=None, taker_fee: Decimal | None=None, isin: str | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: Any, raw_symbol: Any, currency: Any, price_precision: int, price_increment: Any, lot_size: Any, ts_event: int, ts_init: int, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, isin: str | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod
-    def from_dict(values: dict) -> Any:
+    def from_dict(values: dict) -> Instrument:
         """
         Return an instrument from the given initialization values.
 
@@ -77,7 +78,7 @@ class Equity(Any):
         """
 
     @staticmethod
-    def to_dict(obj: Any) -> dict[str, object]:
+    def to_dict(obj: Instrument) -> dict[str, object]:
         """
         Return a dictionary representation of this object.
 

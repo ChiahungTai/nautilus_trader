@@ -1,8 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.orders.base import Order
 
-class TrailingStopMarketOrder(Any):
+class TrailingStopMarketOrder(Order):
     """
     Represents a `Trailing-Stop-Market` conditional order.
 
@@ -90,7 +91,7 @@ class TrailingStopMarketOrder(Any):
     expire_time_ns: int
     is_activated: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, trigger_price: Any | None, trigger_type: Any, trailing_offset: Decimal, trailing_offset_type: Any, init_id: Any, ts_init: int, activation_price: Any | None=None, time_in_force: Any=..., expire_time_ns: int=0, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, trigger_price: Any | None, trigger_type: Any, trailing_offset: Decimal, trailing_offset_type: Any, init_id: Any, ts_init: int, activation_price: Any | None | None=None, time_in_force: Any=..., expire_time_ns: int=0, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None):
         ...
 
     @property

@@ -1,7 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.instruments.base import Instrument
 
-class IndexInstrument(Any):
+class IndexInstrument(Instrument):
     """
     Represents a **spot index** instrument (also known as a **cash index**).
 
@@ -55,7 +56,7 @@ class IndexInstrument(Any):
         ...
 
     @staticmethod
-    def from_dict(values: dict) -> Any:
+    def from_dict(values: dict) -> Instrument:
         """
         Return an instrument from the given initialization values.
 
@@ -71,7 +72,7 @@ class IndexInstrument(Any):
         """
 
     @staticmethod
-    def to_dict(obj: Any) -> dict[str, object]:
+    def to_dict(obj: Instrument) -> dict[str, object]:
         """
         Return a dictionary representation of this object.
 

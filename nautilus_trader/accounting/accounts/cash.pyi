@@ -1,8 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 '\nA cash account that cannot hold leveraged positions.\n\nBalance locking\n---------------\nThe account tracks locked balances per (InstrumentId, Currency) to support\ninstruments that lock different currencies depending on order side:\n\n- BUY orders lock quote currency (cost of purchase).\n- SELL orders lock base currency (assets being sold).\n\nCallers must clear all existing locks via `clear_balance_locked` before applying\nnew locks. This prevents stale currency entries when order compositions change.\n\nGraceful degradation\n--------------------\nWhen total locked exceeds total balance (e.g., due to venue/client state latency),\nthe account clamps locked to total rather than raising an error. This yields zero\nfree balance, preventing new orders while avoiding crashes in live trading.\n\n'
+from nautilus_trader.accounting.accounts.base import Account
 
-class CashAccount(Any):
+class CashAccount(Account):
     """
     Provides a cash account.
 
@@ -166,7 +167,7 @@ class CashAccount(Any):
 
         """
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None=None) -> list:
+    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
         """
         Return the calculated PnL.
 

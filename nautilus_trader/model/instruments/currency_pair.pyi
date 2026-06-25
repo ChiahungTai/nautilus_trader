@@ -1,8 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.instruments.base import Instrument
 
-class CurrencyPair(Any):
+class CurrencyPair(Instrument):
     """
     Represents a generic currency pair instrument in a spot/cash market.
 
@@ -97,7 +98,7 @@ class CurrencyPair(Any):
     """
     base_currency: Any
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, base_currency: Any, quote_currency: Any, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, multiplier=..., lot_size: Any | None=None, max_quantity: Any | None=None, min_quantity: Any | None=None, max_notional: Any | None=None, min_notional: Any | None=None, max_price: Any | None=None, min_price: Any | None=None, margin_init: Decimal | None=None, margin_maint: Decimal | None=None, maker_fee: Decimal | None=None, taker_fee: Decimal | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: Any, raw_symbol: Any, base_currency: Any, quote_currency: Any, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, multiplier=..., lot_size: Any | None | None=None, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     def get_base_currency(self) -> Any:

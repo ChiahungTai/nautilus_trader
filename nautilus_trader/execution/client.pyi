@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.execution.messages import BatchCancelOrders, CancelAllOrders, CancelOrder, ModifyOrder, QueryAccount, QueryOrder, SubmitOrder, SubmitOrderList
 
 class ExecutionClient(Any):
     """
@@ -84,7 +85,7 @@ class ExecutionClient(Any):
 
         """
 
-    def submit_order(self, command: Any) -> None:
+    def submit_order(self, command: SubmitOrder) -> None:
         """
         Submit the order contained in the given command for execution.
 
@@ -95,7 +96,7 @@ class ExecutionClient(Any):
 
         """
 
-    def submit_order_list(self, command: Any) -> None:
+    def submit_order_list(self, command: SubmitOrderList) -> None:
         """
         Submit the order list contained in the given command for execution.
 
@@ -106,7 +107,7 @@ class ExecutionClient(Any):
 
         """
 
-    def modify_order(self, command: Any) -> None:
+    def modify_order(self, command: ModifyOrder) -> None:
         """
         Modify the order with parameters contained in the command.
 
@@ -117,7 +118,7 @@ class ExecutionClient(Any):
 
         """
 
-    def cancel_order(self, command: Any) -> None:
+    def cancel_order(self, command: CancelOrder) -> None:
         """
         Cancel the order with the client order ID contained in the given command.
 
@@ -128,7 +129,7 @@ class ExecutionClient(Any):
 
         """
 
-    def cancel_all_orders(self, command: Any) -> None:
+    def cancel_all_orders(self, command: CancelAllOrders) -> None:
         """
         Cancel all orders for the instrument ID contained in the given command.
 
@@ -139,7 +140,7 @@ class ExecutionClient(Any):
 
         """
 
-    def batch_cancel_orders(self, command: Any) -> None:
+    def batch_cancel_orders(self, command: BatchCancelOrders) -> None:
         """
         Batch cancel orders for the instrument ID contained in the given command.
 
@@ -150,7 +151,7 @@ class ExecutionClient(Any):
 
         """
 
-    def query_account(self, command: Any) -> None:
+    def query_account(self, command: QueryAccount) -> None:
         """
         Query the account specified by the command which will generate an `AccountState` event.
 
@@ -161,7 +162,7 @@ class ExecutionClient(Any):
 
         """
 
-    def query_order(self, command: Any) -> None:
+    def query_order(self, command: QueryOrder) -> None:
         """
         Initiate a reconciliation for the queried order which will generate an
         `OrderStatusReport`.
