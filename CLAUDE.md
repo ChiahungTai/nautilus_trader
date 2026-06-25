@@ -22,7 +22,7 @@ NT 有 `py.typed` marker，pyright 優先從原始碼目錄讀型別（`stubPath
 
 **為什麼這樣設計**：Upstream 從未建立 `.pyi`，rebase 零衝突。比起修改 `pyrightconfig.json`（upstream 可能覆蓋），inline stub 更持久。
 
-**Stub 自給自足約束**：禁止 import 其他 Cython 模組（整條依賴鏈都是 .pyx，pyright 無法解析）。**跨 package** 型別用 `Any`。唯一例外：同 package 且有 co-located `.pyi` 的基底由 generator（`make_self_contained.py`）自動保留，還原真實繼承（`Cache(CacheFacade)`、`MarketOrder(Order)` 等）讓下游 `isinstance` narrow 與 LSP 合法。剩 `class X(Any)` 是跨 package 基底或基底無 `.pyi`（legitimate）。
+**Stub 型別保留（已放寬自給自足）**：generator（`make_self_contained.py`）保留所有有 deployed `.pyi` 的 module 的 cross-package 型別（不限 same-package）——還原繼承 + 精確回傳（`Cache(CacheFacade)`、`order() -> Order | None` 等）。無 `.pyi` 的依賴仍用 `Any`。代價：stub 間 cross-package 互依，靠 export-filtering + 整批部署（`make n`）控制。詳見 `scripts/lsp_stubs/README.md`。
 
 **已覆蓋模組**：model/objects, model/data, model/identifiers, trading/strategy, core/correctness, persistence/wranglers, indicators/{averages,momentum,trend,volatility,volume}
 
