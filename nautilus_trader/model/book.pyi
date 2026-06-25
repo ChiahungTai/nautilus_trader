@@ -1,10 +1,12 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.data import Data
 from nautilus_trader.model.data import BookOrder, OrderBookDelta, OrderBookDeltas, QuoteTick, TradeTick
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.objects import Price, Quantity
+from nautilus_trader.model.orders.base import Order
 
-class OrderBook(Any):
+class OrderBook(Data):
     """
     Provides an order book which can handle L1/L2/L3 granularity data.
 
@@ -223,7 +225,7 @@ class OrderBook(Any):
 
         """
 
-    def apply(self, data: Any) -> None:
+    def apply(self, data: Data) -> None:
         """
         Apply the given data to the order book.
 
@@ -436,7 +438,7 @@ class OrderBook(Any):
 
         """
 
-    def simulate_fills(self, order: Any, price_prec: int, size_prec: int, is_aggressive: bool) -> list:
+    def simulate_fills(self, order: Order, price_prec: int, size_prec: int, is_aggressive: bool) -> list:
         """
         Simulate filling the book with the given order.
 
@@ -510,7 +512,7 @@ class OrderBook(Any):
 
         """
 
-    def to_quote_tick(self) -> QuoteTick:
+    def to_quote_tick(self) -> QuoteTick | None:
         """
         Return a `QuoteTick` created from the top of book levels.
 
@@ -635,5 +637,5 @@ class BookLevel:
 
         """
 
-def py_should_handle_own_book_order(order: Any) -> bool:
+def py_should_handle_own_book_order(order: Order) -> bool:
     ...

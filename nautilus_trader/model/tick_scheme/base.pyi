@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.objects import Price
 
 class TickScheme:
     """
@@ -22,13 +23,13 @@ class TickScheme:
         If `name` is not a valid string.
     """
     name: str
-    min_price: Any
-    max_price: Any
+    min_price: Price
+    max_price: Price
 
-    def __init__(self, name: str, min_tick: Any, max_tick: Any) -> None:
+    def __init__(self, name: str, min_tick: Price, max_tick: Price) -> None:
         ...
 
-    def next_ask_price(self, value: float, n: int=0) -> Any:
+    def next_ask_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` ask ticks away from value.
 
@@ -47,7 +48,7 @@ class TickScheme:
 
         """
 
-    def next_bid_price(self, value: float, n: int=0) -> Any:
+    def next_bid_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` bid ticks away from value.
 

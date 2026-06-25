@@ -1,8 +1,20 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.accounting.accounts.base import Account
 from nautilus_trader.cache.base import CacheFacade
 from nautilus_trader.cache.facade import CacheDatabaseFacade
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.model.book import OrderBook
+from nautilus_trader.model.data import Bar, BarType, InstrumentStatus, QuoteTick, TradeTick
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, ExecAlgorithmId, InstrumentId, OrderListId, PositionId, StrategyId, Venue, VenueOrderId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.instruments.synthetic import SyntheticInstrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.orders.list import OrderList
+from nautilus_trader.model.position import Position
+from nautilus_trader.trading.strategy import Strategy
 
 class Cache(CacheFacade):
     """
@@ -28,7 +40,7 @@ class Cache(CacheFacade):
     def __init__(self, database: CacheDatabaseFacade | None | None=None, config: Any | None | None=None) -> None:
         ...
 
-    def set_specific_venue(self, venue: Any) -> None:
+    def set_specific_venue(self, venue: Venue) -> None:
         """
         Set a specific venue for the cache to use for account lookups.
 
@@ -160,7 +172,7 @@ class Cache(CacheFacade):
 
         """
 
-    def purge_order(self, client_order_id: Any, purge_from_database: bool=False) -> None:
+    def purge_order(self, client_order_id: ClientOrderId, purge_from_database: bool=False) -> None:
         """
         Purge the order for the given client order ID from the cache (if found).
 
@@ -175,7 +187,7 @@ class Cache(CacheFacade):
 
         """
 
-    def purge_position(self, position_id: Any, purge_from_database: bool=False) -> None:
+    def purge_position(self, position_id: PositionId, purge_from_database: bool=False) -> None:
         """
         Purge the position for the given position ID from the cache (if found).
 
@@ -190,7 +202,7 @@ class Cache(CacheFacade):
 
         """
 
-    def purge_instrument(self, instrument_id: Any, purge_from_database: bool=False) -> None:
+    def purge_instrument(self, instrument_id: InstrumentId, purge_from_database: bool=False) -> None:
         """
         Purge the instrument for the given instrument ID from the cache (if found).
 
@@ -270,10 +282,10 @@ class Cache(CacheFacade):
 
         """
 
-    def calculate_unrealized_pnl(self, position: Any) -> Any:
+    def calculate_unrealized_pnl(self, position: Position) -> Money:
         ...
 
-    def load_actor(self, actor: Any) -> None:
+    def load_actor(self, actor: Actor) -> None:
         """
         Load the state dictionary into the given actor.
 
@@ -284,7 +296,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_strategy(self, strategy: Any) -> None:
+    def load_strategy(self, strategy: Strategy) -> None:
         """
         Load the state dictionary into the given strategy.
 
@@ -295,7 +307,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_instrument(self, instrument_id: Any) -> Any:
+    def load_instrument(self, instrument_id: InstrumentId) -> Instrument | None:
         """
         Load the instrument associated with the given instrument ID (if found).
 
@@ -310,7 +322,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_synthetic(self, instrument_id: Any) -> Any:
+    def load_synthetic(self, instrument_id: InstrumentId) -> SyntheticInstrument | None:
         """
         Load the synthetic instrument associated with the given `instrument_id` (if found).
 
@@ -330,7 +342,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_account(self, account_id: Any) -> Any:
+    def load_account(self, account_id: AccountId) -> Account | None:
         """
         Load the account associated with the given account_id (if found).
 
@@ -345,7 +357,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_order(self, client_order_id: Any) -> Any:
+    def load_order(self, client_order_id: ClientOrderId) -> Order | None:
         """
         Load the order associated with the given ID (if found).
 
@@ -360,7 +372,7 @@ class Cache(CacheFacade):
 
         """
 
-    def load_position(self, position_id: Any) -> Any:
+    def load_position(self, position_id: PositionId) -> Position | None:
         """
         Load the position associated with the given ID (if found).
 
@@ -391,7 +403,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_order_book(self, order_book: Any) -> None:
+    def add_order_book(self, order_book: OrderBook) -> None:
         """
         Add the given order book to the cache.
 
@@ -413,7 +425,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_quote_tick(self, tick: Any) -> None:
+    def add_quote_tick(self, tick: QuoteTick) -> None:
         """
         Add the given quote tick to the cache.
 
@@ -424,7 +436,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_trade_tick(self, tick: Any) -> None:
+    def add_trade_tick(self, tick: TradeTick) -> None:
         """
         Add the given trade tick to the cache.
 
@@ -468,7 +480,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_instrument_status(self, status: Any) -> None:
+    def add_instrument_status(self, status: InstrumentStatus) -> None:
         """
         Add the given instrument status update to the cache.
 
@@ -479,7 +491,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_bar(self, bar: Any) -> None:
+    def add_bar(self, bar: Bar) -> None:
         """
         Add the given bar to the cache.
 
@@ -523,7 +535,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_currency(self, currency: Any) -> None:
+    def add_currency(self, currency: Currency) -> None:
         """
         Add the given currency to the cache.
 
@@ -534,7 +546,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_instrument(self, instrument: Any) -> None:
+    def add_instrument(self, instrument: Instrument) -> None:
         """
         Add the given instrument to the cache.
 
@@ -547,7 +559,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_synthetic(self, synthetic: Any) -> None:
+    def add_synthetic(self, synthetic: SyntheticInstrument) -> None:
         """
         Add the given synthetic instrument to the cache.
 
@@ -558,7 +570,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_account(self, account: Any) -> None:
+    def add_account(self, account: Account) -> None:
         """
         Add the given account to the cache.
 
@@ -574,7 +586,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_venue_order_id(self, client_order_id: Any, venue_order_id: Any, overwrite: bool=False) -> None:
+    def add_venue_order_id(self, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, overwrite: bool=False) -> None:
         """
         Index the given client order ID with the given venue order ID.
 
@@ -596,7 +608,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_order(self, order: Any, position_id: Any=None, client_id: Any=None, overwrite: bool=False) -> None:
+    def add_order(self, order: Order, position_id: PositionId | None=None, client_id: ClientId | None=None, overwrite: bool=False) -> None:
         """
         Add the given order to the cache indexed with the given position
         ID.
@@ -621,7 +633,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_order_list(self, order_list: Any) -> None:
+    def add_order_list(self, order_list: OrderList) -> None:
         """
         Add the given order list to the cache.
 
@@ -637,7 +649,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_position_id(self, position_id: Any, venue: Any, client_order_id: Any, strategy_id: Any) -> None:
+    def add_position_id(self, position_id: PositionId, venue: Venue, client_order_id: ClientOrderId, strategy_id: StrategyId) -> None:
         """
         Index the given position ID with the other given IDs.
 
@@ -654,7 +666,7 @@ class Cache(CacheFacade):
 
         """
 
-    def add_position(self, position: Any, oms_type: Any) -> None:
+    def add_position(self, position: Position, oms_type: Any) -> None:
         """
         Add the given position to the cache.
 
@@ -694,7 +706,7 @@ class Cache(CacheFacade):
 
         """
 
-    def greeks(self, instrument_id: Any) -> object:
+    def greeks(self, instrument_id: InstrumentId) -> object:
         """
         Return the latest cached greeks for the given instrument ID.
 
@@ -726,7 +738,7 @@ class Cache(CacheFacade):
 
         """
 
-    def snapshot_position(self, position: Any) -> None:
+    def snapshot_position(self, position: Position) -> None:
         """
         Snapshot the given position in its current state.
 
@@ -739,7 +751,7 @@ class Cache(CacheFacade):
 
         """
 
-    def snapshot_position_state(self, position: Any, ts_snapshot: int, unrealized_pnl: Any=None, open_only: bool=True) -> None:
+    def snapshot_position_state(self, position: Position, ts_snapshot: int, unrealized_pnl: Money | None=None, open_only: bool=True) -> None:
         """
         Snapshot the state dictionary for the given `position`.
 
@@ -759,7 +771,7 @@ class Cache(CacheFacade):
 
         """
 
-    def snapshot_order_state(self, order: Any) -> None:
+    def snapshot_order_state(self, order: Order) -> None:
         """
         Snapshot the state dictionary for the given `order`.
 
@@ -772,7 +784,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_account(self, account: Any) -> None:
+    def update_account(self, account: Account) -> None:
         """
         Update the given account in the cache.
 
@@ -782,7 +794,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_order(self, order: Any) -> None:
+    def update_order(self, order: Order) -> None:
         """
         Update the given order in the cache.
 
@@ -793,7 +805,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_order_pending_cancel_local(self, order: Any) -> None:
+    def update_order_pending_cancel_local(self, order: Order) -> None:
         """
         Update the given `order` as pending cancel locally.
 
@@ -804,7 +816,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_own_order_book(self, order: Any) -> None:
+    def update_own_order_book(self, order: Order) -> None:
         """
         Update the own order book for the given order.
 
@@ -818,7 +830,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_position(self, position: Any) -> None:
+    def update_position(self, position: Position) -> None:
         """
         Update the given position in the cache.
 
@@ -829,7 +841,7 @@ class Cache(CacheFacade):
 
         """
 
-    def update_actor(self, actor: Any) -> None:
+    def update_actor(self, actor: Actor) -> None:
         """
         Update the given actor state in the cache.
 
@@ -839,7 +851,7 @@ class Cache(CacheFacade):
             The actor to update.
         """
 
-    def update_strategy(self, strategy: Any) -> None:
+    def update_strategy(self, strategy: Strategy) -> None:
         """
         Update the given strategy state in the cache.
 
@@ -849,7 +861,7 @@ class Cache(CacheFacade):
             The strategy to update.
         """
 
-    def delete_actor(self, actor: Any) -> None:
+    def delete_actor(self, actor: Actor) -> None:
         """
         Delete the given actor from the cache.
 
@@ -865,7 +877,7 @@ class Cache(CacheFacade):
 
         """
 
-    def delete_strategy(self, strategy: Any) -> None:
+    def delete_strategy(self, strategy: Strategy) -> None:
         """
         Delete the given strategy from the cache.
 
@@ -881,7 +893,7 @@ class Cache(CacheFacade):
 
         """
 
-    def get(self, key: str) -> bytes:
+    def get(self, key: str) -> bytes | None:
         """
         Return the general object for the given `key`.
 
@@ -899,7 +911,7 @@ class Cache(CacheFacade):
 
         """
 
-    def quote_ticks(self, instrument_id: Any) -> list:
+    def quote_ticks(self, instrument_id: InstrumentId) -> list:
         """
         Return the quotes for the given instrument ID.
 
@@ -914,7 +926,7 @@ class Cache(CacheFacade):
 
         """
 
-    def trade_ticks(self, instrument_id: Any) -> list:
+    def trade_ticks(self, instrument_id: InstrumentId) -> list:
         """
         Return trades for the given instrument ID.
 
@@ -929,7 +941,7 @@ class Cache(CacheFacade):
 
         """
 
-    def mark_prices(self, instrument_id: Any) -> list:
+    def mark_prices(self, instrument_id: InstrumentId) -> list:
         """
         Return mark prices for the given instrument ID.
 
@@ -944,7 +956,7 @@ class Cache(CacheFacade):
 
         """
 
-    def index_prices(self, instrument_id: Any) -> list:
+    def index_prices(self, instrument_id: InstrumentId) -> list:
         """
         Return index prices for the given instrument ID.
 
@@ -959,7 +971,7 @@ class Cache(CacheFacade):
 
         """
 
-    def funding_rates(self, instrument_id: Any) -> list:
+    def funding_rates(self, instrument_id: InstrumentId) -> list:
         """
         Return funding rates for the given instrument ID.
 
@@ -974,7 +986,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instrument_statuses(self, instrument_id: Any) -> list:
+    def instrument_statuses(self, instrument_id: InstrumentId) -> list:
         """
         Return instrument status updates for the given instrument ID.
 
@@ -989,7 +1001,7 @@ class Cache(CacheFacade):
 
         """
 
-    def bars(self, bar_type: Any) -> list:
+    def bars(self, bar_type: BarType) -> list:
         """
         Return bars for the given bar type.
 
@@ -1004,7 +1016,7 @@ class Cache(CacheFacade):
 
         """
 
-    def price(self, instrument_id: Any, price_type: Any) -> Any:
+    def price(self, instrument_id: InstrumentId, price_type: Any) -> Price | None:
         """
         Return the price for the given instrument ID and price type.
 
@@ -1039,7 +1051,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_book(self, instrument_id: Any) -> Any:
+    def order_book(self, instrument_id: InstrumentId) -> OrderBook | None:
         """
         Return the order book for the given instrument ID (if found).
 
@@ -1055,7 +1067,7 @@ class Cache(CacheFacade):
 
         """
 
-    def own_order_book(self, instrument_id: Any) -> object:
+    def own_order_book(self, instrument_id: InstrumentId) -> object | None:
         """
         Return the own order book for the given instrument ID (if found).
 
@@ -1072,7 +1084,7 @@ class Cache(CacheFacade):
 
         """
 
-    def own_bid_orders(self, instrument_id: Any, status: set | None=None, accepted_buffer_ns: int=0, ts_now: int=0) -> dict:
+    def own_bid_orders(self, instrument_id: InstrumentId, status: set | None=None, accepted_buffer_ns: int=0, ts_now: int=0) -> dict | None:
         """
         Return own bid orders for the given instrument ID (if found).
 
@@ -1101,7 +1113,7 @@ class Cache(CacheFacade):
 
         """
 
-    def own_ask_orders(self, instrument_id: Any, status: set | None=None, accepted_buffer_ns: int=0, ts_now: int=0) -> dict:
+    def own_ask_orders(self, instrument_id: InstrumentId, status: set | None=None, accepted_buffer_ns: int=0, ts_now: int=0) -> dict | None:
         """
         Return own ask orders for the given instrument ID (if found).
 
@@ -1130,7 +1142,7 @@ class Cache(CacheFacade):
 
         """
 
-    def quote_tick(self, instrument_id: Any, index: int=0) -> Any:
+    def quote_tick(self, instrument_id: InstrumentId, index: int=0) -> QuoteTick | None:
         """
         Return the quote tick for the given instrument ID at the given index (if found).
 
@@ -1154,7 +1166,7 @@ class Cache(CacheFacade):
 
         """
 
-    def trade_tick(self, instrument_id: Any, index: int=0) -> Any:
+    def trade_tick(self, instrument_id: InstrumentId, index: int=0) -> TradeTick | None:
         """
         Return the trade tick for the given instrument ID at the given index (if found).
 
@@ -1178,7 +1190,7 @@ class Cache(CacheFacade):
 
         """
 
-    def mark_price(self, instrument_id: Any, index: int=0) -> Any:
+    def mark_price(self, instrument_id: InstrumentId, index: int=0) -> Any:
         """
         Return the mark price for the given instrument ID at the given index (if found).
 
@@ -1202,7 +1214,7 @@ class Cache(CacheFacade):
 
         """
 
-    def index_price(self, instrument_id: Any, index: int=0) -> Any:
+    def index_price(self, instrument_id: InstrumentId, index: int=0) -> Any:
         """
         Return the index price for the given instrument ID at the given index (if found).
 
@@ -1226,7 +1238,7 @@ class Cache(CacheFacade):
 
         """
 
-    def funding_rate(self, instrument_id: Any, index: int=0) -> Any:
+    def funding_rate(self, instrument_id: InstrumentId, index: int=0) -> Any:
         """
         Return the funding rate for the given instrument ID at the given index (if found).
 
@@ -1248,7 +1260,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instrument_status(self, instrument_id: Any, index: int=0) -> Any:
+    def instrument_status(self, instrument_id: InstrumentId, index: int=0) -> InstrumentStatus | None:
         """
         Return the instrument status for the given instrument ID at the given index (if found).
 
@@ -1272,7 +1284,7 @@ class Cache(CacheFacade):
 
         """
 
-    def bar(self, bar_type: Any, index: int=0) -> Any:
+    def bar(self, bar_type: BarType, index: int=0) -> Bar | None:
         """
         Return the bar for the given bar type at the given index (if found).
 
@@ -1296,7 +1308,7 @@ class Cache(CacheFacade):
 
         """
 
-    def book_update_count(self, instrument_id: Any) -> int:
+    def book_update_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of order book updates for the given instrument ID.
 
@@ -1313,7 +1325,7 @@ class Cache(CacheFacade):
 
         """
 
-    def quote_tick_count(self, instrument_id: Any) -> int:
+    def quote_tick_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of quotes for the given instrument ID.
 
@@ -1328,7 +1340,7 @@ class Cache(CacheFacade):
 
         """
 
-    def trade_tick_count(self, instrument_id: Any) -> int:
+    def trade_tick_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of trades for the given instrument ID.
 
@@ -1343,7 +1355,7 @@ class Cache(CacheFacade):
 
         """
 
-    def mark_price_count(self, instrument_id: Any) -> int:
+    def mark_price_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of mark prices for the given instrument ID.
 
@@ -1358,7 +1370,7 @@ class Cache(CacheFacade):
 
         """
 
-    def index_price_count(self, instrument_id: Any) -> int:
+    def index_price_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of index prices for the given instrument ID.
 
@@ -1373,7 +1385,7 @@ class Cache(CacheFacade):
 
         """
 
-    def funding_rate_count(self, instrument_id: Any) -> int:
+    def funding_rate_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of funding rates for the given instrument ID.
 
@@ -1388,7 +1400,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instrument_status_count(self, instrument_id: Any) -> int:
+    def instrument_status_count(self, instrument_id: InstrumentId) -> int:
         """
         The count of instrument status updates for the given instrument ID.
 
@@ -1403,7 +1415,7 @@ class Cache(CacheFacade):
 
         """
 
-    def bar_count(self, bar_type: Any) -> int:
+    def bar_count(self, bar_type: BarType) -> int:
         """
         The count of bars for the given bar type.
 
@@ -1418,7 +1430,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_order_book(self, instrument_id: Any) -> bool:
+    def has_order_book(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has an order book snapshot
         for the given instrument ID.
@@ -1434,7 +1446,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_quote_ticks(self, instrument_id: Any) -> bool:
+    def has_quote_ticks(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has quotes for the
         given instrument ID.
@@ -1450,7 +1462,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_trade_ticks(self, instrument_id: Any) -> bool:
+    def has_trade_ticks(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has trades for the
         given instrument ID.
@@ -1466,7 +1478,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_mark_prices(self, instrument_id: Any) -> bool:
+    def has_mark_prices(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has mark prices for the
         given instrument ID.
@@ -1482,7 +1494,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_index_prices(self, instrument_id: Any) -> bool:
+    def has_index_prices(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has index prices for the
         given instrument ID.
@@ -1498,7 +1510,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_funding_rates(self, instrument_id: Any) -> bool:
+    def has_funding_rates(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has funding rates for the
         given instrument ID.
@@ -1514,7 +1526,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_instrument_statuses(self, instrument_id: Any) -> bool:
+    def has_instrument_statuses(self, instrument_id: InstrumentId) -> bool:
         """
         Return a value indicating whether the cache has instrument status updates
         for the given instrument ID.
@@ -1530,7 +1542,7 @@ class Cache(CacheFacade):
 
         """
 
-    def has_bars(self, bar_type: Any) -> bool:
+    def has_bars(self, bar_type: BarType) -> bool:
         """
         Return a value indicating whether the cache has bars for the given bar
         type.
@@ -1546,7 +1558,7 @@ class Cache(CacheFacade):
 
         """
 
-    def get_xrate(self, venue: Any, from_currency: Any, to_currency: Any, price_type: Any=...):
+    def get_xrate(self, venue: Venue, from_currency: Currency, to_currency: Currency, price_type: Any=...):
         """
         Return the calculated exchange rate.
 
@@ -1574,7 +1586,7 @@ class Cache(CacheFacade):
 
         """
 
-    def get_mark_xrate(self, from_currency: Any, to_currency: Any) -> object:
+    def get_mark_xrate(self, from_currency: Currency, to_currency: Currency) -> object | None:
         """
         Return the exchange rate based on mark price.
 
@@ -1593,7 +1605,7 @@ class Cache(CacheFacade):
 
         """
 
-    def set_mark_xrate(self, from_currency: Any, to_currency: Any, xrate: float) -> None:
+    def set_mark_xrate(self, from_currency: Currency, to_currency: Currency, xrate: float) -> None:
         """
         Set the exchange rate based on mark price.
 
@@ -1615,7 +1627,7 @@ class Cache(CacheFacade):
 
         """
 
-    def clear_mark_xrate(self, from_currency: Any, to_currency: Any) -> None:
+    def clear_mark_xrate(self, from_currency: Currency, to_currency: Currency) -> None:
         """
         Clear the exchange rate based on mark price.
 
@@ -1634,7 +1646,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instrument(self, instrument_id: Any) -> Any:
+    def instrument(self, instrument_id: InstrumentId) -> Instrument | None:
         """
         Return the instrument corresponding to the given instrument ID.
 
@@ -1649,7 +1661,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instrument_ids(self, venue: Any=None) -> list:
+    def instrument_ids(self, venue: Venue | None=None) -> list:
         """
         Return all instrument IDs held by the cache.
 
@@ -1664,7 +1676,7 @@ class Cache(CacheFacade):
 
         """
 
-    def instruments(self, venue: Any=None, underlying: str | None=None) -> list:
+    def instruments(self, venue: Venue | None=None, underlying: str | None=None) -> list:
         """
         Return all instruments held by the cache.
 
@@ -1681,7 +1693,7 @@ class Cache(CacheFacade):
 
         """
 
-    def bar_types(self, instrument_id: Any=None, price_type: object | None=None, aggregation_source=None) -> list:
+    def bar_types(self, instrument_id: InstrumentId | None=None, price_type: object | None=None, aggregation_source=None) -> list:
         """
         Return all bar types with the given query filters.
 
@@ -1702,7 +1714,7 @@ class Cache(CacheFacade):
 
         """
 
-    def synthetic(self, instrument_id: Any) -> Any:
+    def synthetic(self, instrument_id: InstrumentId) -> SyntheticInstrument | None:
         """
         Return the synthetic instrument corresponding to the given instrument ID.
 
@@ -1742,7 +1754,7 @@ class Cache(CacheFacade):
 
         """
 
-    def account(self, account_id: Any) -> Any:
+    def account(self, account_id: AccountId) -> Account | None:
         """
         Return the account matching the given ID (if found).
 
@@ -1757,7 +1769,7 @@ class Cache(CacheFacade):
 
         """
 
-    def account_for_venue(self, venue: Any=None, account_id: Any=None) -> Any:
+    def account_for_venue(self, venue: Venue | None=None, account_id: AccountId | None=None) -> Account | None:
         """
         Return the account matching the given venue or account ID (if found).
 
@@ -1774,7 +1786,7 @@ class Cache(CacheFacade):
 
         """
 
-    def account_id(self, venue: Any) -> Any:
+    def account_id(self, venue: Venue) -> AccountId | None:
         """
         Return the account ID for the given venue (if found).
 
@@ -1789,7 +1801,7 @@ class Cache(CacheFacade):
 
         """
 
-    def set_account_id_for_venue(self, venue: Any, account_id: Any) -> None:
+    def set_account_id_for_venue(self, venue: Venue, account_id: AccountId) -> None:
         """
         Set the account_id for a venue in the cache index.
 
@@ -1815,7 +1827,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_ids(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def client_order_ids(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all client order IDs with the given query filters.
 
@@ -1836,7 +1848,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_ids_open(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def client_order_ids_open(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all open client order IDs with the given query filters.
 
@@ -1857,7 +1869,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_ids_closed(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def client_order_ids_closed(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all closed client order IDs with the given query filters.
 
@@ -1878,7 +1890,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_ids_emulated(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def client_order_ids_emulated(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all emulated client order IDs with the given query filters.
 
@@ -1899,7 +1911,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_ids_inflight(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def client_order_ids_inflight(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all in-flight client order IDs with the given query filters.
 
@@ -1920,7 +1932,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_list_ids(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def order_list_ids(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all order list IDs.
 
@@ -1941,7 +1953,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_ids(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def position_ids(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all position IDs with the given query filters.
 
@@ -1962,7 +1974,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_open_ids(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def position_open_ids(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all open position IDs with the given query filters.
 
@@ -1983,7 +1995,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_closed_ids(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> set:
+    def position_closed_ids(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all closed position IDs with the given query filters.
 
@@ -2034,7 +2046,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order(self, client_order_id: Any) -> Any:
+    def order(self, client_order_id: ClientOrderId) -> Order | None:
         """
         Return the order matching the given client order ID (if found).
 
@@ -2044,7 +2056,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_order_id(self, venue_order_id: Any) -> Any:
+    def client_order_id(self, venue_order_id: VenueOrderId) -> ClientOrderId | None:
         """
         Return the client order ID matching the given venue order ID (if found).
 
@@ -2059,7 +2071,7 @@ class Cache(CacheFacade):
 
         """
 
-    def venue_order_id(self, client_order_id: Any) -> Any:
+    def venue_order_id(self, client_order_id: ClientOrderId) -> VenueOrderId | None:
         """
         Return the order ID matching the given client order ID (if found).
 
@@ -2069,7 +2081,7 @@ class Cache(CacheFacade):
 
         """
 
-    def client_id(self, client_order_id: Any) -> Any:
+    def client_id(self, client_order_id: ClientOrderId) -> ClientId | None:
         """
         Return the specific execution client ID matching the given client order ID (if found).
 
@@ -2079,7 +2091,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all orders matching the given query filters.
 
@@ -2104,7 +2116,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_open(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders_open(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all open orders with the given query filters.
 
@@ -2129,7 +2141,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_closed(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders_closed(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all closed orders with the given query filters.
 
@@ -2154,7 +2166,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_emulated(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders_emulated(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all emulated orders with the given query filters.
 
@@ -2179,7 +2191,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_inflight(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders_inflight(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all in-flight orders with the given query filters.
 
@@ -2204,7 +2216,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_for_position(self, position_id: Any) -> list:
+    def orders_for_position(self, position_id: PositionId) -> list:
         """
         Return all orders for the given position ID.
 
@@ -2219,7 +2231,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_exists(self, client_order_id: Any) -> bool:
+    def order_exists(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID exists.
 
@@ -2234,7 +2246,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_order_open(self, client_order_id: Any) -> bool:
+    def is_order_open(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID is open.
 
@@ -2249,7 +2261,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_order_closed(self, client_order_id: Any) -> bool:
+    def is_order_closed(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID is closed.
 
@@ -2264,7 +2276,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_order_emulated(self, client_order_id: Any) -> bool:
+    def is_order_emulated(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID is emulated.
 
@@ -2279,7 +2291,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_order_inflight(self, client_order_id: Any) -> bool:
+    def is_order_inflight(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID is in-flight.
 
@@ -2294,7 +2306,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_order_pending_cancel_local(self, client_order_id: Any) -> bool:
+    def is_order_pending_cancel_local(self, client_order_id: ClientOrderId) -> bool:
         """
         Return a value indicating whether an order with the given ID is pending cancel locally.
 
@@ -2309,7 +2321,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_open_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def orders_open_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the count of open orders with the given query filters.
 
@@ -2332,7 +2344,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_closed_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def orders_closed_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the count of closed orders with the given query filters.
 
@@ -2355,7 +2367,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_emulated_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def orders_emulated_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the count of emulated orders with the given query filters.
 
@@ -2378,7 +2390,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_inflight_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def orders_inflight_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the count of in-flight orders with the given query filters.
 
@@ -2401,7 +2413,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_total_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def orders_total_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the total count of orders with the given query filters.
 
@@ -2424,7 +2436,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_list(self, order_list_id: Any) -> Any:
+    def order_list(self, order_list_id: OrderListId) -> OrderList | None:
         """
         Return the order list matching the given order list ID (if found).
 
@@ -2434,7 +2446,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_lists(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> list:
+    def order_lists(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> list:
         """
         Return all order lists matching the given query filters.
 
@@ -2457,7 +2469,7 @@ class Cache(CacheFacade):
 
         """
 
-    def order_list_exists(self, order_list_id: Any) -> bool:
+    def order_list_exists(self, order_list_id: OrderListId) -> bool:
         """
         Return a value indicating whether an order list with the given ID exists.
 
@@ -2472,7 +2484,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_for_exec_algorithm(self, exec_algorithm_id: Any, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def orders_for_exec_algorithm(self, exec_algorithm_id: ExecAlgorithmId, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all execution algorithm orders for the given query filters.
 
@@ -2497,7 +2509,7 @@ class Cache(CacheFacade):
 
         """
 
-    def orders_for_exec_spawn(self, exec_spawn_id: Any) -> list:
+    def orders_for_exec_spawn(self, exec_spawn_id: ClientOrderId) -> list:
         """
         Return all orders for the given execution spawn ID (if found).
 
@@ -2514,7 +2526,7 @@ class Cache(CacheFacade):
 
         """
 
-    def exec_spawn_total_quantity(self, exec_spawn_id: Any, active_only: bool=False) -> Any:
+    def exec_spawn_total_quantity(self, exec_spawn_id: ClientOrderId, active_only: bool=False) -> Quantity | None:
         """
         Return the total quantity for the given execution spawn ID (if found).
 
@@ -2537,7 +2549,7 @@ class Cache(CacheFacade):
 
         """
 
-    def exec_spawn_total_filled_qty(self, exec_spawn_id: Any, active_only: bool=False) -> Any:
+    def exec_spawn_total_filled_qty(self, exec_spawn_id: ClientOrderId, active_only: bool=False) -> Quantity | None:
         """
         Return the total filled quantity for the given execution spawn ID (if found).
 
@@ -2560,7 +2572,7 @@ class Cache(CacheFacade):
 
         """
 
-    def exec_spawn_total_leaves_qty(self, exec_spawn_id: Any, active_only: bool=False) -> Any:
+    def exec_spawn_total_leaves_qty(self, exec_spawn_id: ClientOrderId, active_only: bool=False) -> Quantity | None:
         """
         Return the total leaves quantity for the given execution spawn ID (if found).
 
@@ -2583,7 +2595,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position(self, position_id: Any) -> Any:
+    def position(self, position_id: PositionId) -> Position | None:
         """
         Return the position associated with the given ID (if found).
 
@@ -2598,7 +2610,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_for_order(self, client_order_id: Any) -> Any:
+    def position_for_order(self, client_order_id: ClientOrderId) -> Position | None:
         """
         Return the position associated with the given client order ID (if found).
 
@@ -2613,7 +2625,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_id(self, client_order_id: Any) -> Any:
+    def position_id(self, client_order_id: ClientOrderId) -> PositionId | None:
         """
         Return the position ID associated with the given client order ID (if found).
 
@@ -2628,7 +2640,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_snapshots(self, position_id: Any=None, account_id: Any=None) -> list:
+    def position_snapshots(self, position_id: PositionId | None=None, account_id: AccountId | None=None) -> list:
         """
         Return all position snapshots with the given optional identifier filter.
 
@@ -2645,7 +2657,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_snapshot_ids(self, instrument_id: Any=None, account_id: Any=None) -> set:
+    def position_snapshot_ids(self, instrument_id: InstrumentId | None=None, account_id: AccountId | None=None) -> set:
         """
         Return all position IDs for position snapshots with the given instrument filter.
 
@@ -2662,7 +2674,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_snapshot_bytes(self, position_id: Any) -> list:
+    def position_snapshot_bytes(self, position_id: PositionId) -> list:
         """
         Return the raw pickled snapshot bytes for the given position ID.
 
@@ -2678,7 +2690,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def positions(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all positions with the given query filters.
 
@@ -2703,7 +2715,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions_open(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> list:
+    def positions_open(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> list:
         """
         Return all open positions with the given query filters.
 
@@ -2728,7 +2740,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions_closed(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> list:
+    def positions_closed(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> list:
         """
         Return all closed positions with the given query filters.
 
@@ -2751,7 +2763,7 @@ class Cache(CacheFacade):
 
         """
 
-    def position_exists(self, position_id: Any) -> bool:
+    def position_exists(self, position_id: PositionId) -> bool:
         """
         Return a value indicating whether a position with the given ID exists.
 
@@ -2766,7 +2778,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_position_open(self, position_id: Any) -> bool:
+    def is_position_open(self, position_id: PositionId) -> bool:
         """
         Return a value indicating whether a position with the given ID exists
         and is open.
@@ -2782,7 +2794,7 @@ class Cache(CacheFacade):
 
         """
 
-    def is_position_closed(self, position_id: Any) -> bool:
+    def is_position_closed(self, position_id: PositionId) -> bool:
         """
         Return a value indicating whether a position with the given ID exists
         and is closed.
@@ -2798,7 +2810,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions_open_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def positions_open_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the count of open positions with the given query filters.
 
@@ -2821,7 +2833,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions_closed_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, account_id: Any=None) -> int:
+    def positions_closed_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, account_id: AccountId | None=None) -> int:
         """
         Return the count of closed positions with the given query filters.
 
@@ -2842,7 +2854,7 @@ class Cache(CacheFacade):
 
         """
 
-    def positions_total_count(self, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., account_id: Any=None) -> int:
+    def positions_total_count(self, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., account_id: AccountId | None=None) -> int:
         """
         Return the total count of positions with the given query filters.
 
@@ -2865,7 +2877,7 @@ class Cache(CacheFacade):
 
         """
 
-    def strategy_id_for_order(self, client_order_id: Any) -> Any:
+    def strategy_id_for_order(self, client_order_id: ClientOrderId) -> StrategyId | None:
         """
         Return the strategy ID associated with the given ID (if found).
 
@@ -2880,7 +2892,7 @@ class Cache(CacheFacade):
 
         """
 
-    def strategy_id_for_position(self, position_id: Any) -> Any:
+    def strategy_id_for_position(self, position_id: PositionId) -> StrategyId | None:
         """
         Return the strategy ID associated with the given ID (if found).
 
@@ -2906,7 +2918,7 @@ class Cache(CacheFacade):
 
         """
 
-    def force_remove_from_own_order_book(self, client_order_id: Any) -> None:
+    def force_remove_from_own_order_book(self, client_order_id: ClientOrderId) -> None:
         """
         Force removal of an order from own order books and clean up all indexes.
 

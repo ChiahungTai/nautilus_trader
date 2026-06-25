@@ -1,9 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 import numpy as np
-TOPIX100_TICK_SCHEME = TieredTickScheme(name='TOPIX100', tiers=[(0.1, 1000, 0.1), (1000, 3000, 0.5), (3000, 10000, 1), (10000, 30000, 5), (30000, 100000, 10), (100000, 300000, 50), (300000, 1000000, 100), (1000000, 3000000, 500), (3000000, 10000000, 1000), (10000000, 30000000, 5000), (30000000, np.inf, 10000)], price_precision=4, max_ticks_per_tier=10000)
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.tick_scheme.base import TickScheme
+TOPIX100_TICK_SCHEME: TieredTickScheme = ...
 
-class TieredTickScheme(Any):
+class TieredTickScheme(TickScheme):
     """
     Represents a tick scheme where tick levels change based on price level, such as various financial exchanges.
 
@@ -29,7 +31,7 @@ class TieredTickScheme(Any):
     def find_tick_index(self, value: float) -> int:
         ...
 
-    def next_ask_price(self, value: float, n: int=0) -> Any:
+    def next_ask_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` ask ticks away from value.
 
@@ -48,7 +50,7 @@ class TieredTickScheme(Any):
 
         """
 
-    def next_bid_price(self, value: float, n: int=0) -> Any:
+    def next_bid_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` bid ticks away from value.
 

@@ -1,5 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.identifiers import ClientOrderId, InstrumentId
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.orders.base import Order
 
 class MatchingCore:
     """
@@ -25,11 +28,11 @@ class MatchingCore:
     is_ask_initialized: bool
     is_last_initialized: bool
 
-    def __init__(self, instrument_id: Any, price_increment: Any, trigger_stop_order: Callable, fill_market_order: Callable, fill_limit_order: Callable) -> None:
+    def __init__(self, instrument_id: InstrumentId, price_increment: Price, trigger_stop_order: Callable, fill_market_order: Callable, fill_limit_order: Callable) -> None:
         ...
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         Return the instrument ID for the matching core.
 
@@ -51,7 +54,7 @@ class MatchingCore:
         """
 
     @property
-    def price_increment(self) -> Any:
+    def price_increment(self) -> Price:
         """
         Return the instruments minimum price increment (tick size) for the matching core.
 
@@ -62,7 +65,7 @@ class MatchingCore:
         """
 
     @property
-    def bid(self) -> Any | None:
+    def bid(self) -> Price | None:
         """
         Return the current bid price for the matching core.
 
@@ -73,7 +76,7 @@ class MatchingCore:
         """
 
     @property
-    def ask(self) -> Any | None:
+    def ask(self) -> Price | None:
         """
         Return the current ask price for the matching core.
 
@@ -84,7 +87,7 @@ class MatchingCore:
         """
 
     @property
-    def last(self) -> Any | None:
+    def last(self) -> Price | None:
         """
         Return the current last price for the matching core.
 
@@ -94,10 +97,10 @@ class MatchingCore:
 
         """
 
-    def get_order(self, client_order_id: Any) -> Any:
+    def get_order(self, client_order_id: ClientOrderId) -> Order:
         ...
 
-    def order_exists(self, client_order_id: Any) -> bool:
+    def order_exists(self, client_order_id: ClientOrderId) -> bool:
         ...
 
     def get_orders(self) -> list:
@@ -109,7 +112,7 @@ class MatchingCore:
     def get_orders_ask(self) -> list:
         ...
 
-    def update_price_increment(self, price_increment: Any) -> None:
+    def update_price_increment(self, price_increment: Price) -> None:
         """
         Update the price increment (tick size) for the matching core.
 
@@ -123,16 +126,16 @@ class MatchingCore:
     def reset(self) -> None:
         ...
 
-    def add_order(self, order: Any) -> None:
+    def add_order(self, order: Order) -> None:
         ...
 
-    def delete_order(self, order: Any) -> None:
+    def delete_order(self, order: Order) -> None:
         ...
 
     def iterate(self, timestamp_ns: int) -> None:
         ...
 
-    def match_order(self, order: Any, initial: bool=False) -> None:
+    def match_order(self, order: Order, initial: bool=False) -> None:
         """
         Match the given order.
 
@@ -150,38 +153,38 @@ class MatchingCore:
 
         """
 
-    def match_limit_order(self, order: Any) -> None:
+    def match_limit_order(self, order: Order) -> None:
         ...
 
-    def match_stop_market_order(self, order: Any) -> None:
+    def match_stop_market_order(self, order: Order) -> None:
         ...
 
-    def match_stop_limit_order(self, order: Any, initial: bool) -> None:
+    def match_stop_limit_order(self, order: Order, initial: bool) -> None:
         ...
 
-    def match_market_if_touched_order(self, order: Any) -> None:
+    def match_market_if_touched_order(self, order: Order) -> None:
         ...
 
-    def match_limit_if_touched_order(self, order: Any, initial: bool) -> None:
+    def match_limit_if_touched_order(self, order: Order, initial: bool) -> None:
         ...
 
-    def match_trailing_stop_limit_order(self, order: Any, initial: bool) -> None:
+    def match_trailing_stop_limit_order(self, order: Order, initial: bool) -> None:
         ...
 
-    def match_trailing_stop_market_order(self, order: Any) -> None:
+    def match_trailing_stop_market_order(self, order: Order) -> None:
         ...
 
     def set_fill_limit_inside_spread(self, value: bool) -> None:
         ...
 
-    def is_limit_fillable(self, side: Any, price: Any) -> bool:
+    def is_limit_fillable(self, side: Any, price: Price) -> bool:
         ...
 
-    def is_limit_marketable(self, side: Any, price: Any) -> bool:
+    def is_limit_marketable(self, side: Any, price: Price) -> bool:
         ...
 
-    def is_stop_triggered(self, side: Any, trigger_price: Any) -> bool:
+    def is_stop_triggered(self, side: Any, trigger_price: Price) -> bool:
         ...
 
-    def is_touch_triggered(self, side: Any, trigger_price: Any) -> bool:
+    def is_touch_triggered(self, side: Any, trigger_price: Price) -> bool:
         ...

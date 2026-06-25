@@ -1,9 +1,15 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 '\nThe `ExecutionEngine` is the central component of the entire execution stack.\n\nThe execution engines primary responsibility is to orchestrate interactions\nbetween the `ExecutionClient` instances, and the rest of the platform. This\nincludes sending commands to, and receiving events from, the trading venue\nendpoints via its registered execution clients.\n\nThe engine employs a simple fan-in fan-out messaging pattern to execute\n`TradingCommand` messages and `OrderEvent` messages.\n\nAlternative implementations can be written on top of the generic engine - which\njust need to override the `execute` and `process` methods.\n'
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, Component, MessageBus
+from nautilus_trader.core.message import Command
 from nautilus_trader.execution.client import ExecutionClient
+from nautilus_trader.model.events.order import OrderEvent
+from nautilus_trader.model.identifiers import ClientId, InstrumentId, StrategyId, Venue
+from nautilus_trader.trading.strategy import Strategy
 
-class ExecutionEngine(Any):
+class ExecutionEngine(Component):
     """
     Provides a high-performance execution engine for the management of many
     `ExecutionClient` instances, and the asynchronous ingest and distribution of
@@ -43,7 +49,7 @@ class ExecutionEngine(Any):
     event_count: int
     report_count: int
 
-    def __init__(self, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
     @property
@@ -58,7 +64,7 @@ class ExecutionEngine(Any):
         """
 
     @property
-    def registered_clients(self) -> list[Any]:
+    def registered_clients(self) -> list[ClientId]:
         """
         Return the execution clients registered with the engine.
 
@@ -69,7 +75,7 @@ class ExecutionEngine(Any):
         """
 
     @property
-    def default_client(self) -> Any | None:
+    def default_client(self) -> ClientId | None:
         """
         Return the default execution client registered with the engine.
 
@@ -89,7 +95,7 @@ class ExecutionEngine(Any):
         Disconnect the engine by calling disconnect on all registered clients.
         """
 
-    def position_id_count(self, strategy_id: Any) -> int:
+    def position_id_count(self, strategy_id: StrategyId) -> int:
         """
         The position ID count for the given strategy ID.
 
@@ -159,7 +165,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def get_external_order_claim(self, instrument_id: Any) -> Any:
+    def get_external_order_claim(self, instrument_id: InstrumentId) -> StrategyId | None:
         """
         Get any external order claim for the given instrument ID.
 
@@ -243,7 +249,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_venue_routing(self, client: ExecutionClient, venue: Any) -> None:
+    def register_venue_routing(self, client: ExecutionClient, venue: Venue) -> None:
         """
         Register the given client to route orders to the given venue.
 
@@ -259,7 +265,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_oms_type(self, strategy: Any) -> None:
+    def register_oms_type(self, strategy: Strategy) -> None:
         """
         Register the given trading strategies OMS (Order Management System) type.
 
@@ -270,7 +276,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def register_external_order_claims(self, strategy: Any) -> None:
+    def register_external_order_claims(self, strategy: Strategy) -> None:
         """
         Register the given strategies external order claim instrument IDs (if any)
 
@@ -360,7 +366,7 @@ class ExecutionEngine(Any):
         Load the cache up from the execution database.
         """
 
-    def execute(self, command: Any) -> None:
+    def execute(self, command: Command) -> None:
         """
         Execute the given command.
 
@@ -371,7 +377,7 @@ class ExecutionEngine(Any):
 
         """
 
-    def process(self, event: Any) -> None:
+    def process(self, event: OrderEvent) -> None:
         """
         Process the given order event.
 

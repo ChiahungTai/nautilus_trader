@@ -1,5 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.identifiers import InstrumentId, OrderListId, StrategyId
+from nautilus_trader.model.orders.base import Order
 
 class OrderList:
     """
@@ -24,14 +26,14 @@ class OrderList:
         If orders contain different instrument IDs (must all be the same instrument).
 
     """
-    id: Any
-    instrument_id: Any
-    strategy_id: Any
+    id: OrderListId
+    instrument_id: InstrumentId
+    strategy_id: StrategyId
     orders: list
-    first: Any
+    first: Order
     ts_init: int
 
-    def __init__(self, order_list_id: Any, orders: list) -> None:
+    def __init__(self, order_list_id: OrderListId, orders: list) -> None:
         ...
 
     def __eq__(self, other: OrderList) -> bool:

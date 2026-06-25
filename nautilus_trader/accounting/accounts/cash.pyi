@@ -2,6 +2,12 @@
 from typing import Any, Callable
 '\nA cash account that cannot hold leveraged positions.\n\nBalance locking\n---------------\nThe account tracks locked balances per (InstrumentId, Currency) to support\ninstruments that lock different currencies depending on order side:\n\n- BUY orders lock quote currency (cost of purchase).\n- SELL orders lock base currency (assets being sold).\n\nCallers must clear all existing locks via `clear_balance_locked` before applying\nnew locks. This prevents stale currency entries when order compositions change.\n\nGraceful degradation\n--------------------\nWhen total locked exceeds total balance (e.g., due to venue/client state latency),\nthe account clamps locked to total rather than raising an error. This yields zero\nfree balance, preventing new orders while avoiding crashes in live trading.\n\n'
 from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.model.events.account import AccountState
+from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Money, Price, Quantity
+from nautilus_trader.model.position import Position
 
 class CashAccount(Account):
     """
@@ -25,7 +31,7 @@ class CashAccount(Account):
     ACCOUNT_TYPE = Any
     allow_borrowing: bool
 
-    def __init__(self, event: Any, calculate_account_state: bool=False, allow_borrowing: bool=False) -> None:
+    def __init__(self, event: AccountState, calculate_account_state: bool=False, allow_borrowing: bool=False) -> None:
         ...
 
     @staticmethod
@@ -55,7 +61,7 @@ class CashAccount(Account):
 
         """
 
-    def apply(self, event: Any) -> None:
+    def apply(self, event: AccountState) -> None:
         """
         Apply the given account event to the account.
 
@@ -73,7 +79,7 @@ class CashAccount(Account):
 
         """
 
-    def update_balance_locked(self, instrument_id: Any, locked: Any) -> None:
+    def update_balance_locked(self, instrument_id: InstrumentId, locked: Money) -> None:
         """
         Update the balance locked for the given instrument ID and currency.
 
@@ -95,7 +101,7 @@ class CashAccount(Account):
 
         """
 
-    def clear_balance_locked(self, instrument_id: Any) -> None:
+    def clear_balance_locked(self, instrument_id: InstrumentId) -> None:
         """
         Clear all balances locked for the given instrument ID.
 
@@ -106,10 +112,10 @@ class CashAccount(Account):
 
         """
 
-    def is_unleveraged(self, instrument_id: Any) -> bool:
+    def is_unleveraged(self, instrument_id: InstrumentId) -> bool:
         ...
 
-    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_commission(self, instrument: Instrument, last_qty: Quantity, last_px: Price, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the commission generated from a transaction with the given
         parameters.
@@ -141,7 +147,7 @@ class CashAccount(Account):
 
         """
 
-    def calculate_balance_locked(self, instrument: Any, side: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_balance_locked(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the locked balance.
 
@@ -167,7 +173,7 @@ class CashAccount(Account):
 
         """
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
+    def calculate_pnls(self, instrument: Instrument, fill: OrderFilled, position: Position | None | None=None) -> list:
         """
         Return the calculated PnL.
 
@@ -188,5 +194,5 @@ class CashAccount(Account):
 
         """
 
-    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+    def balance_impact(self, instrument: Instrument, quantity: Quantity, price: Price, order_side: Any) -> Money:
         ...

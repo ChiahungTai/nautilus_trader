@@ -1,7 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.message import Event
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import AccountId, ClientOrderId, ExecAlgorithmId, InstrumentId, OrderListId, PositionId, StrategyId, TradeId, TraderId, VenueOrderId
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
-class OrderEvent(Any):
+class OrderEvent(Event):
     """
     The abstract base class for all order events.
 
@@ -11,7 +15,7 @@ class OrderEvent(Any):
     """
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -22,7 +26,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -33,7 +37,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -44,7 +48,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -55,7 +59,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -66,7 +70,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -88,7 +92,7 @@ class OrderEvent(Any):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -120,7 +124,7 @@ class OrderEvent(Any):
 
         """
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
 class OrderInitialized(OrderEvent):
@@ -200,27 +204,27 @@ class OrderInitialized(OrderEvent):
     """
     side: Any
     order_type: Any
-    quantity: Any
+    quantity: Quantity
     time_in_force: Any
     post_only: bool
     reduce_only: bool
     quote_quantity: bool
     options: dict
     emulation_trigger: Any
-    trigger_instrument_id: Any
+    trigger_instrument_id: InstrumentId
     contingency_type: Any
-    order_list_id: Any
+    order_list_id: OrderListId
     linked_order_ids: list
-    parent_order_id: Any
-    exec_algorithm_id: Any
+    parent_order_id: ClientOrderId
+    exec_algorithm_id: ExecAlgorithmId
     exec_algorithm_params: dict
-    exec_spawn_id: Any
+    exec_spawn_id: ClientOrderId
     tags: list
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, order_type: Any, quantity: Any, time_in_force: Any, post_only: bool, reduce_only: bool, quote_quantity: bool, options: dict, emulation_trigger: Any, trigger_instrument_id: Any | None, contingency_type: Any, order_list_id: Any | None, linked_order_ids: list[Any] | None, parent_order_id: Any | None, exec_algorithm_id: Any | None, exec_algorithm_params: dict[str, object] | None, exec_spawn_id: Any | None, tags: list[str] | None, event_id: Any, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, order_side: Any, order_type: Any, quantity: Quantity, time_in_force: Any, post_only: bool, reduce_only: bool, quote_quantity: bool, options: dict, emulation_trigger: Any, trigger_instrument_id: InstrumentId | None, contingency_type: Any, order_list_id: OrderListId | None, linked_order_ids: list[ClientOrderId] | None, parent_order_id: ClientOrderId | None, exec_algorithm_id: ExecAlgorithmId | None, exec_algorithm_params: dict[str, object] | None, exec_spawn_id: ClientOrderId | None, tags: list[str] | None, event_id: UUID4, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -232,11 +236,11 @@ class OrderInitialized(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -247,7 +251,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -258,7 +262,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -269,7 +273,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -280,7 +284,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -291,7 +295,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -313,7 +317,7 @@ class OrderInitialized(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -398,10 +402,10 @@ class OrderDenied(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, reason: str, event_id: Any, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, reason: str, event_id: UUID4, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -413,11 +417,11 @@ class OrderDenied(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -428,7 +432,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -439,7 +443,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -450,7 +454,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -461,7 +465,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -472,7 +476,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -505,7 +509,7 @@ class OrderDenied(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -585,10 +589,10 @@ class OrderEmulated(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, event_id: Any, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, event_id: UUID4, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -600,11 +604,11 @@ class OrderEmulated(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -615,7 +619,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -626,7 +630,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -637,7 +641,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -648,7 +652,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -659,7 +663,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -681,7 +685,7 @@ class OrderEmulated(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -763,10 +767,10 @@ class OrderReleased(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, released_price: Any, event_id: Any, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, released_price: Price, event_id: UUID4, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -778,11 +782,11 @@ class OrderReleased(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -793,7 +797,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -804,7 +808,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -815,7 +819,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -826,7 +830,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -837,7 +841,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -848,7 +852,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def released_price(self) -> Any:
+    def released_price(self) -> Price:
         """
         The released price for the event.
 
@@ -870,7 +874,7 @@ class OrderReleased(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -954,10 +958,10 @@ class OrderSubmitted(OrderEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, account_id: AccountId, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -969,11 +973,11 @@ class OrderSubmitted(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -984,7 +988,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -995,7 +999,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1006,7 +1010,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1017,7 +1021,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1028,7 +1032,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1050,7 +1054,7 @@ class OrderSubmitted(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -1143,10 +1147,10 @@ class OrderAccepted(OrderEvent):
     https://www.onixs.biz/fix-dictionary/5.0.SP2/tagNum_39.html
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, account_id: AccountId, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -1158,11 +1162,11 @@ class OrderAccepted(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -1173,7 +1177,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -1184,7 +1188,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1195,7 +1199,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1206,7 +1210,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1217,7 +1221,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1239,7 +1243,7 @@ class OrderAccepted(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -1329,10 +1333,10 @@ class OrderRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, due_post_only: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, account_id: AccountId, reason: str, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False, due_post_only: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -1344,11 +1348,11 @@ class OrderRejected(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -1359,7 +1363,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -1370,7 +1374,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1381,7 +1385,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1392,7 +1396,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1403,7 +1407,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1447,7 +1451,7 @@ class OrderRejected(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -1534,10 +1538,10 @@ class OrderCanceled(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -1549,11 +1553,11 @@ class OrderCanceled(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -1564,7 +1568,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -1575,7 +1579,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1586,7 +1590,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1597,7 +1601,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1608,7 +1612,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1630,7 +1634,7 @@ class OrderCanceled(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -1717,10 +1721,10 @@ class OrderExpired(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -1732,11 +1736,11 @@ class OrderExpired(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -1747,7 +1751,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -1758,7 +1762,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1769,7 +1773,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1780,7 +1784,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1791,7 +1795,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1813,7 +1817,7 @@ class OrderExpired(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -1902,10 +1906,10 @@ class OrderTriggered(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -1917,11 +1921,11 @@ class OrderTriggered(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -1932,7 +1936,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -1943,7 +1947,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -1954,7 +1958,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -1965,7 +1969,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -1976,7 +1980,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -1998,7 +2002,7 @@ class OrderTriggered(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -2086,10 +2090,10 @@ class OrderPendingUpdate(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -2101,11 +2105,11 @@ class OrderPendingUpdate(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -2116,7 +2120,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -2127,7 +2131,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -2138,7 +2142,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -2149,7 +2153,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -2160,7 +2164,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -2182,7 +2186,7 @@ class OrderPendingUpdate(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -2270,10 +2274,10 @@ class OrderPendingCancel(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -2285,11 +2289,11 @@ class OrderPendingCancel(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -2300,7 +2304,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -2311,7 +2315,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -2322,7 +2326,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -2333,7 +2337,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -2344,7 +2348,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -2366,7 +2370,7 @@ class OrderPendingCancel(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -2457,10 +2461,10 @@ class OrderModifyRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, reason: str, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -2472,11 +2476,11 @@ class OrderModifyRejected(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -2487,7 +2491,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -2498,7 +2502,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -2509,7 +2513,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -2520,7 +2524,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -2531,7 +2535,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -2564,7 +2568,7 @@ class OrderModifyRejected(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -2655,10 +2659,10 @@ class OrderCancelRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, reason: str, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -2670,11 +2674,11 @@ class OrderCancelRejected(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -2685,7 +2689,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -2696,7 +2700,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -2707,7 +2711,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -2718,7 +2722,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -2729,7 +2733,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -2762,7 +2766,7 @@ class OrderCancelRejected(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -2861,15 +2865,15 @@ class OrderUpdated(OrderEvent):
     ValueError
         If `quantity` is not positive (> 0).
     """
-    quantity: Any
-    price: Any
-    trigger_price: Any
+    quantity: Quantity
+    price: Price
+    trigger_price: Price
     is_quote_quantity: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, quantity: Any, price: Any | None, trigger_price: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, is_quote_quantity: bool=False) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, account_id: AccountId | None, quantity: Quantity, price: Price | None, trigger_price: Price | None, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False, is_quote_quantity: bool=False) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -2881,11 +2885,11 @@ class OrderUpdated(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -2896,7 +2900,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -2907,7 +2911,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -2918,7 +2922,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -2929,7 +2933,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -2940,7 +2944,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -2962,7 +2966,7 @@ class OrderUpdated(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -3075,21 +3079,21 @@ class OrderFilled(OrderEvent):
     ValueError
         If `last_qty` is not positive (> 0).
     """
-    trade_id: Any
-    position_id: Any
+    trade_id: TradeId
+    position_id: PositionId
     order_side: Any
     order_type: Any
-    last_qty: Any
-    last_px: Any
-    currency: Any
-    commission: Any
+    last_qty: Quantity
+    last_px: Price
+    currency: Currency
+    commission: Money
     liquidity_side: Any
     info: dict
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, trade_id: Any, position_id: Any | None, order_side: Any, order_type: Any, last_qty: Any, last_px: Any, currency: Any, commission: Any, liquidity_side: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, info: dict | None=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, account_id: AccountId, trade_id: TradeId, position_id: PositionId | None, order_side: Any, order_type: Any, last_qty: Quantity, last_px: Price, currency: Currency, commission: Money, liquidity_side: Any, event_id: UUID4, ts_event: int, ts_init: int, reconciliation: bool=False, info: dict | None=None) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -3101,11 +3105,11 @@ class OrderFilled(OrderEvent):
     def __repr__(self) -> str:
         ...
 
-    def set_client_order_id(self, client_order_id: Any):
+    def set_client_order_id(self, client_order_id: ClientOrderId):
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         The trader ID associated with the event.
 
@@ -3116,7 +3120,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def strategy_id(self) -> Any:
+    def strategy_id(self) -> TraderId:
         """
         The strategy ID associated with the event.
 
@@ -3127,7 +3131,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def instrument_id(self) -> Any:
+    def instrument_id(self) -> InstrumentId:
         """
         The instrument ID associated with the event.
 
@@ -3138,7 +3142,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def client_order_id(self) -> Any:
+    def client_order_id(self) -> ClientOrderId:
         """
         The client order ID associated with the event.
 
@@ -3149,7 +3153,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def venue_order_id(self) -> Any | None:
+    def venue_order_id(self) -> VenueOrderId | None:
         """
         The venue order ID associated with the event.
 
@@ -3160,7 +3164,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def account_id(self) -> Any | None:
+    def account_id(self) -> AccountId | None:
         """
         The account ID associated with the event.
 
@@ -3182,7 +3186,7 @@ class OrderFilled(OrderEvent):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 

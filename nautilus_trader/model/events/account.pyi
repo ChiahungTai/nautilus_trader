@@ -1,7 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.message import Event
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import AccountId
+from nautilus_trader.model.objects import Currency
 
-class AccountState(Any):
+class AccountState(Event):
     """
     Represents an event which includes information on the state of the account.
 
@@ -28,18 +32,18 @@ class AccountState(Any):
     ts_init : uint64_t
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
-    account_id: Any
+    account_id: AccountId
     account_type: Any
-    base_currency: Any
+    base_currency: Currency
     balances: list
     margins: list
     is_reported: bool
     info: dict
 
-    def __init__(self, account_id: Any, account_type: Any, base_currency: Any, reported: bool, balances: list, margins: list, info: dict, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, account_id: AccountId, account_type: Any, base_currency: Currency, reported: bool, balances: list, margins: list, info: dict, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -49,7 +53,7 @@ class AccountState(Any):
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 

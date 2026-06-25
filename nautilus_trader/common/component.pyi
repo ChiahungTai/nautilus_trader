@@ -1,6 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime, timedelta, tzinfo
+from nautilus_trader.core.message import Event, Request, Response
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import Identifier, TraderId
+from nautilus_trader.serialization.base import Serializer
 RECV = '<--'
 SENT = '-->'
 CMD = '[CMD]'
@@ -537,7 +541,7 @@ class LiveClock(Clock):
     def cancel_timers(self) -> None:
         ...
 
-class TimeEvent(Any):
+class TimeEvent(Event):
     """
     Represents a time event occurring at the event timestamp.
 
@@ -553,7 +557,7 @@ class TimeEvent(Any):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, name: str, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, name: str, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
     def __getstate__(self):
@@ -586,7 +590,7 @@ class TimeEvent(Any):
         """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -814,11 +818,11 @@ class Component:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    trader_id: Any
-    id: Any
+    trader_id: TraderId
+    id: Identifier
     type: type
 
-    def __init__(self, clock: Clock, trader_id: Any=None, component_id: Any=None, component_name: str | None=None, msgbus: MessageBus | None=None, config: Any | None | None=None) -> None:
+    def __init__(self, clock: Clock, trader_id: TraderId | None=None, component_id: Identifier | None=None, component_name: str | None=None, msgbus: MessageBus | None=None, config: Any | None | None=None) -> None:
         ...
 
     def __eq__(self, other: Component) -> bool:
@@ -1104,15 +1108,15 @@ class MessageBus:
     This message bus is not thread-safe and must be called from the same thread
     as the event loop.
     """
-    trader_id: Any
-    serializer: Any
+    trader_id: TraderId
+    serializer: Serializer
     has_backing: bool
     sent_count: int
     req_count: int
     res_count: int
     pub_count: int
 
-    def __init__(self, trader_id: Any, clock: Clock, instance_id: Any=None, name: str | None=None, serializer: Any=None, database: Any | None | None=None, config: Any | None | None=None) -> None:
+    def __init__(self, trader_id: TraderId, clock: Clock, instance_id: UUID4 | None=None, name: str | None=None, serializer: Serializer | None=None, database: Any | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def endpoints(self) -> list:
@@ -1196,7 +1200,7 @@ class MessageBus:
 
         """
 
-    def is_pending_request(self, request_id: Any) -> bool:
+    def is_pending_request(self, request_id: UUID4) -> bool:
         """
         Return if the given `request_id` is still pending a response.
 
@@ -1309,7 +1313,7 @@ class MessageBus:
 
         """
 
-    def request(self, endpoint: str, request: Any) -> None:
+    def request(self, endpoint: str, request: Request) -> None:
         """
         Handle the given `request`.
 
@@ -1324,7 +1328,7 @@ class MessageBus:
 
         """
 
-    def response(self, response: Any) -> None:
+    def response(self, response: Response) -> None:
         """
         Handle the given `response`.
 
@@ -1564,13 +1568,13 @@ class Throttler:
 
         """
 
-def register_component_clock(instance_id: Any, clock: Clock) -> None:
+def register_component_clock(instance_id: UUID4, clock: Clock) -> None:
     ...
 
-def deregister_component_clock(instance_id: Any, clock: Clock) -> None:
+def deregister_component_clock(instance_id: UUID4, clock: Clock) -> None:
     ...
 
-def remove_instance_component_clocks(instance_id: Any) -> None:
+def remove_instance_component_clocks(instance_id: UUID4) -> None:
     ...
 
 def set_backtest_force_stop(value: bool) -> None:
@@ -1594,7 +1598,7 @@ def log_level_from_str(value: str) -> Any:
 def log_level_to_str(value: Any) -> str:
     ...
 
-def init_logging(trader_id: Any=None, machine_id: str | None=None, instance_id: Any=None, level_stdout: Any=..., level_file: Any=..., directory: str | None=None, file_name: str | None=None, file_format: str | None=None, component_levels: dict | None=None, log_components_only: bool=False, colors: bool=True, bypass: bool=False, print_config: bool=False, max_file_size: int=0, max_backup_count: int=5) -> LogGuard:
+def init_logging(trader_id: TraderId | None=None, machine_id: str | None=None, instance_id: UUID4 | None=None, level_stdout: Any=..., level_file: Any=..., directory: str | None=None, file_name: str | None=None, file_format: str | None=None, component_levels: dict | None=None, log_components_only: bool=False, colors: bool=True, bypass: bool=False, print_config: bool=False, max_file_size: int=0, max_backup_count: int=5) -> LogGuard:
     """
     Initialize the logging subsystem.
 
@@ -1667,7 +1671,7 @@ def set_logging_pyo3(value: bool) -> None:
 def flush_logger() -> None:
     ...
 
-def log_header(trader_id: Any, machine_id: str, instance_id: Any, component: str) -> None:
+def log_header(trader_id: TraderId, machine_id: str, instance_id: UUID4, component: str) -> None:
     ...
 
 def log_sysinfo(component: str) -> None:

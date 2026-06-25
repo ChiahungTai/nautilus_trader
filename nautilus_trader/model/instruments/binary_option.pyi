@@ -2,7 +2,9 @@
 from typing import Any, Callable
 from decimal import Decimal
 import pandas as pd
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Price, Quantity
 
 class BinaryOption(Instrument):
     """
@@ -68,7 +70,7 @@ class BinaryOption(Instrument):
     activation_ns: int
     expiration_ns: int
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, currency: Any, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, activation_ns: int, expiration_ns: int, ts_event: int, ts_init: int, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, outcome: str | None=None, description: str | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, asset_class: Any, currency: Currency, price_precision: int, size_precision: int, price_increment: Price, size_increment: Quantity, activation_ns: int, expiration_ns: int, ts_event: int, ts_init: int, max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, outcome: str | None=None, description: str | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @property

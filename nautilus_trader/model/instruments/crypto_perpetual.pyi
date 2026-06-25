@@ -1,7 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
 class CryptoPerpetual(Instrument):
     """
@@ -96,14 +98,14 @@ class CryptoPerpetual(Instrument):
         If `margin_maint` is negative (< 0).
 
     """
-    base_currency: Any
-    settlement_currency: Any
+    base_currency: Currency
+    settlement_currency: Currency
     is_quanto: bool
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, base_currency: Any, quote_currency: Any, settlement_currency: Any, is_inverse: bool, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, multiplier=..., lot_size=..., max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, base_currency: Currency, quote_currency: Currency, settlement_currency: Currency, is_inverse: bool, price_precision: int, size_precision: int, price_increment: Price, size_increment: Quantity, ts_event: int, ts_init: int, multiplier=..., lot_size=..., max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, max_notional: Money | None | None=None, min_notional: Money | None | None=None, max_price: Price | None | None=None, min_price: Price | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
-    def get_base_currency(self) -> Any:
+    def get_base_currency(self) -> Currency:
         """
         Return the instruments base currency.
 
@@ -113,7 +115,7 @@ class CryptoPerpetual(Instrument):
 
         """
 
-    def get_settlement_currency(self) -> Any:
+    def get_settlement_currency(self) -> Currency:
         """
         Return the currency used to settle a trade of the instrument.
 
@@ -123,7 +125,7 @@ class CryptoPerpetual(Instrument):
 
         """
 
-    def get_cost_currency(self) -> Any:
+    def get_cost_currency(self) -> Currency:
         """
         Return the currency used for PnL calculations for the instrument.
 
@@ -137,7 +139,7 @@ class CryptoPerpetual(Instrument):
 
         """
 
-    def notional_value(self, quantity: Any, price: Any, use_quote_for_inverse: bool=False, target_currency: Any=None, conversion_price: Any=None) -> Any:
+    def notional_value(self, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False, target_currency: Currency | None=None, conversion_price: Price | None=None) -> Money:
         """
         Calculate the notional value.
 

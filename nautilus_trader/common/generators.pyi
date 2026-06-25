@@ -1,6 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from nautilus_trader.common.component import Clock
+from nautilus_trader.model.identifiers import ClientOrderId, OrderListId, PositionId, StrategyId, TraderId
 
 class IdentifierGenerator:
     """
@@ -14,7 +15,7 @@ class IdentifierGenerator:
         The internal clock.
     """
 
-    def __init__(self, trader_id: Any, clock: Clock) -> None:
+    def __init__(self, trader_id: TraderId, clock: Clock) -> None:
         ...
 
 class ClientOrderIdGenerator(IdentifierGenerator):
@@ -45,7 +46,7 @@ class ClientOrderIdGenerator(IdentifierGenerator):
     use_uuids: bool
     use_hyphens: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, clock: Clock, initial_count: int=0, use_uuids: bool=False, use_hyphens: bool=True) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, clock: Clock, initial_count: int=0, use_uuids: bool=False, use_hyphens: bool=True) -> None:
         ...
 
     def set_count(self, count: int) -> None:
@@ -59,7 +60,7 @@ class ClientOrderIdGenerator(IdentifierGenerator):
 
         """
 
-    def generate(self) -> Any:
+    def generate(self) -> ClientOrderId:
         """
         Return a unique client order ID.
 
@@ -98,7 +99,7 @@ class OrderListIdGenerator(IdentifierGenerator):
     """
     count: int
 
-    def __init__(self, trader_id: Any, strategy_id: Any, clock: Clock, initial_count: int=0) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, clock: Clock, initial_count: int=0) -> None:
         ...
 
     def set_count(self, count: int) -> None:
@@ -112,7 +113,7 @@ class OrderListIdGenerator(IdentifierGenerator):
 
         """
 
-    def generate(self) -> Any:
+    def generate(self) -> OrderListId:
         """
         Return a unique order list ID.
 
@@ -139,10 +140,10 @@ class PositionIdGenerator(IdentifierGenerator):
         The trader ID tag for the generator.
     """
 
-    def __init__(self, trader_id: Any, clock: Clock) -> None:
+    def __init__(self, trader_id: TraderId, clock: Clock) -> None:
         ...
 
-    def set_count(self, strategy_id: Any, count: int) -> None:
+    def set_count(self, strategy_id: StrategyId, count: int) -> None:
         """
         Set the internal position count for the given strategy ID.
 
@@ -160,7 +161,7 @@ class PositionIdGenerator(IdentifierGenerator):
 
         """
 
-    def get_count(self, strategy_id: Any) -> int:
+    def get_count(self, strategy_id: StrategyId) -> int:
         """
         Return the internal position count for the given strategy ID.
 
@@ -175,7 +176,7 @@ class PositionIdGenerator(IdentifierGenerator):
 
         """
 
-    def generate(self, strategy_id: Any, flipped: bool=False) -> Any:
+    def generate(self, strategy_id: StrategyId, flipped: bool=False) -> PositionId:
         """
         Return a unique position ID.
 

@@ -1,6 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Price, Quantity
 
 class IndexInstrument(Instrument):
     """
@@ -52,7 +54,7 @@ class IndexInstrument(Instrument):
 
     """
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, currency: Any, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, currency: Currency, price_precision: int, size_precision: int, price_increment: Price, size_increment: Quantity, ts_event: int, ts_init: int, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod

@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.data import Bar, QuoteTick, TradeTick
 
 class Indicator:
     """
@@ -24,13 +25,13 @@ class Indicator:
     def __repr__(self) -> str:
         ...
 
-    def handle_quote_tick(self, tick: Any) -> None:
+    def handle_quote_tick(self, tick: QuoteTick) -> None:
         """Abstract method (implement in subclass)."""
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         """Abstract method (implement in subclass)."""
 
-    def handle_bar(self, bar: Any) -> None:
+    def handle_bar(self, bar: Bar) -> None:
         """Abstract method (implement in subclass)."""
 
     def reset(self) -> None:

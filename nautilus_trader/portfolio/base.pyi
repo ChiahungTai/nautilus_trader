@@ -1,5 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.model.identifiers import AccountId, InstrumentId, Venue
+from nautilus_trader.model.objects import Currency, Money, Price
 
 class PortfolioFacade:
     """
@@ -8,62 +11,62 @@ class PortfolioFacade:
     initialized: bool
     analyzer: Any
 
-    def account(self, venue: Any=None, account_id: Any=None) -> Any:
+    def account(self, venue: Venue | None=None, account_id: AccountId | None=None) -> Account:
         """Abstract method (implement in subclass)."""
 
-    def balances_locked(self, venue: Any=None, account_id: Any=None) -> dict:
+    def balances_locked(self, venue: Venue | None=None, account_id: AccountId | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def margins_init(self, venue: Any=None, account_id: Any=None) -> dict:
+    def margins_init(self, venue: Venue | None=None, account_id: AccountId | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def margins_maint(self, venue: Any=None, account_id: Any=None) -> dict:
+    def margins_maint(self, venue: Venue | None=None, account_id: AccountId | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def realized_pnls(self, venue: Any=None, account_id: Any=None, target_currency: Any=None) -> dict:
+    def realized_pnls(self, venue: Venue | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def unrealized_pnls(self, venue: Any=None, account_id: Any=None, target_currency: Any=None) -> dict:
+    def unrealized_pnls(self, venue: Venue | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def total_pnls(self, venue: Any=None, account_id: Any=None, target_currency: Any=None) -> dict:
+    def total_pnls(self, venue: Venue | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def net_exposures(self, venue: Any=None, account_id: Any=None, target_currency: Any=None) -> dict:
+    def net_exposures(self, venue: Venue | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def mark_values(self, venue: Any=None, account_id: Any=None) -> dict:
+    def mark_values(self, venue: Venue | None=None, account_id: AccountId | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def equity(self, venue: Any=None, account_id: Any=None) -> dict:
+    def equity(self, venue: Venue | None=None, account_id: AccountId | None=None) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def missing_price_instruments(self, venue: Any) -> list:
+    def missing_price_instruments(self, venue: Venue) -> list:
         """Abstract method (implement in subclass)."""
 
-    def realized_pnl(self, instrument_id: Any, account_id: Any=None, target_currency: Any=None) -> Any:
+    def realized_pnl(self, instrument_id: InstrumentId, account_id: AccountId | None=None, target_currency: Currency | None=None) -> Money:
         """Abstract method (implement in subclass)."""
 
-    def unrealized_pnl(self, instrument_id: Any, price: Any=None, account_id: Any=None, target_currency: Any=None) -> Any:
+    def unrealized_pnl(self, instrument_id: InstrumentId, price: Price | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> Money:
         """Abstract method (implement in subclass)."""
 
-    def total_pnl(self, instrument_id: Any, price: Any=None, account_id: Any=None, target_currency: Any=None) -> Any:
+    def total_pnl(self, instrument_id: InstrumentId, price: Price | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> Money:
         """Abstract method (implement in subclass)."""
 
-    def net_exposure(self, instrument_id: Any, price: Any=None, account_id: Any=None, target_currency: Any=None) -> Any:
+    def net_exposure(self, instrument_id: InstrumentId, price: Price | None=None, account_id: AccountId | None=None, target_currency: Currency | None=None) -> Money:
         """Abstract method (implement in subclass)."""
 
-    def net_position(self, instrument_id: Any, account_id: Any=None) -> object:
+    def net_position(self, instrument_id: InstrumentId, account_id: AccountId | None=None) -> object:
         """Abstract method (implement in subclass)."""
 
-    def is_net_long(self, instrument_id: Any, account_id: Any=None) -> bool:
+    def is_net_long(self, instrument_id: InstrumentId, account_id: AccountId | None=None) -> bool:
         """Abstract method (implement in subclass)."""
 
-    def is_net_short(self, instrument_id: Any, account_id: Any=None) -> bool:
+    def is_net_short(self, instrument_id: InstrumentId, account_id: AccountId | None=None) -> bool:
         """Abstract method (implement in subclass)."""
 
-    def is_flat(self, instrument_id: Any, account_id: Any=None) -> bool:
+    def is_flat(self, instrument_id: InstrumentId, account_id: AccountId | None=None) -> bool:
         """Abstract method (implement in subclass)."""
 
-    def is_completely_flat(self, account_id: Any=None) -> bool:
+    def is_completely_flat(self, account_id: AccountId | None=None) -> bool:
         """Abstract method (implement in subclass)."""

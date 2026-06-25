@@ -1,6 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Money, Price, Quantity
 
 class PositionSizer:
     """
@@ -15,12 +17,12 @@ class PositionSizer:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    instrument: Any
+    instrument: Instrument
 
-    def __init__(self, instrument: Any) -> None:
+    def __init__(self, instrument: Instrument) -> None:
         ...
 
-    def update_instrument(self, instrument: Any) -> None:
+    def update_instrument(self, instrument: Instrument) -> None:
         """
         Update the internal instrument with the given instrument.
 
@@ -36,7 +38,7 @@ class PositionSizer:
 
         """
 
-    def calculate(self, entry: Any, stop_loss: Any, equity: Any, risk: Decimal, commission_rate: Decimal=..., exchange_rate: Decimal=..., hard_limit: Decimal | None | None=None, unit_batch_size: Decimal=..., units: int=1) -> Any:
+    def calculate(self, entry: Price, stop_loss: Price, equity: Money, risk: Decimal, commission_rate: Decimal=..., exchange_rate: Decimal=..., hard_limit: Decimal | None | None=None, unit_batch_size: Decimal=..., units: int=1) -> Quantity:
         """Abstract method (implement in subclass)."""
 
 class FixedRiskSizer(PositionSizer):
@@ -49,10 +51,10 @@ class FixedRiskSizer(PositionSizer):
         The instrument for position sizing.
     """
 
-    def __init__(self, instrument: Any) -> None:
+    def __init__(self, instrument: Instrument) -> None:
         ...
 
-    def calculate(self, entry: Any, stop_loss: Any, equity: Any, risk: Decimal, commission_rate: Decimal=..., exchange_rate: Decimal=..., hard_limit: Decimal | None | None=None, unit_batch_size: Decimal=..., units: int=1) -> Any:
+    def calculate(self, entry: Price, stop_loss: Price, equity: Money, risk: Decimal, commission_rate: Decimal=..., exchange_rate: Decimal=..., hard_limit: Decimal | None | None=None, unit_batch_size: Decimal=..., units: int=1) -> Quantity:
         """
         Calculate the position size quantity.
 

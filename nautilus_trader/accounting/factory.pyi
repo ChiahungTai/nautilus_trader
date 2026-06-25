@@ -1,5 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.model.events.account import AccountState
 
 class AccountFactory:
     """
@@ -76,7 +78,7 @@ class AccountFactory:
         """
 
     @staticmethod
-    def create(event: Any) -> Any:
+    def create(event: AccountState) -> Account:
         """
         Create an account based on the events account type.
 

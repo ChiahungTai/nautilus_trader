@@ -1,9 +1,22 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.common.component import Clock, MessageBus
 from nautilus_trader.execution.messages import TradingCommand
+from nautilus_trader.model.events.order import OrderAccepted, OrderCanceled, OrderCancelRejected, OrderDenied, OrderEmulated, OrderEvent, OrderExpired, OrderFilled, OrderInitialized, OrderModifyRejected, OrderPendingCancel, OrderPendingUpdate, OrderRejected, OrderReleased, OrderSubmitted, OrderTriggered, OrderUpdated
+from nautilus_trader.model.events.position import PositionChanged, PositionClosed, PositionEvent, PositionOpened
+from nautilus_trader.model.identifiers import ClientId, TraderId
+from nautilus_trader.model.objects import Price, Quantity
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.orders.limit import LimitOrder
+from nautilus_trader.model.orders.list import OrderList
+from nautilus_trader.model.orders.market import MarketOrder
+from nautilus_trader.model.orders.market_to_limit import MarketToLimitOrder
+from nautilus_trader.portfolio.base import PortfolioFacade
 
-class ExecAlgorithm(Any):
+class ExecAlgorithm(Actor):
     """
     The base class for all execution algorithms.
 
@@ -37,7 +50,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def register(self, trader_id: Any, portfolio: Any, msgbus: Any, cache: Any, clock: Any) -> None:
+    def register(self, trader_id: TraderId, portfolio: PortfolioFacade, msgbus: MessageBus, cache: CacheFacade, clock: Clock) -> None:
         """
         Register the execution algorithm with a trader.
 
@@ -76,7 +89,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order(self, order: Any) -> None:
+    def on_order(self, order: Order) -> None:
         """
         Actions to be performed when running and receives an order.
 
@@ -91,7 +104,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_list(self, order_list: Any) -> None:
+    def on_order_list(self, order_list: OrderList) -> None:
         """
         Actions to be performed when running and receives an order list.
 
@@ -106,7 +119,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_event(self, event: Any) -> None:
+    def on_order_event(self, event: OrderEvent) -> None:
         """
         Actions to be performed when running and receives an order event.
 
@@ -121,7 +134,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_initialized(self, event: Any) -> None:
+    def on_order_initialized(self, event: OrderInitialized) -> None:
         """
         Actions to be performed when running and receives an order initialized event.
 
@@ -136,7 +149,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_denied(self, event: Any) -> None:
+    def on_order_denied(self, event: OrderDenied) -> None:
         """
         Actions to be performed when running and receives an order denied event.
 
@@ -151,7 +164,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_emulated(self, event: Any) -> None:
+    def on_order_emulated(self, event: OrderEmulated) -> None:
         """
         Actions to be performed when running and receives an order initialized event.
 
@@ -166,7 +179,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_released(self, event: Any) -> None:
+    def on_order_released(self, event: OrderReleased) -> None:
         """
         Actions to be performed when running and receives an order released event.
 
@@ -181,7 +194,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_submitted(self, event: Any) -> None:
+    def on_order_submitted(self, event: OrderSubmitted) -> None:
         """
         Actions to be performed when running and receives an order submitted event.
 
@@ -196,7 +209,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_rejected(self, event: Any) -> None:
+    def on_order_rejected(self, event: OrderRejected) -> None:
         """
         Actions to be performed when running and receives an order rejected event.
 
@@ -211,7 +224,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_accepted(self, event: Any) -> None:
+    def on_order_accepted(self, event: OrderAccepted) -> None:
         """
         Actions to be performed when running and receives an order accepted event.
 
@@ -226,7 +239,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_canceled(self, event: Any) -> None:
+    def on_order_canceled(self, event: OrderCanceled) -> None:
         """
         Actions to be performed when running and receives an order canceled event.
 
@@ -241,7 +254,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_expired(self, event: Any) -> None:
+    def on_order_expired(self, event: OrderExpired) -> None:
         """
         Actions to be performed when running and receives an order expired event.
 
@@ -256,7 +269,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_triggered(self, event: Any) -> None:
+    def on_order_triggered(self, event: OrderTriggered) -> None:
         """
         Actions to be performed when running and receives an order triggered event.
 
@@ -271,7 +284,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_pending_update(self, event: Any) -> None:
+    def on_order_pending_update(self, event: OrderPendingUpdate) -> None:
         """
         Actions to be performed when running and receives an order pending update event.
 
@@ -286,7 +299,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_pending_cancel(self, event: Any) -> None:
+    def on_order_pending_cancel(self, event: OrderPendingCancel) -> None:
         """
         Actions to be performed when running and receives an order pending cancel event.
 
@@ -301,7 +314,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_modify_rejected(self, event: Any) -> None:
+    def on_order_modify_rejected(self, event: OrderModifyRejected) -> None:
         """
         Actions to be performed when running and receives an order modify rejected event.
 
@@ -316,7 +329,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_cancel_rejected(self, event: Any) -> None:
+    def on_order_cancel_rejected(self, event: OrderCancelRejected) -> None:
         """
         Actions to be performed when running and receives an order cancel rejected event.
 
@@ -331,7 +344,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_updated(self, event: Any) -> None:
+    def on_order_updated(self, event: OrderUpdated) -> None:
         """
         Actions to be performed when running and receives an order updated event.
 
@@ -346,7 +359,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_order_filled(self, event: Any) -> None:
+    def on_order_filled(self, event: OrderFilled) -> None:
         """
         Actions to be performed when running and receives an order filled event.
 
@@ -361,7 +374,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_position_event(self, event: Any) -> None:
+    def on_position_event(self, event: PositionEvent) -> None:
         """
         Actions to be performed when running and receives a position event.
 
@@ -376,7 +389,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_position_opened(self, event: Any) -> None:
+    def on_position_opened(self, event: PositionOpened) -> None:
         """
         Actions to be performed when running and receives a position opened event.
 
@@ -391,7 +404,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_position_changed(self, event: Any) -> None:
+    def on_position_changed(self, event: PositionChanged) -> None:
         """
         Actions to be performed when running and receives a position changed event.
 
@@ -406,7 +419,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def on_position_closed(self, event: Any) -> None:
+    def on_position_closed(self, event: PositionClosed) -> None:
         """
         Actions to be performed when running and receives a position closed event.
 
@@ -421,7 +434,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def spawn_market(self, primary: Any, quantity: Any, time_in_force: Any=..., reduce_only: bool=False, tags: list | None=None, reduce_primary: bool=True) -> Any:
+    def spawn_market(self, primary: Order, quantity: Quantity, time_in_force: Any=..., reduce_only: bool=False, tags: list | None=None, reduce_primary: bool=True) -> MarketOrder:
         """
         Spawn a new ``MARKET`` order from the given primary order.
 
@@ -463,7 +476,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def spawn_limit(self, primary: Any, quantity: Any, price: Any, time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, display_qty: Any=None, emulation_trigger: Any=..., tags: list | None=None, reduce_primary: bool=True) -> Any:
+    def spawn_limit(self, primary: Order, quantity: Quantity, price: Price, time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., tags: list | None=None, reduce_primary: bool=True) -> LimitOrder:
         """
         Spawn a new ``LIMIT`` order from the given primary order.
 
@@ -520,7 +533,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def spawn_market_to_limit(self, primary: Any, quantity: Any, time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, display_qty: Any=None, emulation_trigger: Any=..., tags: list | None=None, reduce_primary: bool=True) -> Any:
+    def spawn_market_to_limit(self, primary: Order, quantity: Quantity, time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., tags: list | None=None, reduce_primary: bool=True) -> MarketToLimitOrder:
         """
         Spawn a new ``MARKET_TO_LIMIT`` order from the given primary order.
 
@@ -573,7 +586,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def submit_order(self, order: Any) -> None:
+    def submit_order(self, order: Order) -> None:
         """
         Submit the given order (may be the primary or spawned order).
 
@@ -606,7 +619,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def modify_order(self, order: Any, quantity: Any=None, price: Any=None, trigger_price: Any=None, client_id: Any=None) -> None:
+    def modify_order(self, order: Order, quantity: Quantity | None=None, price: Price | None=None, trigger_price: Price | None=None, client_id: ClientId | None=None) -> None:
         """
         Modify the given order with optional parameters and routing instructions.
 
@@ -651,7 +664,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def modify_order_in_place(self, order: Any, quantity: Any=None, price: Any=None, trigger_price: Any=None) -> None:
+    def modify_order_in_place(self, order: Order, quantity: Quantity | None=None, price: Price | None=None, trigger_price: Price | None=None) -> None:
         """
         Modify the given ``INITIALIZED`` order in place (immediately) with optional parameters.
 
@@ -688,7 +701,7 @@ class ExecAlgorithm(Any):
 
         """
 
-    def cancel_order(self, order: Any, client_id: Any=None) -> None:
+    def cancel_order(self, order: Order, client_id: ClientId | None=None) -> None:
         """
         Cancel the given order with optional routing instructions.
 

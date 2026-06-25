@@ -1,18 +1,24 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.events.account import AccountState
+from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.identifiers import AccountId, InstrumentId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import AccountBalance, Currency, Money, Price, Quantity
+from nautilus_trader.model.position import Position
 
 class Account:
     """
     The base class for all trading accounts.
     """
-    id: Any
+    id: AccountId
     type: Any
-    base_currency: Any
+    base_currency: Currency
     is_cash_account: bool
     is_margin_account: bool
     calculate_account_state: bool
 
-    def __init__(self, event: Any, calculate_account_state: bool) -> None:
+    def __init__(self, event: AccountState, calculate_account_state: bool) -> None:
         ...
 
     def __eq__(self, other: Account) -> bool:
@@ -122,7 +128,7 @@ class Account:
         Return the total commissions for the account.
         """
 
-    def balance(self, currency: Any=None) -> Any:
+    def balance(self, currency: Currency | None=None) -> AccountBalance | None:
         """
         Return the current account balance total.
 
@@ -150,7 +156,7 @@ class Account:
 
         """
 
-    def balance_total(self, currency: Any=None) -> Any:
+    def balance_total(self, currency: Currency | None=None) -> Money | None:
         """
         Return the current account balance total.
 
@@ -178,7 +184,7 @@ class Account:
 
         """
 
-    def balance_free(self, currency: Any=None) -> Any:
+    def balance_free(self, currency: Currency | None=None) -> Money | None:
         """
         Return the account balance free.
 
@@ -206,7 +212,7 @@ class Account:
 
         """
 
-    def balance_locked(self, currency: Any=None) -> Any:
+    def balance_locked(self, currency: Currency | None=None) -> Money | None:
         """
         Return the account balance locked.
 
@@ -234,7 +240,7 @@ class Account:
 
         """
 
-    def commission(self, currency: Any) -> Any:
+    def commission(self, currency: Currency) -> Money | None:
         """
         Return the total commissions for the given currency.
 
@@ -249,7 +255,7 @@ class Account:
 
         """
 
-    def apply(self, event: Any) -> None:
+    def apply(self, event: AccountState) -> None:
         """
         Apply the given account event to the account.
 
@@ -292,7 +298,7 @@ class Account:
 
         """
 
-    def update_commissions(self, commission: Any) -> None:
+    def update_commissions(self, commission: Money) -> None:
         """
         Update the commissions.
 
@@ -326,7 +332,7 @@ class Account:
 
         """
 
-    def is_unleveraged(self, instrument_id: Any) -> bool:
+    def is_unleveraged(self, instrument_id: InstrumentId) -> bool:
         """
         Return whether the given instrument is leveraged for this account (leverage == 1).
 
@@ -341,11 +347,11 @@ class Account:
 
         """
 
-    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_commission(self, instrument: Instrument, last_qty: Quantity, last_px: Price, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Money:
         ...
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
+    def calculate_pnls(self, instrument: Instrument, fill: OrderFilled, position: Position | None | None=None) -> list:
         ...
 
-    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+    def balance_impact(self, instrument: Instrument, quantity: Quantity, price: Price, order_side: Any) -> Money:
         ...

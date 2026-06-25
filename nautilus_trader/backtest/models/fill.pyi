@@ -1,5 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.book import OrderBook
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.orders.base import Order
 
 class FillModel:
     """
@@ -67,7 +71,7 @@ class FillModel:
 
         """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook | None:
         """
         Return a simulated OrderBook for fill simulation.
 
@@ -109,7 +113,7 @@ class BestPriceFillModel(FillModel):
     def fill_limit_inside_spread(self) -> bool:
         ...
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with unlimited liquidity at best prices.
         Also allows execution inside the bid ask
@@ -124,7 +128,7 @@ class OneTickSlippageFillModel(FillModel):
 
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with no volume at best prices, unlimited volume one tick away.
         """
@@ -137,7 +141,7 @@ class TwoTierFillModel(FillModel):
     of basic market impact for small to medium orders.
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with two-tier liquidity structure.
         """
@@ -152,7 +156,7 @@ class ProbabilisticFillModel(FillModel):
 
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook based on probabilistic logic.
         """
@@ -166,7 +170,7 @@ class SizeAwareFillModel(FillModel):
 
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with size-dependent liquidity.
         """
@@ -180,7 +184,7 @@ class LimitOrderPartialFillModel(FillModel):
 
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with limited fills at limit prices.
         """
@@ -196,7 +200,7 @@ class ThreeTierFillModel(FillModel):
 
     """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with three-tier liquidity structure.
         """
@@ -223,7 +227,7 @@ class MarketHoursFillModel(FillModel):
         Set the liquidity period for testing purposes.
         """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with time-dependent liquidity.
         """
@@ -245,7 +249,7 @@ class VolumeSensitiveFillModel(FillModel):
         Set recent volume for testing purposes.
         """
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with volume-based liquidity.
         """
@@ -262,7 +266,7 @@ class CompetitionAwareFillModel(FillModel):
     def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None, liquidity_factor: float=0.3) -> None:
         ...
 
-    def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:
+    def get_orderbook_for_fill_simulation(self, instrument: Instrument, order: Order, best_bid: Price, best_ask: Price) -> OrderBook:
         """
         Return OrderBook with competition-adjusted liquidity.
         """

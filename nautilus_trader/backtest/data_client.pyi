@@ -1,8 +1,13 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 '\nThis module provides a data client for backtesting.\n'
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, MessageBus
+from nautilus_trader.data.client import DataClient, MarketDataClient
+from nautilus_trader.data.messages import RequestBars, RequestData, RequestForwardPrices, RequestInstrument, RequestInstruments, RequestOrderBookSnapshot, RequestQuoteTicks, RequestTradeTicks, SubscribeBars, SubscribeData, SubscribeFundingRates, SubscribeIndexPrices, SubscribeInstrument, SubscribeInstrumentClose, SubscribeInstruments, SubscribeInstrumentStatus, SubscribeMarkPrices, SubscribeOptionGreeks, SubscribeOrderBook, SubscribeQuoteTicks, SubscribeTradeTicks, UnsubscribeBars, UnsubscribeData, UnsubscribeFundingRates, UnsubscribeIndexPrices, UnsubscribeInstrument, UnsubscribeInstrumentClose, UnsubscribeInstruments, UnsubscribeInstrumentStatus, UnsubscribeMarkPrices, UnsubscribeOptionGreeks, UnsubscribeOrderBook, UnsubscribeQuoteTicks, UnsubscribeTradeTicks
+from nautilus_trader.model.identifiers import ClientId
 
-class BacktestDataClient(Any):
+class BacktestDataClient(DataClient):
     """
     Provides an implementation of `DataClient` for backtesting.
 
@@ -20,19 +25,19 @@ class BacktestDataClient(Any):
         The configuration for the instance.
     """
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, client_id: ClientId, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
-    def subscribe(self, command: Any) -> None:
+    def subscribe(self, command: SubscribeData) -> None:
         ...
 
-    def unsubscribe(self, command: Any) -> None:
+    def unsubscribe(self, command: UnsubscribeData) -> None:
         ...
 
-    def request(self, request: Any) -> None:
+    def request(self, request: RequestData) -> None:
         ...
 
-class BacktestMarketDataClient(Any):
+class BacktestMarketDataClient(MarketDataClient):
     """
     Provides an implementation of `MarketDataClient` for backtesting.
 
@@ -48,110 +53,110 @@ class BacktestMarketDataClient(Any):
         The clock for the client.
     """
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any) -> None:
+    def __init__(self, client_id: ClientId, msgbus: MessageBus, cache: Cache, clock: Clock) -> None:
         ...
 
-    def subscribe(self, command: Any) -> None:
+    def subscribe(self, command: SubscribeData) -> None:
         ...
 
-    def unsubscribe(self, command: Any) -> None:
+    def unsubscribe(self, command: UnsubscribeData) -> None:
         ...
 
-    def subscribe_instruments(self, command: Any) -> None:
+    def subscribe_instruments(self, command: SubscribeInstruments) -> None:
         ...
 
-    def subscribe_instrument(self, command: Any) -> None:
+    def subscribe_instrument(self, command: SubscribeInstrument) -> None:
         ...
 
-    def subscribe_order_book_deltas(self, command: Any) -> None:
+    def subscribe_order_book_deltas(self, command: SubscribeOrderBook) -> None:
         ...
 
-    def subscribe_order_book_depth(self, command: Any) -> None:
+    def subscribe_order_book_depth(self, command: SubscribeOrderBook) -> None:
         ...
 
-    def subscribe_quote_ticks(self, command: Any) -> None:
+    def subscribe_quote_ticks(self, command: SubscribeQuoteTicks) -> None:
         ...
 
-    def subscribe_trade_ticks(self, command: Any) -> None:
+    def subscribe_trade_ticks(self, command: SubscribeTradeTicks) -> None:
         ...
 
-    def subscribe_mark_prices(self, command: Any) -> None:
+    def subscribe_mark_prices(self, command: SubscribeMarkPrices) -> None:
         ...
 
-    def subscribe_index_prices(self, command: Any) -> None:
+    def subscribe_index_prices(self, command: SubscribeIndexPrices) -> None:
         ...
 
-    def subscribe_funding_rates(self, command: Any) -> None:
+    def subscribe_funding_rates(self, command: SubscribeFundingRates) -> None:
         ...
 
-    def subscribe_bars(self, command: Any) -> None:
+    def subscribe_bars(self, command: SubscribeBars) -> None:
         ...
 
-    def subscribe_instrument_status(self, command: Any) -> None:
+    def subscribe_instrument_status(self, command: SubscribeInstrumentStatus) -> None:
         ...
 
-    def subscribe_option_greeks(self, command: Any) -> None:
+    def subscribe_option_greeks(self, command: SubscribeOptionGreeks) -> None:
         ...
 
-    def subscribe_instrument_close(self, command: Any) -> None:
+    def subscribe_instrument_close(self, command: SubscribeInstrumentClose) -> None:
         ...
 
-    def unsubscribe_instruments(self, command: Any) -> None:
+    def unsubscribe_instruments(self, command: UnsubscribeInstruments) -> None:
         ...
 
-    def unsubscribe_instrument(self, command: Any) -> None:
+    def unsubscribe_instrument(self, command: UnsubscribeInstrument) -> None:
         ...
 
-    def unsubscribe_order_book_deltas(self, command: Any) -> None:
+    def unsubscribe_order_book_deltas(self, command: UnsubscribeOrderBook) -> None:
         ...
 
-    def unsubscribe_order_book_depth(self, command: Any) -> None:
+    def unsubscribe_order_book_depth(self, command: UnsubscribeOrderBook) -> None:
         ...
 
-    def unsubscribe_quote_ticks(self, command: Any) -> None:
+    def unsubscribe_quote_ticks(self, command: UnsubscribeQuoteTicks) -> None:
         ...
 
-    def unsubscribe_trade_ticks(self, command: Any) -> None:
+    def unsubscribe_trade_ticks(self, command: UnsubscribeTradeTicks) -> None:
         ...
 
-    def unsubscribe_mark_prices(self, command: Any) -> None:
+    def unsubscribe_mark_prices(self, command: UnsubscribeMarkPrices) -> None:
         ...
 
-    def unsubscribe_index_prices(self, command: Any) -> None:
+    def unsubscribe_index_prices(self, command: UnsubscribeIndexPrices) -> None:
         ...
 
-    def unsubscribe_funding_rates(self, command: Any) -> None:
+    def unsubscribe_funding_rates(self, command: UnsubscribeFundingRates) -> None:
         ...
 
-    def unsubscribe_bars(self, command: Any) -> None:
+    def unsubscribe_bars(self, command: UnsubscribeBars) -> None:
         ...
 
-    def unsubscribe_instrument_status(self, command: Any) -> None:
+    def unsubscribe_instrument_status(self, command: UnsubscribeInstrumentStatus) -> None:
         ...
 
-    def unsubscribe_option_greeks(self, command: Any) -> None:
+    def unsubscribe_option_greeks(self, command: UnsubscribeOptionGreeks) -> None:
         ...
 
-    def unsubscribe_instrument_close(self, command: Any) -> None:
+    def unsubscribe_instrument_close(self, command: UnsubscribeInstrumentClose) -> None:
         ...
 
-    def request_instrument(self, request: Any) -> None:
+    def request_instrument(self, request: RequestInstrument) -> None:
         ...
 
-    def request_instruments(self, request: Any) -> None:
+    def request_instruments(self, request: RequestInstruments) -> None:
         ...
 
-    def request_order_book_snapshot(self, request: Any) -> None:
+    def request_order_book_snapshot(self, request: RequestOrderBookSnapshot) -> None:
         ...
 
-    def request_quote_ticks(self, request: Any) -> None:
+    def request_quote_ticks(self, request: RequestQuoteTicks) -> None:
         ...
 
-    def request_trade_ticks(self, request: Any) -> None:
+    def request_trade_ticks(self, request: RequestTradeTicks) -> None:
         ...
 
-    def request_bars(self, request: Any) -> None:
+    def request_bars(self, request: RequestBars) -> None:
         ...
 
-    def request_forward_prices(self, request: Any) -> None:
+    def request_forward_prices(self, request: RequestForwardPrices) -> None:
         ...

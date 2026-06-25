@@ -1,8 +1,14 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, Component, MessageBus
 from nautilus_trader.execution.messages import BatchCancelOrders, CancelAllOrders, CancelOrder, ModifyOrder, QueryAccount, QueryOrder, SubmitOrder, SubmitOrderList
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, InstrumentId, PositionId, StrategyId, TradeId, Venue, VenueOrderId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
-class ExecutionClient(Any):
+class ExecutionClient(Component):
     """
     The base class for all execution clients.
 
@@ -39,19 +45,19 @@ class ExecutionClient(Any):
     This class should not be used directly, but through a concrete subclass.
     """
     oms_type: Any
-    venue: Any
-    account_id: Any
+    venue: Venue
+    account_id: AccountId
     account_type: Any
-    base_currency: Any
+    base_currency: Currency
     is_connected: bool
 
-    def __init__(self, client_id: Any, venue: Any | None, oms_type: Any, account_type: Any, base_currency: Any | None, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, client_id: ClientId, venue: Venue | None, oms_type: Any, account_type: Any, base_currency: Currency | None, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
         ...
 
-    def get_account(self) -> Any:
+    def get_account(self) -> Account | None:
         """
         Return the account for the client (if registered).
 
@@ -61,7 +67,7 @@ class ExecutionClient(Any):
 
         """
 
-    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any) -> Any:
+    def calculate_commission(self, instrument: Instrument, last_qty: Quantity, last_px: Price, liquidity_side: Any) -> Money | None:
         """
         Calculate the commission for a reconciliation fill.
 
@@ -193,7 +199,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_denied(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, reason: str, ts_event: int) -> None:
+    def generate_order_denied(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, reason: str, ts_event: int) -> None:
         """
         Generate an `OrderDenied` event and send it to the `ExecutionEngine`.
 
@@ -212,7 +218,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_submitted(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, ts_event: int) -> None:
+    def generate_order_submitted(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, ts_event: int) -> None:
         """
         Generate an `OrderSubmitted` event and send it to the `ExecutionEngine`.
 
@@ -229,7 +235,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_rejected(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, reason: str, ts_event: int, due_post_only: bool=False) -> None:
+    def generate_order_rejected(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, reason: str, ts_event: int, due_post_only: bool=False) -> None:
         """
         Generate an `OrderRejected` event and send it to the `ExecutionEngine`.
 
@@ -250,7 +256,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_accepted(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, ts_event: int) -> None:
+    def generate_order_accepted(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, ts_event: int) -> None:
         """
         Generate an `OrderAccepted` event and send it to the `ExecutionEngine`.
 
@@ -269,7 +275,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_modify_rejected(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, reason: str, ts_event: int) -> None:
+    def generate_order_modify_rejected(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, reason: str, ts_event: int) -> None:
         """
         Generate an `OrderModifyRejected` event and send it to the `ExecutionEngine`.
 
@@ -290,7 +296,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_cancel_rejected(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, reason: str, ts_event: int) -> None:
+    def generate_order_cancel_rejected(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, reason: str, ts_event: int) -> None:
         """
         Generate an `OrderCancelRejected` event and send it to the `ExecutionEngine`.
 
@@ -311,7 +317,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_updated(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, quantity: Any, price: Any, trigger_price: Any, ts_event: int, venue_order_id_modified: bool=False, is_quote_quantity: object | None=None) -> None:
+    def generate_order_updated(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, quantity: Quantity, price: Price, trigger_price: Price, ts_event: int, venue_order_id_modified: bool=False, is_quote_quantity: object | None=None) -> None:
         """
         Generate an `OrderUpdated` event and send it to the `ExecutionEngine`.
 
@@ -341,7 +347,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_canceled(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, ts_event: int) -> None:
+    def generate_order_canceled(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, ts_event: int) -> None:
         """
         Generate an `OrderCanceled` event and send it to the `ExecutionEngine`.
 
@@ -360,7 +366,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_triggered(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, ts_event: int) -> None:
+    def generate_order_triggered(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, ts_event: int) -> None:
         """
         Generate an `OrderTriggered` event and send it to the `ExecutionEngine`.
 
@@ -379,7 +385,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_expired(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, ts_event: int) -> None:
+    def generate_order_expired(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, ts_event: int) -> None:
         """
         Generate an `OrderExpired` event and send it to the `ExecutionEngine`.
 
@@ -398,7 +404,7 @@ class ExecutionClient(Any):
 
         """
 
-    def generate_order_filled(self, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, venue_position_id: Any | None, trade_id: Any, order_side: Any, order_type: Any, last_qty: Any, last_px: Any, quote_currency: Any, commission: Any, liquidity_side: Any, ts_event: int, info: dict | None=None) -> None:
+    def generate_order_filled(self, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId, venue_position_id: PositionId | None, trade_id: TradeId, order_side: Any, order_type: Any, last_qty: Quantity, last_px: Price, quote_currency: Currency, commission: Money, liquidity_side: Any, ts_event: int, info: dict | None=None) -> None:
         """
         Generate an `OrderFilled` event and send it to the `ExecutionEngine`.
 

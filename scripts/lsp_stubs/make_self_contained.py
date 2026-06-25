@@ -15,8 +15,15 @@ Four transformations:
 Usage: python make_self_contained.py <input.pyi> <output.pyi>
 """
 import ast
+import re
 import sys
 from pathlib import Path
+
+
+# Matches a docstring "Returns X or None" clause (after backtick normalization).
+# NT lookup methods (order/position/instrument/account/...) document None-able
+# returns this way; stubgen-pyx can't express Optional from Cython `cpdef X`.
+_NONE_RETURN_RE = re.compile(r"\bor None\b")
 
 
 def _is_any(node: ast.AST) -> bool:
@@ -113,6 +120,19 @@ class SelfContainedTransformer(ast.NodeTransformer):
         # .pyx declares no return type, tripping downstream disallow_untyped_calls.
         if node.name == "__init__" and node.returns is None:
             node.returns = ast.Constant(value=None)
+        # Optional-ize lookup methods whose docstring says they return "X or None"
+        # (order/position/instrument/account/...). stubgen-pyx emits the Cython
+        # `cpdef X` return as non-Optional `X`, which would make downstream
+        # `if x is None:` unreachable — wrap preserved (non-Any) returns as `X | None`.
+        doc = (ast.get_docstring(node) or "").replace("``", "").replace("`", "")
+        if (
+            _NONE_RETURN_RE.search(doc)
+            and isinstance(node.returns, ast.Name)
+            and node.returns.id != "Any"
+        ):
+            node.returns = ast.BinOp(
+                left=node.returns, op=ast.BitOr(), right=ast.Constant(value=None)
+            )
         args = node.args
         positional = list(args.posonlyargs) + list(args.args)
         n_defaultless = len(positional) - len(args.defaults)
@@ -201,24 +221,21 @@ def _merge_typing_and_drop_imports(
     tree.body = [typing_import, *kept]
 
 
-def _same_package_pyi_exports(tree: ast.Module, dst: Path) -> dict[str, set[str]]:
+def _pyi_backed_exports(tree: ast.Module, dst: Path) -> dict[str, set[str]]:
     """
-    For each nautilus_trader import module that is same-package with ``dst`` AND
-    has a co-located .pyi, return {module: set of exported symbol names}.
+    For each nautilus_trader import module with a co-located .pyi, return
+    {module: set of exported symbol names}.
 
-    Only exported symbols are preserveable; this handles incomplete hand-written
-    stubs (e.g. model/data.pyi doesn't re-export OrderBookDepth10 that book.pyx
-    cimports) — unexported symbols stay Any instead of producing pyright `unknown
-    import symbol`.
+    Cross-package as well as same-package: pyright resolves any deployed .pyi, so
+    preserving these (instead of Any-ifying) gives precise return/param types
+    (e.g. cache.order() -> Order, cache.position() -> Position). Only exported
+    symbols are preserveable — unexported stay Any (handles incomplete stubs, e.g.
+    model/data.pyi doesn't re-export OrderBookDepth10 that book.pyx cimports).
     """
     # nt_root = the .../nautilus_trader package dir, at any stub depth
     # (stubs live 2 levels deep like cache/cache.pyi, or 3+ like model/orders/market.pyi).
     nt_root = next((p for p in dst.parents if p.name == "nautilus_trader"), None)
     if nt_root is None:
-        return {}
-    try:
-        dst_pkg_rel = dst.parent.relative_to(nt_root)  # Path("cache") or Path("model/orders")
-    except ValueError:
         return {}
 
     out: dict[str, set[str]] = {}
@@ -229,10 +246,7 @@ def _same_package_pyi_exports(tree: ast.Module, dst: Path) -> dict[str, set[str]
             and node.module.startswith("nautilus_trader.")
         ):
             continue
-        mod_rel = node.module.removeprefix("nautilus_trader.")  # e.g. cache.base
-        mod_pkg = mod_rel.rsplit(".", 1)[0] if "." in mod_rel else ""  # cache / model.orders
-        if Path(*mod_pkg.split(".")) != dst_pkg_rel:
-            continue  # not same package (compare as Path: dot-form vs slash-form)
+        mod_rel = node.module.removeprefix("nautilus_trader.")  # cache.base / model.orders.base
         mod_path = nt_root.joinpath(*mod_rel.split(".")).with_suffix(".pyi")
         if mod_path.exists():
             out[node.module] = _pyi_exports(mod_path)
@@ -243,7 +257,7 @@ def make_self_contained(src: str, dst: str) -> int:
     tree = ast.parse(Path(src).read_text(encoding="utf-8"))
 
     dst_path = Path(dst)
-    same_pkg_exports = _same_package_pyi_exports(tree, dst_path)
+    same_pkg_exports = _pyi_backed_exports(tree, dst_path)
     preserved_imports: dict[str, list[ast.alias]] = {}
 
     cross: set[str] = set()
@@ -275,11 +289,40 @@ def make_self_contained(src: str, dst: str) -> int:
     ast.fix_missing_locations(tree)
     _merge_typing_and_drop_imports(tree, preserved_imports)
     ast.fix_missing_locations(tree)
+    _elide_module_constant_construction(tree)
+    ast.fix_missing_locations(tree)
 
     header = "# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)\n"
     Path(dst).write_text(header + ast.unparse(tree), encoding="utf-8")
 
     return len(cross)
+
+
+def _elide_module_constant_construction(tree: ast.Module) -> None:
+    """
+    Elide module-level constant construction values to `...`, keeping the type.
+
+    stubgen-pyx emits full construction (e.g. ``X = FixedTickScheme(...,
+    min_tick=Price.from_str_c(...))``); the construction can reference C-only
+    ``cdef`` methods (``from_str_c``) that aren't Python-callable -> pyright
+    errors once the type is preserved (broadened). Stubs only need the constant's
+    existence + type, so convert ``X = Call(...)`` -> ``X: <CallType> = ...``.
+    """
+    for i, node in enumerate(tree.body):
+        if not (isinstance(node, ast.Assign) and isinstance(node.value, ast.Call)):
+            continue
+        if len(node.targets) != 1 or not isinstance(node.targets[0], ast.Name):
+            continue
+        func = node.value.func
+        annotation = (
+            func if isinstance(func, ast.Name) else ast.Name(id="Any", ctx=ast.Load())
+        )
+        tree.body[i] = ast.AnnAssign(
+            target=node.targets[0],
+            annotation=annotation,
+            value=ast.Constant(value=...),
+            simple=1,
+        )
 
 
 if __name__ == "__main__":

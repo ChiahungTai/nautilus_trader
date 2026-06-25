@@ -3,6 +3,13 @@ from typing import Any, Callable
 '\nA margin account capable of holding leveraged positions and tracking instrument-specific\nleverage ratios.\n\nPnL calculation\n---------------\nThe account calculates PnL differently based on instrument type:\n\n- **Premium instruments** (options, option spreads, binary options, warrants): Realize\n  the notional value as a cash flow on every fill. BUY = negative (premium paid),\n  SELL = positive (premium received).\n\n- **Other instruments**: Only realize PnL on position reduction (fill side opposite to\n  entry). Use the minimum of fill and position quantity to avoid double-counting.\n\n'
 from decimal import Decimal
 from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.accounting.margin_models import MarginModel
+from nautilus_trader.model.events.account import AccountState
+from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, MarginBalance, Money, Price, Quantity
+from nautilus_trader.model.position import Position
 
 class MarginAccount(Account):
     """
@@ -22,7 +29,7 @@ class MarginAccount(Account):
     """
     default_leverage: Any
 
-    def __init__(self, event: Any, calculate_account_state: bool=False) -> None:
+    def __init__(self, event: AccountState, calculate_account_state: bool=False) -> None:
         ...
 
     @staticmethod
@@ -103,7 +110,7 @@ class MarginAccount(Account):
 
         """
 
-    def leverage(self, instrument_id: Any) -> object:
+    def leverage(self, instrument_id: InstrumentId) -> object | None:
         """
         Return the leverage for the given instrument (if found).
 
@@ -118,7 +125,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin_init(self, instrument_id: Any) -> Any:
+    def margin_init(self, instrument_id: InstrumentId) -> Money | None:
         """
         Return the current initial (order) margin.
 
@@ -138,7 +145,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin_maint(self, instrument_id: Any) -> Any:
+    def margin_maint(self, instrument_id: InstrumentId) -> Money | None:
         """
         Return the current maintenance (position) margin.
 
@@ -158,7 +165,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin(self, instrument_id: Any) -> Any:
+    def margin(self, instrument_id: InstrumentId) -> MarginBalance | None:
         """
         Return the current margin balance.
 
@@ -178,7 +185,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin_for_currency(self, currency: Any) -> Any:
+    def margin_for_currency(self, currency: Currency) -> MarginBalance | None:
         """
         Return the account-wide (cross-margin) balance for the given collateral currency.
 
@@ -193,7 +200,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin_init_for_currency(self, currency: Any) -> Any:
+    def margin_init_for_currency(self, currency: Currency) -> Money | None:
         """
         Return the account-wide initial (order) margin for the given collateral currency.
 
@@ -208,7 +215,7 @@ class MarginAccount(Account):
 
         """
 
-    def margin_maint_for_currency(self, currency: Any) -> Any:
+    def margin_maint_for_currency(self, currency: Currency) -> Money | None:
         """
         Return the account-wide maintenance (position) margin for the given collateral currency.
 
@@ -223,7 +230,7 @@ class MarginAccount(Account):
 
         """
 
-    def total_margin_init(self, currency: Any) -> Any:
+    def total_margin_init(self, currency: Currency) -> Money:
         """
         Return the total initial margin reserved in the given currency.
 
@@ -240,7 +247,7 @@ class MarginAccount(Account):
 
         """
 
-    def total_margin_maint(self, currency: Any) -> Any:
+    def total_margin_maint(self, currency: Currency) -> Money:
         """
         Return the total maintenance margin reserved in the given currency.
 
@@ -275,7 +282,7 @@ class MarginAccount(Account):
 
         """
 
-    def set_leverage(self, instrument_id: Any, leverage: Decimal) -> None:
+    def set_leverage(self, instrument_id: InstrumentId, leverage: Decimal) -> None:
         """
         Set the leverage for the given instrument.
 
@@ -295,7 +302,7 @@ class MarginAccount(Account):
 
         """
 
-    def set_margin_model(self, margin_model: Any) -> None:
+    def set_margin_model(self, margin_model: MarginModel) -> None:
         """
         Set the margin calculation model for the account.
 
@@ -306,7 +313,7 @@ class MarginAccount(Account):
 
         """
 
-    def apply(self, event: Any) -> None:
+    def apply(self, event: AccountState) -> None:
         """
         Apply the given account event to the account.
 
@@ -326,7 +333,7 @@ class MarginAccount(Account):
 
         """
 
-    def update_margin_init(self, instrument_id: Any, margin_init: Any) -> None:
+    def update_margin_init(self, instrument_id: InstrumentId, margin_init: Money) -> None:
         """
         Update the initial (order) margin.
 
@@ -348,7 +355,7 @@ class MarginAccount(Account):
 
         """
 
-    def update_margin_maint(self, instrument_id: Any, margin_maint: Any) -> None:
+    def update_margin_maint(self, instrument_id: InstrumentId, margin_maint: Money) -> None:
         """
         Update the maintenance (position) margin.
 
@@ -370,7 +377,7 @@ class MarginAccount(Account):
 
         """
 
-    def update_margin(self, margin: Any) -> None:
+    def update_margin(self, margin: MarginBalance) -> None:
         """
         Update the margin balance.
 
@@ -388,7 +395,7 @@ class MarginAccount(Account):
 
         """
 
-    def clear_margin_init(self, instrument_id: Any) -> None:
+    def clear_margin_init(self, instrument_id: InstrumentId) -> None:
         """
         Clear the initial (order) margins for the given instrument ID.
 
@@ -403,7 +410,7 @@ class MarginAccount(Account):
 
         """
 
-    def clear_margin_maint(self, instrument_id: Any) -> None:
+    def clear_margin_maint(self, instrument_id: InstrumentId) -> None:
         """
         Clear the maintenance (position) margins for the given instrument ID.
 
@@ -418,7 +425,7 @@ class MarginAccount(Account):
 
         """
 
-    def clear_margin(self, instrument_id: Any) -> None:
+    def clear_margin(self, instrument_id: InstrumentId) -> None:
         """
         Clear the maintenance (position) margins for the given instrument ID.
 
@@ -433,7 +440,7 @@ class MarginAccount(Account):
 
         """
 
-    def clear_account_margin(self, currency: Any) -> None:
+    def clear_account_margin(self, currency: Currency) -> None:
         """
         Clear the account-wide (cross-margin) margin for the given collateral currency.
 
@@ -448,10 +455,10 @@ class MarginAccount(Account):
 
         """
 
-    def is_unleveraged(self, instrument_id: Any) -> bool:
+    def is_unleveraged(self, instrument_id: InstrumentId) -> bool:
         ...
 
-    def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_commission(self, instrument: Instrument, last_qty: Quantity, last_px: Price, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the commission generated from a transaction with the given
         parameters.
@@ -483,7 +490,7 @@ class MarginAccount(Account):
 
         """
 
-    def calculate_margin_init(self, instrument: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_init(self, instrument: Instrument, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the initial (order) margin.
 
@@ -507,7 +514,7 @@ class MarginAccount(Account):
 
         """
 
-    def calculate_margin_maint(self, instrument: Any, side: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_maint(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the maintenance (position) margin.
 
@@ -533,7 +540,7 @@ class MarginAccount(Account):
 
         """
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
+    def calculate_pnls(self, instrument: Instrument, fill: OrderFilled, position: Position | None | None=None) -> list:
         """
         Return the calculated PnL.
 
@@ -554,5 +561,5 @@ class MarginAccount(Account):
 
         """
 
-    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+    def balance_impact(self, instrument: Instrument, quantity: Quantity, price: Price, order_side: Any) -> Money:
         ...

@@ -1,7 +1,18 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.accounting.accounts.base import Account
 from nautilus_trader.cache.facade import CacheDatabaseFacade
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, ComponentId, InstrumentId, PositionId, StrategyId, TraderId, VenueOrderId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.instruments.synthetic import SyntheticInstrument
+from nautilus_trader.model.objects import Currency, Money
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.position import Position
+from nautilus_trader.serialization.base import Serializer
+from nautilus_trader.trading.strategy import Strategy
 
 class CacheDatabaseAdapter(CacheDatabaseFacade):
     """
@@ -34,7 +45,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
     per the default implementations for both `TradingNode` and `BacktestEngine`.
     """
 
-    def __init__(self, trader_id: Any, instance_id: Any, serializer: Any, config: Any | None | None=None) -> None:
+    def __init__(self, trader_id: TraderId, instance_id: UUID4, serializer: Serializer, config: Any | None | None=None) -> None:
         ...
 
     def close(self) -> None:
@@ -177,7 +188,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_currency(self, code: str) -> Any:
+    def load_currency(self, code: str) -> Currency | None:
         """
         Load the currency associated with the given currency code (if found).
 
@@ -192,7 +203,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_instrument(self, instrument_id: Any) -> Any:
+    def load_instrument(self, instrument_id: InstrumentId) -> Instrument | None:
         """
         Load the instrument associated with the given instrument ID
         (if found).
@@ -208,7 +219,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_synthetic(self, instrument_id: Any) -> Any:
+    def load_synthetic(self, instrument_id: InstrumentId) -> SyntheticInstrument | None:
         """
         Load the synthetic instrument associated with the given synthetic instrument ID
         (if found).
@@ -229,7 +240,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_account(self, account_id: Any) -> Any:
+    def load_account(self, account_id: AccountId) -> Account | None:
         """
         Load the account associated with the given account ID (if found).
 
@@ -244,7 +255,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_order(self, client_order_id: Any) -> Any:
+    def load_order(self, client_order_id: ClientOrderId) -> Order | None:
         """
         Load the order associated with the given client order ID (if found).
 
@@ -259,7 +270,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_position(self, position_id: Any) -> Any:
+    def load_position(self, position_id: PositionId) -> Position | None:
         """
         Load the position associated with the given ID (if found).
 
@@ -274,7 +285,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_actor(self, component_id: Any) -> dict:
+    def load_actor(self, component_id: ComponentId) -> dict:
         """
         Load the state for the given actor.
 
@@ -289,7 +300,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def delete_actor(self, component_id: Any) -> None:
+    def delete_actor(self, component_id: ComponentId) -> None:
         """
         Delete the given actor from the database.
 
@@ -300,7 +311,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def load_strategy(self, strategy_id: Any) -> dict:
+    def load_strategy(self, strategy_id: StrategyId) -> dict:
         """
         Load the state for the given strategy.
 
@@ -315,7 +326,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def delete_strategy(self, strategy_id: Any) -> None:
+    def delete_strategy(self, strategy_id: StrategyId) -> None:
         """
         Delete the given strategy from the database.
 
@@ -326,7 +337,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def delete_order(self, client_order_id: Any) -> None:
+    def delete_order(self, client_order_id: ClientOrderId) -> None:
         """
         Delete the given order from the database.
 
@@ -337,7 +348,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def delete_position(self, position_id: Any) -> None:
+    def delete_position(self, position_id: PositionId) -> None:
         """
         Delete the given position from the database.
 
@@ -348,7 +359,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def delete_account_event(self, account_id: Any, event_id: str) -> None:
+    def delete_account_event(self, account_id: AccountId, event_id: str) -> None:
         """
         Delete the given account event from the database.
 
@@ -374,7 +385,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_currency(self, currency: Any) -> None:
+    def add_currency(self, currency: Currency) -> None:
         """
         Add the given currency to the database.
 
@@ -385,7 +396,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_instrument(self, instrument: Any) -> None:
+    def add_instrument(self, instrument: Instrument) -> None:
         """
         Add the given instrument to the database.
 
@@ -396,7 +407,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_synthetic(self, synthetic: Any) -> None:
+    def add_synthetic(self, synthetic: SyntheticInstrument) -> None:
         """
         Add the given synthetic instrument to the database.
 
@@ -407,7 +418,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_account(self, account: Any) -> None:
+    def add_account(self, account: Account) -> None:
         """
         Add the given account to the database.
 
@@ -418,7 +429,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_order(self, order: Any, position_id: Any=None, client_id: Any=None) -> None:
+    def add_order(self, order: Order, position_id: PositionId | None=None, client_id: ClientId | None=None) -> None:
         """
         Add the given order to the database.
 
@@ -433,7 +444,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def add_position(self, position: Any) -> None:
+    def add_position(self, position: Position) -> None:
         """
         Add the given position to the database.
 
@@ -444,7 +455,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def index_venue_order_id(self, client_order_id: Any, venue_order_id: Any) -> None:
+    def index_venue_order_id(self, client_order_id: ClientOrderId, venue_order_id: VenueOrderId) -> None:
         """
         Add an index entry for the given `venue_order_id` to `client_order_id`.
 
@@ -457,7 +468,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def index_order_position(self, client_order_id: Any, position_id: Any) -> None:
+    def index_order_position(self, client_order_id: ClientOrderId, position_id: PositionId) -> None:
         """
         Add an index entry for the given `client_order_id` to `position_id`.
 
@@ -470,7 +481,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def update_actor(self, actor: Any) -> None:
+    def update_actor(self, actor: Actor) -> None:
         """
         Update the given actor state in the database.
 
@@ -481,7 +492,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def update_strategy(self, strategy: Any) -> None:
+    def update_strategy(self, strategy: Strategy) -> None:
         """
         Update the given strategy state in the database.
 
@@ -492,7 +503,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def update_account(self, account: Any) -> None:
+    def update_account(self, account: Account) -> None:
         """
         Update the given account in the database.
 
@@ -502,7 +513,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def update_order(self, order: Any) -> None:
+    def update_order(self, order: Order) -> None:
         """
         Update the given order in the database.
 
@@ -513,7 +524,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def update_position(self, position: Any) -> None:
+    def update_position(self, position: Position) -> None:
         """
         Update the given position in the database.
 
@@ -524,7 +535,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def snapshot_order_state(self, order: Any) -> None:
+    def snapshot_order_state(self, order: Order) -> None:
         """
         Snapshot the state of the given `order`.
 
@@ -535,7 +546,7 @@ class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         """
 
-    def snapshot_position_state(self, position: Any, ts_snapshot: int, unrealized_pnl: Any=None) -> None:
+    def snapshot_position_state(self, position: Position, ts_snapshot: int, unrealized_pnl: Money | None=None) -> None:
         """
         Snapshot the state of the given `position`.
 

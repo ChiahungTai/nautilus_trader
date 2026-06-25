@@ -1,9 +1,17 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.common.component import Clock, MessageBus
+from nautilus_trader.core.message import Event
 from nautilus_trader.execution.matching_core import MatchingCore
 from nautilus_trader.execution.messages import SubmitOrder, TradingCommand
+from nautilus_trader.model.data import QuoteTick, TradeTick
+from nautilus_trader.model.identifiers import ClientOrderId, InstrumentId
+from nautilus_trader.model.objects import Price
+from nautilus_trader.portfolio.base import PortfolioFacade
 
-class OrderEmulator(Any):
+class OrderEmulator(Actor):
     """
     Provides order emulation for specified trigger types.
 
@@ -25,11 +33,11 @@ class OrderEmulator(Any):
     command_count: int
     event_count: int
 
-    def __init__(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, portfolio: PortfolioFacade, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
     @property
-    def subscribed_quotes(self) -> list[Any]:
+    def subscribed_quotes(self) -> list[InstrumentId]:
         """
         Return the subscribed quote feeds for the emulator.
 
@@ -40,7 +48,7 @@ class OrderEmulator(Any):
         """
 
     @property
-    def subscribed_trades(self) -> list[Any]:
+    def subscribed_trades(self) -> list[InstrumentId]:
         """
         Return the subscribed trade feeds for the emulator.
 
@@ -50,7 +58,7 @@ class OrderEmulator(Any):
 
         """
 
-    def get_submit_order_commands(self) -> dict[Any, SubmitOrder]:
+    def get_submit_order_commands(self) -> dict[ClientOrderId, SubmitOrder]:
         """
         Return the emulators cached submit order commands.
 
@@ -60,7 +68,7 @@ class OrderEmulator(Any):
 
         """
 
-    def get_matching_core(self, instrument_id: Any) -> MatchingCore | None:
+    def get_matching_core(self, instrument_id: InstrumentId) -> MatchingCore | None:
         """
         Return the emulators matching core for the given instrument ID.
 
@@ -73,7 +81,7 @@ class OrderEmulator(Any):
     def on_start(self) -> None:
         ...
 
-    def on_event(self, event: Any) -> None:
+    def on_event(self, event: Event) -> None:
         """
         Handle the given `event`.
 
@@ -104,7 +112,7 @@ class OrderEmulator(Any):
 
         """
 
-    def create_matching_core(self, instrument_id: Any, price_increment: Any) -> MatchingCore:
+    def create_matching_core(self, instrument_id: InstrumentId, price_increment: Price) -> MatchingCore:
         """
         Create an internal matching core for the given `instrument`.
 
@@ -129,8 +137,8 @@ class OrderEmulator(Any):
     def on_order_book_deltas(self, deltas) -> None:
         ...
 
-    def on_quote_tick(self, tick: Any) -> None:
+    def on_quote_tick(self, tick: QuoteTick) -> None:
         ...
 
-    def on_trade_tick(self, tick: Any) -> None:
+    def on_trade_tick(self, tick: TradeTick) -> None:
         ...

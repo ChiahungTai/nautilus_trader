@@ -1,7 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Price, Quantity
 
 class Equity(Instrument):
     """
@@ -58,7 +60,7 @@ class Equity(Instrument):
     """
     isin: str
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, currency: Any, price_precision: int, price_increment: Any, lot_size: Any, ts_event: int, ts_init: int, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, isin: str | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, currency: Currency, price_precision: int, price_increment: Price, lot_size: Quantity, ts_event: int, ts_init: int, max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, isin: str | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod

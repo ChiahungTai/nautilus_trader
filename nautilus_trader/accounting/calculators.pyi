@@ -2,6 +2,7 @@
 from typing import Any, Callable
 import pandas as pd
 from datetime import date
+from nautilus_trader.model.identifiers import InstrumentId
 
 class RolloverInterestCalculator:
     """
@@ -29,7 +30,7 @@ class RolloverInterestCalculator:
 
         """
 
-    def calc_overnight_rate(self, instrument_id: Any, date: date) -> object:
+    def calc_overnight_rate(self, instrument_id: InstrumentId, date: date) -> object:
         """
         Return the rollover interest rate between the given base currency and quote currency.
 

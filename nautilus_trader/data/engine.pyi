@@ -3,11 +3,16 @@ from typing import Any, Callable, Generator
 '\nThe `DataEngine` is the central component of the entire data stack.\n\nThe data engines primary responsibility is to orchestrate interactions between\nthe `DataClient` instances, and the rest of the platform. This includes sending\nrequests to, and receiving responses from, data endpoints via its registered\ndata clients.\n\nThe engine employs a simple fan-in fan-out messaging pattern to execute\n`DataCommand` type messages, and process `DataResponse` messages or market data\nobjects.\n\nAlternative implementations can be written on top of the generic engine - which\njust need to override the `execute`, `process`, `send` and `receive` methods.\n'
 from dataclasses import dataclass
 from datetime import datetime
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, Component, MessageBus
+from nautilus_trader.core.data import Data
 from nautilus_trader.data.client import DataClient
 from nautilus_trader.data.messages import DataCommand, DataResponse, RequestData
+from nautilus_trader.model.data import BarType
+from nautilus_trader.model.identifiers import ClientId, InstrumentId, Venue
 TimeRangeGenerator = Callable[[int, dict[str, Any]], Generator[int, bool, None]]
 
-class DataEngine(Any):
+class DataEngine(Component):
     """
     Provides a high-performance data engine for managing many `DataClient`
     instances, for the asynchronous ingest of data.
@@ -29,11 +34,11 @@ class DataEngine(Any):
     response_count: int
     data_count: int
 
-    def __init__(self, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
     @property
-    def registered_clients(self) -> list[Any]:
+    def registered_clients(self) -> list[ClientId]:
         """
         Return the execution clients registered with the engine.
 
@@ -44,7 +49,7 @@ class DataEngine(Any):
         """
 
     @property
-    def default_client(self) -> Any | None:
+    def default_client(self) -> ClientId | None:
         """
         Return the default data client registered with the engine.
 
@@ -55,7 +60,7 @@ class DataEngine(Any):
         """
 
     @property
-    def routing_map(self) -> dict[Any, DataClient]:
+    def routing_map(self) -> dict[Venue, DataClient]:
         """
         Return the default data client registered with the engine.
 
@@ -150,7 +155,7 @@ class DataEngine(Any):
 
         """
 
-    def register_venue_routing(self, client: DataClient, venue: Any) -> None:
+    def register_venue_routing(self, client: DataClient, venue: Venue) -> None:
         """
         Register the given client to route messages to the given venue.
 
@@ -343,7 +348,7 @@ class DataEngine(Any):
 
         """
 
-    def process(self, data: Any, historical: bool=False) -> None:
+    def process(self, data: Data, historical: bool=False) -> None:
         """
         Process the given data.
 
@@ -354,7 +359,7 @@ class DataEngine(Any):
 
         """
 
-    def process_historical(self, data: Any) -> None:
+    def process_historical(self, data: Data) -> None:
         """
         Process historical data.
 
@@ -398,17 +403,17 @@ class RequestWorkflowState:
     join_started: bool = False
     time_range_generator_enabled: bool = False
     continuous_future_cursor_ns: int = 0
-    continuous_future_primary_bar_type: Any | None = None
+    continuous_future_primary_bar_type: BarType | None = None
     continuous_future_active_source: tuple | None = None
-    continuous_future_active_segment_id: Any | None = None
+    continuous_future_active_segment_id: InstrumentId | None = None
 
 @dataclass(slots=True)
 class ContinuousFutureSubscriptionState:
-    target_bar_type: Any
-    client_id: Any | None
-    venue: Any | None
+    target_bar_type: BarType
+    client_id: ClientId | None
+    venue: Venue | None
     params: dict
-    active_segment_instrument_id: Any | None = None
+    active_segment_instrument_id: InstrumentId | None = None
     next_transition_index: int | None = None
     timer_name: str | None = None
 

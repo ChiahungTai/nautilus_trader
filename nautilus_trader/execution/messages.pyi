@@ -1,8 +1,14 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.core.message import Command
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, ExecAlgorithmId, InstrumentId, PositionId, StrategyId, TraderId, Venue, VenueOrderId
+from nautilus_trader.model.objects import Price, Quantity
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.orders.list import OrderList
 
-class ExecutionReportCommand(Any):
+class ExecutionReportCommand(Command):
     """
     The base class for all execution report commands.
 
@@ -26,12 +32,12 @@ class ExecutionReportCommand(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    instrument_id: Any
+    instrument_id: InstrumentId
     start: datetime
     end: datetime
     params: dict
 
-    def __init__(self, instrument_id: Any | None, start: datetime | None, end: datetime | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId | None, start: datetime | None, end: datetime | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
 class GenerateOrderStatusReport(ExecutionReportCommand):
@@ -53,10 +59,10 @@ class GenerateOrderStatusReport(ExecutionReportCommand):
     params : dict[str, object], optional
         Additional parameters for the command.
     """
-    client_order_id: Any
-    venue_order_id: Any
+    client_order_id: ClientOrderId
+    venue_order_id: VenueOrderId
 
-    def __init__(self, instrument_id: Any | None, client_order_id: Any | None, venue_order_id: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId | None, client_order_id: ClientOrderId | None, venue_order_id: VenueOrderId | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -116,7 +122,7 @@ class GenerateOrderStatusReports(ExecutionReportCommand):
     open_only: bool
     log_receipt_level: Any
 
-    def __init__(self, instrument_id: Any | None, start: datetime | None, end: datetime | None, open_only: bool, command_id: Any, ts_init: int, params: dict | None | None=None, log_receipt_level: Any=..., correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId | None, start: datetime | None, end: datetime | None, open_only: bool, command_id: UUID4, ts_init: int, params: dict | None | None=None, log_receipt_level: Any=..., correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -171,9 +177,9 @@ class GenerateFillReports(ExecutionReportCommand):
     params : dict[str, object], optional
         Additional parameters for the command.
     """
-    venue_order_id: Any
+    venue_order_id: VenueOrderId
 
-    def __init__(self, instrument_id: Any | None, venue_order_id: Any | None, start: datetime | None, end: datetime | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId | None, venue_order_id: VenueOrderId | None, start: datetime | None, end: datetime | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -230,7 +236,7 @@ class GeneratePositionStatusReports(ExecutionReportCommand):
     """
     log_receipt_level: Any
 
-    def __init__(self, instrument_id: Any | None, start: datetime | None, end: datetime | None, command_id: Any, ts_init: int, params: dict | None | None=None, log_receipt_level: Any=..., correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId | None, start: datetime | None, end: datetime | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, log_receipt_level: Any=..., correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -282,11 +288,11 @@ class GenerateExecutionMassStatus(ExecutionReportCommand):
     params : dict[str, object], optional
         Additional parameters for the command.
     """
-    trader_id: Any
-    client_id: Any
-    venue: Any
+    trader_id: TraderId
+    client_id: ClientId
+    venue: Venue
 
-    def __init__(self, trader_id: Any, client_id: Any, command_id: Any, ts_init: int, venue: Any | None | None=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, client_id: ClientId, command_id: UUID4, ts_init: int, venue: Venue | None | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -319,7 +325,7 @@ class GenerateExecutionMassStatus(ExecutionReportCommand):
 
         """
 
-class TradingCommand(Any):
+class TradingCommand(Command):
     """
     The base class for all trading related commands.
 
@@ -344,13 +350,13 @@ class TradingCommand(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    client_id: Any
-    trader_id: Any
-    strategy_id: Any
-    instrument_id: Any
+    client_id: ClientId
+    trader_id: TraderId
+    strategy_id: StrategyId
+    instrument_id: InstrumentId
     params: dict
 
-    def __init__(self, client_id: Any | None, trader_id: Any, strategy_id: Any, instrument_id: Any, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, client_id: ClientId | None, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
 class SubmitOrder(TradingCommand):
@@ -380,11 +386,11 @@ class SubmitOrder(TradingCommand):
     ----------
     https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_D_68.html
     """
-    order: Any
-    exec_algorithm_id: Any
-    position_id: Any
+    order: Order
+    exec_algorithm_id: ExecAlgorithmId
+    position_id: PositionId
 
-    def __init__(self, trader_id: Any, strategy_id: Any, order: Any, command_id: Any, ts_init: int, position_id: Any | None | None=None, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, order: Order, command_id: UUID4, ts_init: int, position_id: PositionId | None | None=None, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -451,12 +457,12 @@ class SubmitOrderList(TradingCommand):
     ----------
     https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_E_69.html
     """
-    order_list: Any
-    exec_algorithm_id: Any
-    position_id: Any
+    order_list: OrderList
+    exec_algorithm_id: ExecAlgorithmId
+    position_id: PositionId
     has_emulated_order: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, order_list: Any, command_id: Any, ts_init: int, position_id: Any | None | None=None, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, order_list: OrderList, command_id: UUID4, ts_init: int, position_id: PositionId | None | None=None, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -527,13 +533,13 @@ class ModifyOrder(TradingCommand):
     ----------
     https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_G_71.html
     """
-    client_order_id: Any
-    venue_order_id: Any
-    quantity: Any
-    price: Any
-    trigger_price: Any
+    client_order_id: ClientOrderId
+    venue_order_id: VenueOrderId
+    quantity: Quantity
+    price: Price
+    trigger_price: Price
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, quantity: Any | None, price: Any | None, trigger_price: Any | None, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, quantity: Quantity | None, price: Price | None, trigger_price: Price | None, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -598,10 +604,10 @@ class CancelOrder(TradingCommand):
     ----------
     https://www.onixs.biz/fix-dictionary/5.0.SP2/msgType_F_70.html
     """
-    client_order_id: Any
-    venue_order_id: Any
+    client_order_id: ClientOrderId
+    venue_order_id: VenueOrderId
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -662,7 +668,7 @@ class CancelAllOrders(TradingCommand):
     """
     order_side: Any
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, order_side: Any, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, order_side: Any, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -730,7 +736,7 @@ class BatchCancelOrders(TradingCommand):
     """
     cancels: list
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, cancels: list, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, cancels: list, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -791,10 +797,10 @@ class QueryOrder(TradingCommand):
     params : dict[str, object], optional
         Additional parameters for the command.
     """
-    client_order_id: Any
-    venue_order_id: Any
+    client_order_id: ClientOrderId
+    venue_order_id: VenueOrderId
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, venue_order_id: VenueOrderId | None, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -830,7 +836,7 @@ class QueryOrder(TradingCommand):
 
         """
 
-class QueryAccount(Any):
+class QueryAccount(Command):
     """
     Represents a command to query an account.
 
@@ -849,12 +855,12 @@ class QueryAccount(Any):
     params : dict[str, object], optional
         Additional parameters for the command.
     """
-    client_id: Any
-    trader_id: Any
-    account_id: Any
+    client_id: ClientId
+    trader_id: TraderId
+    account_id: AccountId
     params: dict
 
-    def __init__(self, trader_id: Any, account_id: Any, command_id: Any, ts_init: int, client_id: Any=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, account_id: AccountId, command_id: UUID4, ts_init: int, client_id: ClientId | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __repr__(self) -> str:

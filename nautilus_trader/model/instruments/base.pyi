@@ -1,11 +1,14 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.core.data import Data
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 EXPIRING_INSTRUMENT_CLASSES = {Any, Any, Any, Any}
 ENGINE_EXPIRING_INSTRUMENT_CLASSES = {Any, Any, Any, Any}
 NEGATIVE_PRICE_INSTRUMENT_CLASSES = (Any, Any, Any)
 
-class Instrument(Any):
+class Instrument(Data):
     """
     The base class for all instruments.
 
@@ -105,24 +108,24 @@ class Instrument(Any):
         If `min_price` is negative (< 0).
 
     """
-    id: Any
-    raw_symbol: Any
+    id: InstrumentId
+    raw_symbol: Symbol
     asset_class: Any
     instrument_class: Any
-    quote_currency: Any
+    quote_currency: Currency
     is_inverse: bool
     price_precision: int
     size_precision: int
-    price_increment: Any
-    size_increment: Any
-    multiplier: Any
-    lot_size: Any
-    max_quantity: Any
-    min_quantity: Any
-    max_notional: Any
-    min_notional: Any
-    max_price: Any
-    min_price: Any
+    price_increment: Price
+    size_increment: Quantity
+    multiplier: Quantity
+    lot_size: Quantity
+    max_quantity: Quantity
+    min_quantity: Quantity
+    max_notional: Money
+    min_notional: Money
+    max_price: Price
+    min_price: Price
     margin_init: object
     margin_maint: object
     maker_fee: object
@@ -132,7 +135,7 @@ class Instrument(Any):
     ts_event: int
     ts_init: int
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, instrument_class: Any, quote_currency: Any, is_inverse: bool, price_precision: int, size_precision: int, size_increment: Any, multiplier: Any, margin_init: Decimal, margin_maint: Decimal, maker_fee: Decimal, taker_fee: Decimal, ts_event: int, ts_init: int, price_increment: Any | None | None=None, lot_size: Any | None | None=None, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, asset_class: Any, instrument_class: Any, quote_currency: Currency, is_inverse: bool, price_precision: int, size_precision: int, size_increment: Quantity, multiplier: Quantity, margin_init: Decimal, margin_maint: Decimal, maker_fee: Decimal, taker_fee: Decimal, ts_event: int, ts_init: int, price_increment: Price | None | None=None, lot_size: Quantity | None | None=None, max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, max_notional: Money | None | None=None, min_notional: Money | None | None=None, max_price: Price | None | None=None, min_price: Price | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     def __eq__(self, other: Instrument) -> bool:
@@ -217,7 +220,7 @@ class Instrument(Any):
 
         """
 
-    def get_base_currency(self) -> Any:
+    def get_base_currency(self) -> Currency | None:
         """
         Return the instruments base currency (if applicable).
 
@@ -227,7 +230,7 @@ class Instrument(Any):
 
         """
 
-    def get_settlement_currency(self) -> Any:
+    def get_settlement_currency(self) -> Currency:
         """
         Return the currency used to settle a trade of the instrument.
 
@@ -241,7 +244,7 @@ class Instrument(Any):
 
         """
 
-    def get_cost_currency(self) -> Any:
+    def get_cost_currency(self) -> Currency:
         """
         Return the currency used for PnL calculations for the instrument.
 
@@ -278,7 +281,7 @@ class Instrument(Any):
 
         """
 
-    def make_price(self, value) -> Any:
+    def make_price(self, value) -> Price:
         """
         Return a new price from the given value using the instruments price
         precision.
@@ -294,7 +297,7 @@ class Instrument(Any):
 
         """
 
-    def next_bid_price(self, value: float, num_ticks: int=0) -> Any:
+    def next_bid_price(self, value: float, num_ticks: int=0) -> Price:
         """
         Return the price `n` bid ticks away from value.
 
@@ -318,7 +321,7 @@ class Instrument(Any):
 
         """
 
-    def next_ask_price(self, value: float, num_ticks: int=0) -> Any:
+    def next_ask_price(self, value: float, num_ticks: int=0) -> Price:
         """
         Return the price `n` ask ticks away from value.
 
@@ -394,7 +397,7 @@ class Instrument(Any):
             If a tick scheme is not initialized.
         """
 
-    def make_qty(self, value, round_down: bool=False) -> Any:
+    def make_qty(self, value, round_down: bool=False) -> Quantity:
         """
         Return a new quantity from the given value using the instruments size
         precision.
@@ -419,7 +422,7 @@ class Instrument(Any):
 
         """
 
-    def notional_value(self, quantity: Any, price: Any, use_quote_for_inverse: bool=False, target_currency: Any=None, conversion_price: Any=None) -> Any:
+    def notional_value(self, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False, target_currency: Currency | None=None, conversion_price: Price | None=None) -> Money:
         """
         Calculate the notional value.
 
@@ -448,7 +451,7 @@ class Instrument(Any):
 
         """
 
-    def calculate_base_quantity(self, quantity: Any, last_px: Any) -> Any:
+    def calculate_base_quantity(self, quantity: Quantity, last_px: Price) -> Quantity:
         """
         Calculate the base asset quantity from the given quote asset `quantity` and last price.
 

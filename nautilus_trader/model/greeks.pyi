@@ -1,5 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.common.component import Clock
+from nautilus_trader.model.identifiers import InstrumentId, StrategyId, Venue
+from nautilus_trader.model.position import Position
 
 class GreeksCalculator:
     """
@@ -32,10 +36,10 @@ class GreeksCalculator:
 
     """
 
-    def __init__(self, cache: Any, clock: Any) -> None:
+    def __init__(self, cache: CacheFacade, clock: Clock) -> None:
         ...
 
-    def instrument_greeks(self, instrument_id: Any, flat_interest_rate: float=0.0425, flat_dividend_yield: float | None=None, spot_shock: float=0.0, vol_shock: float=0.0, time_to_expiry_shock: float=0.0, use_cached_greeks: bool=False, update_vol: bool=False, cache_greeks: bool=False, ts_event: int=0, position: Any | None=None, percent_greeks: bool=False, index_instrument_id: Any | None=None, beta_weights: dict[Any, float] | None=None, vega_time_weight_base: int | None=None) -> Any | None:
+    def instrument_greeks(self, instrument_id: InstrumentId, flat_interest_rate: float=0.0425, flat_dividend_yield: float | None | None=None, spot_shock: float=0.0, vol_shock: float=0.0, time_to_expiry_shock: float=0.0, use_cached_greeks: bool=False, update_vol: bool=False, cache_greeks: bool=False, ts_event: int=0, position: Position | None | None=None, percent_greeks: bool=False, index_instrument_id: InstrumentId | None | None=None, beta_weights: dict[InstrumentId, float] | None | None=None, vega_time_weight_base: int | None | None=None) -> Any | None:
         """
         Calculate option or underlying greeks for a given instrument and a quantity of 1.
 
@@ -91,7 +95,7 @@ class GreeksCalculator:
 
         """
 
-    def modify_greeks(self, delta_input: float, gamma_input: float, underlying_instrument_id: Any, underlying_price: float, unshocked_underlying_price: float, percent_greeks: bool, index_instrument_id: Any | None, beta_weights: dict[Any, float] | None, vega_input: float=0.0, vol: float=0.0, expiry_in_days: int=0, vega_time_weight_base: int | None=None) -> tuple[float, float, float]:
+    def modify_greeks(self, delta_input: float, gamma_input: float, underlying_instrument_id: InstrumentId, underlying_price: float, unshocked_underlying_price: float, percent_greeks: bool, index_instrument_id: InstrumentId | None, beta_weights: dict[InstrumentId, float] | None, vega_input: float=0.0, vol: float=0.0, expiry_in_days: int=0, vega_time_weight_base: int | None | None=None) -> tuple[float, float, float]:
         """
         Modify delta and gamma based on beta weighting and percentage calculations.
 
@@ -147,7 +151,7 @@ class GreeksCalculator:
         or V(I = I0 * (1 + index_percent_return / 100))
         """
 
-    def portfolio_greeks(self, underlyings: list[str] | None=None, venue: Any=None, instrument_id: Any=None, strategy_id: Any=None, side: Any=..., flat_interest_rate: float=0.0425, flat_dividend_yield: float | None=None, spot_shock: float=0.0, vol_shock: float=0.0, time_to_expiry_shock: float=0.0, use_cached_greeks: bool=False, update_vol: bool=False, cache_greeks: bool=False, percent_greeks: bool=False, index_instrument_id: Any | None=None, beta_weights: dict[Any, float] | None=None, greeks_filter: Callable | None=None, vega_time_weight_base: int | None=None) -> Any | None:
+    def portfolio_greeks(self, underlyings: list[str] | None=None, venue: Venue | None=None, instrument_id: InstrumentId | None=None, strategy_id: StrategyId | None=None, side: Any=..., flat_interest_rate: float=0.0425, flat_dividend_yield: float | None | None=None, spot_shock: float=0.0, vol_shock: float=0.0, time_to_expiry_shock: float=0.0, use_cached_greeks: bool=False, update_vol: bool=False, cache_greeks: bool=False, percent_greeks: bool=False, index_instrument_id: InstrumentId | None | None=None, beta_weights: dict[InstrumentId, float] | None | None=None, greeks_filter: Callable | None | None=None, vega_time_weight_base: int | None | None=None) -> Any | None:
         """
         Calculate the portfolio Greeks for a given set of positions.
 
@@ -220,8 +224,8 @@ class GreeksCalculator:
 
         """
 
-    def cache_futures_spread(self, call_instrument_id: Any, put_instrument_id: Any, futures_instrument_id: Any) -> object:
+    def cache_futures_spread(self, call_instrument_id: InstrumentId, put_instrument_id: InstrumentId, futures_instrument_id: InstrumentId) -> object:
         ...
 
-    def get_cached_futures_spread_price(self, underlying_instrument_id: Any) -> object:
+    def get_cached_futures_spread_price(self, underlying_instrument_id: InstrumentId) -> object:
         ...

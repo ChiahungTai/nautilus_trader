@@ -1,5 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.events.order import OrderEvent, OrderFilled, OrderInitialized
+from nautilus_trader.model.identifiers import AccountId, ClientOrderId, ExecAlgorithmId, InstrumentId, OrderListId, PositionId, StrategyId, TradeId, TraderId, VenueOrderId
+from nautilus_trader.model.objects import Quantity
 STOP_ORDER_TYPES = {Any, Any, Any, Any}
 LIMIT_ORDER_TYPES = {Any, Any, Any, Any}
 TRIGGERABLE_ORDER_TYPES = {Any, Any, Any}
@@ -19,14 +23,14 @@ class Order:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    trader_id: Any
-    strategy_id: Any
-    instrument_id: Any
-    client_order_id: Any
-    venue_order_id: Any
-    position_id: Any
-    account_id: Any
-    last_trade_id: Any
+    trader_id: TraderId
+    strategy_id: StrategyId
+    instrument_id: InstrumentId
+    client_order_id: ClientOrderId
+    venue_order_id: VenueOrderId
+    position_id: PositionId
+    account_id: AccountId
+    last_trade_id: TradeId
     side: Any
     order_type: Any
     time_in_force: Any
@@ -34,30 +38,30 @@ class Order:
     is_post_only: bool
     is_reduce_only: bool
     is_quote_quantity: bool
-    quantity: Any
-    filled_qty: Any
-    leaves_qty: Any
-    overfill_qty: Any
+    quantity: Quantity
+    filled_qty: Quantity
+    leaves_qty: Quantity
+    overfill_qty: Quantity
     avg_px: float
     slippage: float
     emulation_trigger: Any
-    trigger_instrument_id: Any
+    trigger_instrument_id: InstrumentId
     contingency_type: Any
-    order_list_id: Any
+    order_list_id: OrderListId
     linked_order_ids: list
-    parent_order_id: Any
-    exec_algorithm_id: Any
+    parent_order_id: ClientOrderId
+    exec_algorithm_id: ExecAlgorithmId
     exec_algorithm_params: dict
-    exec_spawn_id: Any
+    exec_spawn_id: ClientOrderId
     tags: list
-    init_id: Any
+    init_id: UUID4
     ts_init: int
     ts_submitted: int
     ts_accepted: int
     ts_closed: int
     ts_last: int
 
-    def __init__(self, init: Any) -> None:
+    def __init__(self, init: OrderInitialized) -> None:
         ...
 
     def __eq__(self, other: Order) -> bool:
@@ -550,7 +554,7 @@ class Order:
 
         """
 
-    def would_reduce_only(self, position_side: Any, position_qty: Any) -> bool:
+    def would_reduce_only(self, position_side: Any, position_qty: Quantity) -> bool:
         """
         Whether the current order would only reduce the given position if applied
         in full.
@@ -578,7 +582,7 @@ class Order:
 
         """
 
-    def apply(self, event: Any) -> None:
+    def apply(self, event: OrderEvent) -> None:
         """
         Apply the given order event to the order.
 
@@ -600,7 +604,7 @@ class Order:
 
         """
 
-    def is_duplicate_fill(self, fill: Any) -> bool:
+    def is_duplicate_fill(self, fill: OrderFilled) -> bool:
         """
         Return whether a fill with matching trade_id, side, qty, and price already exists.
 

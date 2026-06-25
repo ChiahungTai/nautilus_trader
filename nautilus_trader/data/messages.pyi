@@ -1,8 +1,12 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.core.message import Command, Request, Response
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.data import BarType, DataType
+from nautilus_trader.model.identifiers import ClientId, InstrumentId, Venue
 
-class DataCommand(Any):
+class DataCommand(Command):
     """
     The base class for all data commands.
 
@@ -30,12 +34,12 @@ class DataCommand(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    client_id: Any
-    venue: Any
-    data_type: Any
+    client_id: ClientId
+    venue: Venue
+    data_type: DataType
     params: dict
 
-    def __init__(self, data_type: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, data_type: DataType, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -71,9 +75,9 @@ class SubscribeData(DataCommand):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    instrument_id: Any
+    instrument_id: InstrumentId
 
-    def __init__(self, data_type: Any, instrument_id: Any | None, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, data_type: DataType, instrument_id: InstrumentId | None, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def to_request(self, start: datetime | None, end: datetime | None, callback: Callable[[Any], None] | None) -> RequestData:
@@ -120,7 +124,7 @@ class SubscribeInstruments(SubscribeData):
 
     """
 
-    def __init__(self, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -175,7 +179,7 @@ class SubscribeInstrument(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -225,7 +229,7 @@ class SubscribeOrderBook(SubscribeData):
     managed: bool
     interval_ms: int
 
-    def __init__(self, instrument_id: Any, book_data_type: type, book_type: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, depth: int=0, managed: bool=True, interval_ms: int=0, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, book_data_type: type, book_type: Any, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, depth: int=0, managed: bool=True, interval_ms: int=0, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -285,7 +289,7 @@ class SubscribeQuoteTicks(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -340,7 +344,7 @@ class SubscribeTradeTicks(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -395,7 +399,7 @@ class SubscribeMarkPrices(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -430,7 +434,7 @@ class SubscribeIndexPrices(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -465,7 +469,7 @@ class SubscribeFundingRates(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -499,9 +503,9 @@ class SubscribeBars(SubscribeData):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    bar_type: Any
+    bar_type: BarType
 
-    def __init__(self, bar_type: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, bar_type: BarType, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -556,7 +560,7 @@ class SubscribeInstrumentStatus(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -591,7 +595,7 @@ class SubscribeInstrumentClose(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -621,7 +625,7 @@ class SubscribeOptionGreeks(SubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -658,7 +662,7 @@ class SubscribeOptionChain(SubscribeData):
     strike_range: object
     snapshot_interval_ms: object
 
-    def __init__(self, series_id: object, strike_range: object, snapshot_interval_ms: object, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, series_id: object, strike_range: object, snapshot_interval_ms: object, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -694,9 +698,9 @@ class UnsubscribeData(DataCommand):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    instrument_id: Any
+    instrument_id: InstrumentId
 
-    def __init__(self, data_type: Any, instrument_id: Any | None, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, data_type: DataType, instrument_id: InstrumentId | None, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
 class UnsubscribeInstruments(UnsubscribeData):
@@ -723,7 +727,7 @@ class UnsubscribeInstruments(UnsubscribeData):
 
     """
 
-    def __init__(self, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -758,7 +762,7 @@ class UnsubscribeInstrument(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -795,7 +799,7 @@ class UnsubscribeOrderBook(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, book_data_type: type, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, book_data_type: type, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -830,7 +834,7 @@ class UnsubscribeQuoteTicks(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -865,7 +869,7 @@ class UnsubscribeTradeTicks(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -900,7 +904,7 @@ class UnsubscribeMarkPrices(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -935,7 +939,7 @@ class UnsubscribeIndexPrices(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -970,7 +974,7 @@ class UnsubscribeFundingRates(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1004,9 +1008,9 @@ class UnsubscribeBars(UnsubscribeData):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    bar_type: Any
+    bar_type: BarType
 
-    def __init__(self, bar_type: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, bar_type: BarType, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1041,7 +1045,7 @@ class UnsubscribeInstrumentStatus(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1076,7 +1080,7 @@ class UnsubscribeInstrumentClose(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1106,7 +1110,7 @@ class UnsubscribeOptionGreeks(UnsubscribeData):
 
     """
 
-    def __init__(self, instrument_id: Any, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1137,7 +1141,7 @@ class UnsubscribeOptionChain(UnsubscribeData):
     """
     series_id: object
 
-    def __init__(self, series_id: object, client_id: Any | None, venue: Any | None, command_id: Any, ts_init: int, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, series_id: object, client_id: ClientId | None, venue: Venue | None, command_id: UUID4, ts_init: int, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1146,7 +1150,7 @@ class UnsubscribeOptionChain(UnsubscribeData):
     def __repr__(self) -> str:
         ...
 
-class RequestData(Any):
+class RequestData(Request):
     """
     Represents a request for data.
 
@@ -1182,16 +1186,16 @@ class RequestData(Any):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    data_type: Any
-    instrument_id: Any
+    data_type: DataType
+    instrument_id: InstrumentId
     start: datetime
     end: datetime
     limit: int
-    client_id: Any
-    venue: Any
+    client_id: ClientId
+    venue: Venue
     params: dict
 
-    def __init__(self, data_type: Any, instrument_id: Any | None, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, data_type: DataType, instrument_id: InstrumentId | None, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1236,7 +1240,7 @@ class RequestInstrument(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1276,7 +1280,7 @@ class RequestInstruments(RequestData):
 
     """
 
-    def __init__(self, start: datetime | None, end: datetime | None, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, start: datetime | None, end: datetime | None, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1318,7 +1322,7 @@ class RequestOrderBookSnapshot(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1365,7 +1369,7 @@ class RequestOrderBookDepth(RequestData):
     """
     depth: int
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, limit: int, depth: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, limit: int, depth: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1412,7 +1416,7 @@ class RequestOrderBookDeltas(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1459,7 +1463,7 @@ class RequestQuoteTicks(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1506,7 +1510,7 @@ class RequestTradeTicks(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1553,7 +1557,7 @@ class RequestFundingRates(RequestData):
 
     """
 
-    def __init__(self, instrument_id: Any, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1599,9 +1603,9 @@ class RequestBars(RequestData):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    bar_type: Any
+    bar_type: BarType
 
-    def __init__(self, bar_type: Any, start: datetime | None, end: datetime | None, limit: int, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, bar_type: BarType, start: datetime | None, end: datetime | None, limit: int, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1642,7 +1646,7 @@ class RequestForwardPrices(RequestData):
     underlying: str
     sample_instrument_id: object
 
-    def __init__(self, underlying: str, client_id: Any | None, venue: Any | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, sample_instrument_id: object | None=None, params: dict | None | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, underlying: str, client_id: ClientId | None, venue: Venue | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, sample_instrument_id: object | None=None, params: dict | None | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __str__(self) -> str:
@@ -1681,7 +1685,7 @@ class RequestJoin(RequestData):
     """
     request_ids: tuple
 
-    def __init__(self, request_ids: tuple, start: datetime | None, end: datetime | None, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, params: dict | None, correlation_id: Any=None) -> None:
+    def __init__(self, request_ids: tuple, start: datetime | None, end: datetime | None, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, params: dict | None, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def with_dates(self, start: datetime, end: datetime, ts_init: int, callback: Callable[[Any], None] | None | None=None):
@@ -1693,7 +1697,7 @@ class RequestJoin(RequestData):
     def __repr__(self) -> str:
         ...
 
-class DataResponse(Any):
+class DataResponse(Response):
     """
     Represents a response with data.
 
@@ -1726,15 +1730,15 @@ class DataResponse(Any):
         If both `client_id` and `venue` are both ``None`` (not enough routing info).
 
     """
-    client_id: Any
-    venue: Any
-    data_type: Any
+    client_id: ClientId
+    venue: Venue
+    data_type: DataType
     data: object
     start: datetime
     end: datetime
     params: dict
 
-    def __init__(self, client_id: Any | None, venue: Any | None, data_type: Any, data, correlation_id: Any, response_id: Any, ts_init: int, start: datetime, end: datetime, params: dict | None | None=None) -> None:
+    def __init__(self, client_id: ClientId | None, venue: Venue | None, data_type: DataType, data, correlation_id: UUID4, response_id: UUID4, ts_init: int, start: datetime, end: datetime, params: dict | None | None=None) -> None:
         ...
 
     def __str__(self) -> str:

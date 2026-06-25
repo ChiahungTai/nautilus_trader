@@ -1,5 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import ClientOrderId, ExecAlgorithmId, InstrumentId, OrderListId, StrategyId, TraderId
+from nautilus_trader.model.objects import Price, Quantity
 from nautilus_trader.model.orders.base import Order
 
 class MarketToLimitOrder(Order):
@@ -70,11 +73,11 @@ class MarketToLimitOrder(Order):
     ----------
     https://www.interactivebrokers.com/en/trading/orders/mtl.php
     """
-    price: Any
+    price: Price
     expire_time_ns: int
-    display_qty: Any
+    display_qty: Quantity
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, init_id: Any, ts_init: int, time_in_force: Any=..., expire_time_ns: int=0, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, client_order_id: ClientOrderId, order_side: Any, quantity: Quantity, init_id: UUID4, ts_init: int, time_in_force: Any=..., expire_time_ns: int=0, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, contingency_type: Any=..., order_list_id: OrderListId | None=None, linked_order_ids: list | None=None, parent_order_id: ClientOrderId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, exec_spawn_id: ClientOrderId | None=None, tags: list | None=None) -> None:
         ...
 
     @property

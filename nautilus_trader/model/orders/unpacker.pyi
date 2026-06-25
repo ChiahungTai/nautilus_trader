@@ -1,5 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.events.order import OrderInitialized
+from nautilus_trader.model.orders.base import Order
 
 class OrderUnpacker:
     """
@@ -7,7 +9,7 @@ class OrderUnpacker:
     """
 
     @staticmethod
-    def unpack(values: dict) -> Any:
+    def unpack(values: dict) -> Order:
         """
         Return an order unpacked from the given values.
 
@@ -22,7 +24,7 @@ class OrderUnpacker:
         """
 
     @staticmethod
-    def from_init(init: Any) -> Any:
+    def from_init(init: OrderInitialized) -> Order:
         """
         Return an order initialized from the given event.
 

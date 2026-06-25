@@ -2,7 +2,9 @@
 from typing import Any, Callable
 from decimal import Decimal
 from datetime import datetime
+from nautilus_trader.model.identifiers import Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
 class BettingInstrument(Instrument):
     """
@@ -25,7 +27,7 @@ class BettingInstrument(Instrument):
     selection_name: str
     selection_handicap: float
 
-    def __init__(self, venue_name: str, event_type_id: int, event_type_name: str, competition_id: int, competition_name: str, event_id: int, event_name: str, event_country_code: str, event_open_date: datetime, betting_type: str, market_id: str, market_name: str, market_start_time: datetime, market_type: str, selection_id: int, selection_name: str, currency: str, selection_handicap: float, price_precision: int, size_precision: int, ts_event: int, ts_init: int, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, venue_name: str, event_type_id: int, event_type_name: str, competition_id: int, competition_name: str, event_id: int, event_name: str, event_country_code: str, event_open_date: datetime, betting_type: str, market_id: str, market_name: str, market_start_time: datetime, market_type: str, selection_id: int, selection_name: str, currency: str, selection_handicap: float, price_precision: int, size_precision: int, ts_event: int, ts_init: int, max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, max_notional: Money | None | None=None, min_notional: Money | None | None=None, max_price: Price | None | None=None, min_price: Price | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod
@@ -55,10 +57,10 @@ class BettingInstrument(Instrument):
 
         """
 
-    def notional_value(self, quantity: Any, price: Any, use_quote_for_inverse: bool=False, target_currency: Any=None, conversion_price: Any=None) -> Any:
+    def notional_value(self, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False, target_currency: Currency | None=None, conversion_price: Price | None=None) -> Money:
         ...
 
-def make_symbol(market_id: str, selection_id: int, selection_handicap: float) -> Any:
+def make_symbol(market_id: str, selection_id: int, selection_handicap: float) -> Symbol:
     """
     Make symbol.
 

@@ -1,6 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from nautilus_trader.accounting.accounts.cash import CashAccount
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Money, Price, Quantity
 
 class BettingAccount(CashAccount):
     """
@@ -8,7 +10,7 @@ class BettingAccount(CashAccount):
     """
     ACCOUNT_TYPE = Any
 
-    def calculate_balance_locked(self, instrument: Any, side: Any, quantity: Any, price: Any, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_balance_locked(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the locked balance.
 
@@ -31,20 +33,20 @@ class BettingAccount(CashAccount):
 
         """
 
-    def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:
+    def balance_impact(self, instrument: Instrument, quantity: Quantity, price: Price, order_side: Any) -> Money:
         ...
 
-def stake(quantity: Any, price: Any):
+def stake(quantity: Quantity, price: Price):
     ...
 
-def liability(quantity: Any, price: Any, side: Any):
+def liability(quantity: Quantity, price: Price, side: Any):
     ...
 
-def win_payoff(quantity: Any, price: Any, side: Any):
+def win_payoff(quantity: Quantity, price: Price, side: Any):
     ...
 
-def lose_payoff(quantity: Any, side: Any):
+def lose_payoff(quantity: Quantity, side: Any):
     ...
 
-def exposure(quantity: Any, price: Any, side: Any):
+def exposure(quantity: Quantity, price: Price, side: Any):
     ...

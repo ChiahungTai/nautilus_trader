@@ -1,9 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
-FOREX_5DECIMAL_TICK_SCHEME = FixedTickScheme(name='FOREX_5DECIMAL', price_precision=5, min_tick=Any, max_tick=Any)
-FOREX_3DECIMAL_TICK_SCHEME = FixedTickScheme(name='FOREX_3DECIMAL', price_precision=3, min_tick=Any, max_tick=Any)
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.tick_scheme.base import TickScheme
+FOREX_5DECIMAL_TICK_SCHEME: FixedTickScheme = ...
+FOREX_3DECIMAL_TICK_SCHEME: FixedTickScheme = ...
 
-class FixedTickScheme(Any):
+class FixedTickScheme(TickScheme):
     """
     Represents a fixed precision tick scheme such as for Forex or Crypto.
 
@@ -26,12 +28,12 @@ class FixedTickScheme(Any):
         If `name` is not a valid string.
     """
     price_precision: int
-    increment: Any
+    increment: Price
 
-    def __init__(self, name: str, price_precision: int, min_tick: Any, max_tick: Any, increment: float | None | None=None) -> None:
+    def __init__(self, name: str, price_precision: int, min_tick: Price, max_tick: Price, increment: float | None | None=None) -> None:
         ...
 
-    def next_ask_price(self, value: float, n: int=0) -> Any:
+    def next_ask_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` ask ticks away from value.
 
@@ -50,7 +52,7 @@ class FixedTickScheme(Any):
 
         """
 
-    def next_bid_price(self, value: float, n: int=0) -> Any:
+    def next_bid_price(self, value: float, n: int=0) -> Price:
         """
         Return the price `n` bid ticks away from value.
 

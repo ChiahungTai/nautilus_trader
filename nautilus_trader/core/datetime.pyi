@@ -1,54 +1,286 @@
-# -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2026 Nautech Systems Pty Ltd. All rights reserved.
-#  https://nautechsystems.io
-#
-#  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
-#  You may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-# -------------------------------------------------------------------------------------------------
-
-import datetime as dt
-from typing import Final
-
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
+'\nThis module provides efficient functions for performing standard datetime related operations.\n\nFunctions include awareness/tz checks and conversions, as well as ISO 8601 (RFC 3339) conversion.\n'
 import pandas as pd
+from datetime import datetime
 
-# Re-exports
-from nautilus_trader.core.nautilus_pyo3 import micros_to_nanos as micros_to_nanos
-from nautilus_trader.core.nautilus_pyo3 import millis_to_nanos as millis_to_nanos
-from nautilus_trader.core.nautilus_pyo3 import nanos_to_micros as nanos_to_micros
-from nautilus_trader.core.nautilus_pyo3 import nanos_to_millis as nanos_to_millis
-from nautilus_trader.core.nautilus_pyo3 import nanos_to_secs as nanos_to_secs
-from nautilus_trader.core.nautilus_pyo3 import secs_to_millis as secs_to_millis
-from nautilus_trader.core.nautilus_pyo3 import secs_to_nanos as secs_to_nanos
+def unix_nanos_to_dt(nanos: int):
+    """
+    Return the datetime (UTC) from the given UNIX timestamp (nanoseconds).
 
-# UNIX epoch is the UTC time at midnight on 1970-01-01
-UNIX_EPOCH: Final[pd.Timestamp]
+    Parameters
+    ----------
+    nanos : uint64_t
+        The UNIX timestamp (nanoseconds) to convert.
 
-def unix_nanos_to_dt(nanos: int) -> pd.Timestamp: ...
-def dt_to_unix_nanos(dt: pd.Timestamp | str | int) -> int: ...
-def unix_nanos_to_iso8601(unix_nanos: int, nanos_precision: bool = True) -> str: ...
-def format_iso8601(dt: dt.datetime, nanos_precision: bool = True) -> str: ...
-def format_optional_iso8601(dt: dt.datetime | None, nanos_precision: bool = True) -> str: ...
-def maybe_unix_nanos_to_dt(nanos: int | None) -> pd.Timestamp | None: ...
-def maybe_dt_to_unix_nanos(dt: pd.Timestamp | None) -> int | None: ...
-def is_datetime_utc(dt: dt.datetime) -> bool: ...
-def is_tz_aware(time_object: dt.datetime | pd.DataFrame) -> bool: ...
-def is_tz_naive(time_object: dt.datetime | pd.DataFrame) -> bool: ...
-def as_utc_timestamp(dt: dt.datetime) -> dt.datetime: ...
-def as_utc_index(data: pd.DataFrame) -> pd.DataFrame: ...
-def time_object_to_dt(time_object: pd.Timestamp | str | int | None) -> dt.datetime | None: ...
-def max_date(
-    date1: pd.Timestamp | str | int | None = None,
-    date2: str | int | None = None,
-) -> pd.Timestamp | None: ...
-def min_date(
-    date1: pd.Timestamp | str | int | None = None,
-    date2: str | int | None = None,
-) -> pd.Timestamp | None: ...
-def ensure_pydatetime_utc(timestamp: pd.Timestamp | None) -> dt.datetime | None: ...
+    Returns
+    -------
+    pd.Timestamp
+
+    """
+
+def dt_to_unix_nanos(dt: pd.Timestamp):
+    """
+    Return the UNIX timestamp (nanoseconds) from the given datetime (UTC).
+
+    Parameters
+    ----------
+    dt : pd.Timestamp | str | int
+        The datetime to convert.
+
+    Returns
+    -------
+    uint64_t
+
+    Warnings
+    --------
+    This function expects a pandas `Timestamp` as standard Python `datetime`
+    objects are only accurate to 1 microsecond (μs).
+
+    """
+
+def unix_nanos_to_iso8601(unix_nanos: int, nanos_precision: bool=True) -> str:
+    """
+    Convert the given `unix_nanos` to an ISO 8601 (RFC 3339) format string.
+
+    Parameters
+    ----------
+    unix_nanos : int
+        The UNIX timestamp (nanoseconds) to be converted.
+    nanos_precision : bool, default True
+        If True, use nanosecond precision. If False, use millisecond precision.
+
+    Returns
+    -------
+    str
+
+    """
+
+def format_iso8601(dt: datetime, nanos_precision: bool=True) -> str:
+    """
+    Format the given datetime as an ISO 8601 (RFC 3339) specification string.
+
+    Parameters
+    ----------
+    dt : pd.Timestamp
+        The datetime to format.
+    nanos_precision : bool, default True
+        If True, use nanosecond precision. If False, use millisecond precision.
+
+    Returns
+    -------
+    str
+
+    """
+
+def format_optional_iso8601(dt: datetime, nanos_precision: bool=True) -> str:
+    """
+    Format the given optional datetime as an ISO 8601 (RFC 3339) specification string.
+
+    If value is `None` then will return the string "None".
+
+    Parameters
+    ----------
+    dt : pd.Timestamp, optional
+        The datetime to format.
+    nanos_precision : bool, default True
+        If True, use nanosecond precision. If False, use millisecond precision.
+
+    Returns
+    -------
+    str
+
+    """
+
+def maybe_unix_nanos_to_dt(nanos):
+    """
+    Return the datetime (UTC) from the given UNIX timestamp (nanoseconds), or ``None``.
+
+    If nanos is ``None``, then will return ``None``.
+
+    Parameters
+    ----------
+    nanos : int, optional
+        The UNIX timestamp (nanoseconds) to convert.
+
+    Returns
+    -------
+    pd.Timestamp or ``None``
+
+    """
+
+def maybe_dt_to_unix_nanos(dt: pd.Timestamp):
+    """
+    Return the UNIX timestamp (nanoseconds) from the given datetime, or ``None``.
+
+    If dt is ``None``, then will return ``None``.
+
+    Parameters
+    ----------
+    dt : pd.Timestamp, optional
+        The datetime to convert.
+
+    Returns
+    -------
+    int64 or ``None``
+
+    Warnings
+    --------
+    If the input is not ``None`` then this function expects a pandas `Timestamp`
+    as standard Python `datetime` objects are only accurate to 1 microsecond (μs).
+
+    """
+
+def is_datetime_utc(dt: datetime) -> bool:
+    """
+    Return a value indicating whether the given timestamp is timezone aware UTC.
+
+    Parameters
+    ----------
+    dt : datetime
+        The datetime to check.
+
+    Returns
+    -------
+    bool
+        True if timezone aware UTC, else False.
+
+    """
+
+def is_tz_aware(time_object) -> bool:
+    """
+    Return a value indicating whether the given object is timezone aware.
+
+    Parameters
+    ----------
+    time_object : datetime, pd.Timestamp, pd.Series, pd.DataFrame
+        The time object to check.
+
+    Returns
+    -------
+    bool
+        True if timezone aware, else False.
+
+    """
+
+def is_tz_naive(time_object) -> bool:
+    """
+    Return a value indicating whether the given object is timezone naive.
+
+    Parameters
+    ----------
+    time_object : datetime, pd.Timestamp, pd.DataFrame
+        The time object to check.
+
+    Returns
+    -------
+    bool
+        True if object timezone naive, else False.
+
+    """
+
+def as_utc_timestamp(dt: datetime) -> datetime:
+    """
+    Ensure the given timestamp is tz-aware UTC.
+
+    Parameters
+    ----------
+    dt : datetime
+        The timestamp to check.
+
+    Returns
+    -------
+    datetime
+
+    """
+
+def as_utc_index(data: pd.DataFrame) -> object | None:
+    """
+    Ensure the given data has a DateTimeIndex which is tz-aware UTC.
+
+    Parameters
+    ----------
+    data : pd.Series or pd.DataFrame.
+        The object to ensure is UTC.
+
+    Returns
+    -------
+    pd.Series, pd.DataFrame or ``None``
+
+    """
+
+def time_object_to_dt(time_object) -> datetime | None:
+    """
+    Return the datetime (UTC) from the given UNIX timestamp as integer (nanoseconds), string or pd.Timestamp.
+
+    Parameters
+    ----------
+    time_object : pd.Timestamp | str | int | None
+        The time object to convert.
+
+    Returns
+    -------
+    pd.Timestamp or ``None``
+        Returns None if the input is None.
+
+    """
+
+def max_date(date1: pd.Timestamp | str | int | None | None=None, date2: str | int | None | None=None) -> pd.Timestamp | None:
+    """
+    Return the maximum date as a datetime (UTC).
+
+    Parameters
+    ----------
+    date1 : pd.Timestamp | str | int | None, optional
+        The first date to compare. Can be a string, integer (timestamp), or None. Default is None.
+    date2 : pd.Timestamp | str | int | None, optional
+        The second date to compare. Can be a string, integer (timestamp), or None. Default is None.
+
+    Returns
+    -------
+    pd.Timestamp | None
+        The maximum date, or None if both input dates are None.
+
+    """
+
+def min_date(date1: pd.Timestamp | str | int | None | None=None, date2: str | int | None | None=None) -> pd.Timestamp | None:
+    """
+    Return the minimum date as a datetime (UTC).
+
+    Parameters
+    ----------
+    date1 : pd.Timestamp | str | int | None, optional
+        The first date to compare. Can be a string, integer (timestamp), or None. Default is None.
+    date2 : pd.Timestamp | str | int | None, optional
+        The second date to compare. Can be a string, integer (timestamp), or None. Default is None.
+
+    Returns
+    -------
+    pd.Timestamp | None
+        The minimum date, or None if both input dates are None.
+
+    """
+
+def ensure_pydatetime_utc(timestamp: pd.Timestamp) -> Any:
+    """
+    Convert an optional ``pandas.Timestamp`` to a timezone-aware ``datetime`` in UTC.
+
+    The underlying Python ``datetime`` type only supports microsecond precision. When
+    the provided ``timestamp`` contains non-zero nanoseconds these **cannot** be
+    represented and are therefore truncated to microseconds before the conversion
+    takes place.  This avoids the "Discarding nonzero nanoseconds in conversion"
+    ``UserWarning`` raised by pandas when calling :py:meth:`Timestamp.to_pydatetime`.
+
+    Parameters
+    ----------
+    timestamp : pd.Timestamp, optional
+        The timestamp to convert. If ``None`` the function immediately returns
+        ``None``.
+
+    Returns
+    -------
+    datetime.datetime | None
+        The converted timestamp with tz-info set to ``UTC`` or ``None`` if the
+        input was ``None``.
+
+    """

@@ -2,6 +2,11 @@
 from typing import Any, Callable
 import pandas as pd
 from datetime import datetime, timedelta
+from nautilus_trader.common.component import Clock
+from nautilus_trader.model.data import Bar, BarType, QuoteTick, TradeTick
+from nautilus_trader.model.greeks import GreeksCalculator
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Price, Quantity
 
 class BarBuilder:
     """
@@ -25,13 +30,13 @@ class BarBuilder:
     ts_last: int
     count: int
 
-    def __init__(self, instrument: Any, bar_type: Any) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType) -> None:
         ...
 
     def __repr__(self) -> str:
         ...
 
-    def update(self, price: Any, size: Any, ts_init: int) -> None:
+    def update(self, price: Price, size: Quantity, ts_init: int) -> None:
         """
         Update the bar builder.
 
@@ -46,7 +51,7 @@ class BarBuilder:
 
         """
 
-    def update_bar(self, bar: Any, volume: Any, ts_init: int) -> None:
+    def update_bar(self, bar: Bar, volume: Quantity, ts_init: int) -> None:
         """
         Update the bar builder.
 
@@ -60,7 +65,7 @@ class BarBuilder:
     def set_adjustment(self, adjustment: object, mode: object | None=None) -> None:
         ...
 
-    def build_now(self) -> Any:
+    def build_now(self) -> Bar:
         """
         Return the aggregated bar and reset.
 
@@ -70,7 +75,7 @@ class BarBuilder:
 
         """
 
-    def build(self, ts_event: int, ts_init: int) -> Any:
+    def build(self, ts_event: int, ts_init: int) -> Bar:
         """
         Return the aggregated bar with the given closing timestamp, and reset.
 
@@ -118,14 +123,14 @@ class BarAggregator:
     ValueError
         If `instrument.id` != `bar_type.instrument_id`.
     """
-    bar_type: Any
+    bar_type: BarType
     historical_mode: bool
     is_running: bool
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def set_historical_mode(self, historical_mode: bool, handler: Callable[[Any], None]) -> None:
+    def set_historical_mode(self, historical_mode: bool, handler: Callable[[Bar], None]) -> None:
         """
         Set the historical mode state of the aggregator.
 
@@ -154,7 +159,7 @@ class BarAggregator:
 
         """
 
-    def handle_quote_tick(self, tick: Any) -> None:
+    def handle_quote_tick(self, tick: QuoteTick) -> None:
         """
         Update the aggregator with the given tick.
 
@@ -165,7 +170,7 @@ class BarAggregator:
 
         """
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         """
         Update the aggregator with the given tick.
 
@@ -176,7 +181,7 @@ class BarAggregator:
 
         """
 
-    def handle_bar(self, bar: Any) -> None:
+    def handle_bar(self, bar: Bar) -> None:
         """
         Update the aggregator with the given bar.
 
@@ -209,7 +214,7 @@ class TickBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
 class TickImbalanceBarAggregator(BarAggregator):
@@ -235,10 +240,10 @@ class TickImbalanceBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class TickRunsBarAggregator(BarAggregator):
@@ -264,10 +269,10 @@ class TickRunsBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class VolumeBarAggregator(BarAggregator):
@@ -292,7 +297,7 @@ class VolumeBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
 class VolumeImbalanceBarAggregator(BarAggregator):
@@ -318,10 +323,10 @@ class VolumeImbalanceBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class VolumeRunsBarAggregator(BarAggregator):
@@ -347,10 +352,10 @@ class VolumeRunsBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class ValueBarAggregator(BarAggregator):
@@ -375,7 +380,7 @@ class ValueBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
     def get_cumulative_value(self) -> object:
@@ -411,10 +416,10 @@ class ValueImbalanceBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class ValueRunsBarAggregator(BarAggregator):
@@ -440,10 +445,10 @@ class ValueRunsBarAggregator(BarAggregator):
         If `instrument.id` != `bar_type.instrument_id`.
     """
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any) -> None:
+    def handle_trade_tick(self, tick: TradeTick) -> None:
         ...
 
 class RenkoBarAggregator(BarAggregator):
@@ -470,7 +475,7 @@ class RenkoBarAggregator(BarAggregator):
     """
     brick_size: object
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None]) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None]) -> None:
         ...
 
 class TimeBarAggregator(BarAggregator):
@@ -517,13 +522,13 @@ class TimeBarAggregator(BarAggregator):
     stored_open_ns: int
     first_close_ns: int
 
-    def __init__(self, instrument: Any, bar_type: Any, handler: Callable[[Any], None], clock: Any, interval_type: str='left-open', timestamp_on_close: bool=True, skip_first_non_full_bar: bool=False, build_with_no_updates: bool=True, time_bars_origin_offset: pd.Timedelta | pd.DateOffset | None=None, bar_build_delay: int=0) -> None:
+    def __init__(self, instrument: Instrument, bar_type: BarType, handler: Callable[[Bar], None], clock: Clock, interval_type: str='left-open', timestamp_on_close: bool=True, skip_first_non_full_bar: bool=False, build_with_no_updates: bool=True, time_bars_origin_offset: pd.Timedelta | pd.DateOffset | None=None, bar_build_delay: int=0) -> None:
         ...
 
     def __str__(self):
         ...
 
-    def set_clock(self, clock: Any) -> None:
+    def set_clock(self, clock: Clock) -> None:
         ...
 
     def start_timer(self) -> None:
@@ -593,16 +598,16 @@ class SpreadQuoteAggregator:
     historical_mode: bool
     is_running: bool
 
-    def __init__(self, spread_instrument: Any, handler: Callable[[Any], None], greeks_calculator: Any, clock: Any, historical: bool, update_interval_seconds: object | None=None, quote_build_delay: int=0) -> None:
+    def __init__(self, spread_instrument: Instrument, handler: Callable[[QuoteTick], None], greeks_calculator: GreeksCalculator, clock: Clock, historical: bool, update_interval_seconds: object | None=None, quote_build_delay: int=0) -> None:
         ...
 
-    def set_historical_mode(self, historical_mode: bool, handler: Callable[[Any], None], greeks_calculator: Any) -> None:
+    def set_historical_mode(self, historical_mode: bool, handler: Callable[[QuoteTick], None], greeks_calculator: GreeksCalculator) -> None:
         ...
 
     def set_running(self, is_running: bool) -> None:
         ...
 
-    def set_clock(self, clock: Any) -> None:
+    def set_clock(self, clock: Clock) -> None:
         ...
 
     def start_timer(self) -> None:
@@ -611,7 +616,7 @@ class SpreadQuoteAggregator:
     def stop_timer(self) -> None:
         ...
 
-    def handle_quote_tick(self, tick: Any) -> None:
+    def handle_quote_tick(self, tick: QuoteTick) -> None:
         ...
 
     def flush_pending_historical_quotes(self) -> None:

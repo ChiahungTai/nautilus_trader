@@ -1,9 +1,30 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any, Generator
+from typing import Any, Callable, Generator
 from decimal import Decimal
 import cython
 import pandas as pd
 from datetime import datetime
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.accounting.margin_models import MarginModel
+from nautilus_trader.backtest.execution_client import BacktestExecClient
+from nautilus_trader.backtest.modules import SimulationModule
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.common.component import Logger, LogGuard, MessageBus, TestClock
+from nautilus_trader.core.data import Data
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.execution.algorithm import ExecAlgorithm
+from nautilus_trader.execution.messages import BatchCancelOrders, CancelAllOrders, CancelOrder, ModifyOrder, TradingCommand
+from nautilus_trader.model.book import OrderBook
+from nautilus_trader.model.data import Bar, InstrumentStatus, OrderBookDelta, OrderBookDeltas, QuoteTick, TradeTick
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, InstrumentId, PositionId, TraderId, Venue
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.position import Position
+from nautilus_trader.portfolio.base import PortfolioFacade
+from nautilus_trader.trading.strategy import Strategy
 
 class BacktestEngine:
     """
@@ -21,14 +42,14 @@ class BacktestEngine:
         If `config` is not of type `BacktestEngineConfig`.
     """
 
-    def __init__(self, config: Any | None=None) -> None:
+    def __init__(self, config: Any | None | None=None) -> None:
         ...
 
     def __del__(self) -> None:
         ...
 
     @property
-    def trader_id(self) -> Any:
+    def trader_id(self) -> TraderId:
         """
         Return the engines trader ID.
 
@@ -50,7 +71,7 @@ class BacktestEngine:
         """
 
     @property
-    def instance_id(self) -> Any:
+    def instance_id(self) -> UUID4:
         """
         Return the engines instance ID.
 
@@ -74,7 +95,7 @@ class BacktestEngine:
         """
 
     @property
-    def logger(self) -> Any:
+    def logger(self) -> Logger:
         """
         Return the internal logger for the engine.
 
@@ -85,7 +106,7 @@ class BacktestEngine:
         """
 
     @property
-    def run_config_id(self) -> str:
+    def run_config_id(self) -> str | None:
         """
         Return the last backtest engine run config ID.
 
@@ -96,7 +117,7 @@ class BacktestEngine:
         """
 
     @property
-    def run_id(self) -> Any:
+    def run_id(self) -> UUID4 | None:
         """
         Return the last backtest engine run ID (if run).
 
@@ -173,7 +194,7 @@ class BacktestEngine:
         """
 
     @property
-    def cache(self) -> Any:
+    def cache(self) -> CacheFacade:
         """
         Return the engines internal read-only cache.
 
@@ -184,7 +205,7 @@ class BacktestEngine:
         """
 
     @property
-    def data(self) -> list[Any]:
+    def data(self) -> list[Data]:
         """
         Return the engines internal data stream.
 
@@ -195,7 +216,7 @@ class BacktestEngine:
         """
 
     @property
-    def portfolio(self) -> Any:
+    def portfolio(self) -> PortfolioFacade:
         """
         Return the engines internal read-only portfolio.
 
@@ -205,7 +226,7 @@ class BacktestEngine:
 
         """
 
-    def get_log_guard(self) -> Any.LogGuard | Any | None:
+    def get_log_guard(self) -> Any | LogGuard | None:
         """
         Return the global logging subsystems log guard.
 
@@ -217,7 +238,7 @@ class BacktestEngine:
 
         """
 
-    def list_venues(self) -> list[Any]:
+    def list_venues(self) -> list[Venue]:
         """
         Return the venues contained within the engine.
 
@@ -227,7 +248,7 @@ class BacktestEngine:
 
         """
 
-    def add_venue(self, venue: Any, oms_type: Any, account_type: Any, starting_balances: list[Any], base_currency: Any | None=None, default_leverage: Decimal | None=None, leverages: dict[Any, Decimal] | None=None, margin_model: Any=None, modules: list[Any] | None=None, fill_model: Any | None=None, fee_model: Any | None=None, latency_model: Any | None=None, book_type: Any=..., routing: bool=False, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_trigger_mode: Any=..., use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_message_queue: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, allow_cash_borrowing: bool=False, frozen_account: bool=False, price_protection_points=None, settlement_prices: dict[Any, float] | None=None) -> None:
+    def add_venue(self, venue: Venue, oms_type: Any, account_type: Any, starting_balances: list[Money], base_currency: Currency | None | None=None, default_leverage: Decimal | None | None=None, leverages: dict[InstrumentId, Decimal] | None | None=None, margin_model: MarginModel | None=None, modules: list[SimulationModule] | None | None=None, fill_model: Any | None | None=None, fee_model: Any | None | None=None, latency_model: Any | None | None=None, book_type: Any=..., routing: bool=False, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_trigger_mode: Any=..., use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_message_queue: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, allow_cash_borrowing: bool=False, frozen_account: bool=False, price_protection_points=None, settlement_prices: dict[InstrumentId, float] | None | None=None) -> None:
         """
         Add a `SimulatedExchange` with the given parameters to the backtest engine.
 
@@ -326,7 +347,7 @@ class BacktestEngine:
 
         """
 
-    def change_fill_model(self, venue: Any, model: Any) -> None:
+    def change_fill_model(self, venue: Venue, model: Any) -> None:
         """
         Change the fill model for the exchange of the given venue.
 
@@ -339,7 +360,7 @@ class BacktestEngine:
 
         """
 
-    def add_instrument(self, instrument: Any) -> None:
+    def add_instrument(self, instrument: Instrument) -> None:
         """
         Add the instrument to the backtest engine.
 
@@ -361,7 +382,7 @@ class BacktestEngine:
 
         """
 
-    def add_data(self, data: list, client_id: Any=None, validate: bool=True, sort: bool=True) -> None:
+    def add_data(self, data: list, client_id: ClientId | None=None, validate: bool=True, sort: bool=True) -> None:
         """
         Add the given `data` to the backtest engine.
 
@@ -425,7 +446,7 @@ class BacktestEngine:
 
         """
 
-    def add_data_iterator(self, data_name: str, generator: Generator[list[Any], None, None], client_id: Any=None) -> None:
+    def add_data_iterator(self, data_name: str, generator: Generator[list[Data], None, None], client_id: ClientId | None=None) -> None:
         """
         Add a single stream generator that yields ``list[Data]`` objects for the low-level streaming backtest API.
 
@@ -472,7 +493,7 @@ class BacktestEngine:
 
         """
 
-    def add_actor(self, actor: Any) -> None:
+    def add_actor(self, actor: Actor) -> None:
         """
         Add the given actor to the backtest engine.
 
@@ -483,7 +504,7 @@ class BacktestEngine:
 
         """
 
-    def add_actors(self, actors: list[Any]) -> None:
+    def add_actors(self, actors: list[Actor]) -> None:
         """
         Add the given list of actors to the backtest engine.
 
@@ -494,7 +515,7 @@ class BacktestEngine:
 
         """
 
-    def add_strategy(self, strategy: Any) -> None:
+    def add_strategy(self, strategy: Strategy) -> None:
         """
         Add the given strategy to the backtest engine.
 
@@ -505,7 +526,7 @@ class BacktestEngine:
 
         """
 
-    def add_strategies(self, strategies: list[Any]) -> None:
+    def add_strategies(self, strategies: list[Strategy]) -> None:
         """
         Add the given list of strategies to the backtest engine.
 
@@ -516,7 +537,7 @@ class BacktestEngine:
 
         """
 
-    def add_exec_algorithm(self, exec_algorithm: Any) -> None:
+    def add_exec_algorithm(self, exec_algorithm: ExecAlgorithm) -> None:
         """
         Add the given execution algorithm to the backtest engine.
 
@@ -527,7 +548,7 @@ class BacktestEngine:
 
         """
 
-    def add_exec_algorithms(self, exec_algorithms: list[Any]) -> None:
+    def add_exec_algorithms(self, exec_algorithms: list[ExecAlgorithm]) -> None:
         """
         Add the given list of execution algorithms to the backtest engine.
 
@@ -596,7 +617,7 @@ class BacktestEngine:
 
         """
 
-    def run(self, start: datetime | str | int | None=None, end: datetime | str | int | None=None, run_config_id: str | None=None, streaming: bool=False) -> None:
+    def run(self, start: datetime | str | int | None | None=None, end: datetime | str | int | None | None=None, run_config_id: str | None | None=None, streaming: bool=False) -> None:
         """
         Run a backtest.
 
@@ -810,7 +831,7 @@ class BacktestDataIterator:
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    def next(self) -> Any:
+    def next(self) -> Data | None:
         """
         Return the next ``Data`` object in chronological order.
 
@@ -992,18 +1013,18 @@ class SimulatedExchange:
         If `modules` contains a type other than `SimulationModule`.
 
     """
-    id: Any
+    id: Venue
     oms_type: Any
     book_type: Any
-    msgbus: Any
-    cache: Any
-    exec_client: Any
+    msgbus: MessageBus
+    cache: Cache
+    exec_client: BacktestExecClient
     account_type: Any
-    base_currency: Any
+    base_currency: Currency
     starting_balances: list
     default_leverage: Any
     leverages: dict
-    margin_model: Any
+    margin_model: MarginModel
     is_frozen_account: bool
     latency_model: Any
     fill_model: Any
@@ -1026,13 +1047,13 @@ class SimulatedExchange:
     modules: list
     instruments: dict
 
-    def __init__(self, venue: Any, oms_type: Any, account_type: Any, starting_balances: list, base_currency: Any | None, default_leverage: Decimal, leverages: dict[Any, Decimal], modules: list, portfolio: Any, msgbus: Any, cache: Any, clock: Any, fill_model: Any, fee_model: Any, latency_model: Any=None, margin_model: Any=None, book_type: Any=..., frozen_account: bool=False, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_trigger_mode: Any=..., use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_message_queue: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, price_protection_points=None, settlement_prices: dict[Any, float] | None=None) -> None:
+    def __init__(self, venue: Venue, oms_type: Any, account_type: Any, starting_balances: list, base_currency: Currency | None, default_leverage: Decimal, leverages: dict[InstrumentId, Decimal], modules: list, portfolio: PortfolioFacade, msgbus: MessageBus, cache: CacheFacade, clock: TestClock, fill_model: Any, fee_model: Any, latency_model: Any=None, margin_model: MarginModel | None=None, book_type: Any=..., frozen_account: bool=False, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_trigger_mode: Any=..., use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_message_queue: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, price_protection_points=None, settlement_prices: dict[InstrumentId, float] | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
         ...
 
-    def register_client(self, client: Any) -> None:
+    def register_client(self, client: BacktestExecClient) -> None:
         """
         Register the given execution client with the simulated exchange.
 
@@ -1071,7 +1092,7 @@ class SimulatedExchange:
 
         """
 
-    def add_instrument(self, instrument: Any) -> None:
+    def add_instrument(self, instrument: Instrument) -> None:
         """
         Add the given instrument to the exchange.
 
@@ -1089,7 +1110,7 @@ class SimulatedExchange:
 
         """
 
-    def best_bid_price(self, instrument_id: Any) -> Any:
+    def best_bid_price(self, instrument_id: InstrumentId) -> Price | None:
         """
         Return the best bid price for the given instrument ID (if found).
 
@@ -1104,7 +1125,7 @@ class SimulatedExchange:
 
         """
 
-    def best_ask_price(self, instrument_id: Any) -> Any:
+    def best_ask_price(self, instrument_id: InstrumentId) -> Price | None:
         """
         Return the best ask price for the given instrument ID (if found).
 
@@ -1119,7 +1140,7 @@ class SimulatedExchange:
 
         """
 
-    def get_book(self, instrument_id: Any) -> Any:
+    def get_book(self, instrument_id: InstrumentId) -> OrderBook | None:
         """
         Return the order book for the given instrument ID.
 
@@ -1134,7 +1155,7 @@ class SimulatedExchange:
 
         """
 
-    def get_matching_engine(self, instrument_id: Any) -> OrderMatchingEngine:
+    def get_matching_engine(self, instrument_id: InstrumentId) -> OrderMatchingEngine | None:
         """
         Return the matching engine for the given instrument ID (if found).
 
@@ -1169,7 +1190,7 @@ class SimulatedExchange:
 
         """
 
-    def get_open_orders(self, instrument_id: Any=None) -> list:
+    def get_open_orders(self, instrument_id: InstrumentId | None=None) -> list:
         """
         Return the open orders at the exchange.
 
@@ -1184,7 +1205,7 @@ class SimulatedExchange:
 
         """
 
-    def get_open_bid_orders(self, instrument_id: Any=None) -> list:
+    def get_open_bid_orders(self, instrument_id: InstrumentId | None=None) -> list:
         """
         Return the open bid orders at the exchange.
 
@@ -1199,7 +1220,7 @@ class SimulatedExchange:
 
         """
 
-    def get_open_ask_orders(self, instrument_id: Any=None) -> list:
+    def get_open_ask_orders(self, instrument_id: InstrumentId | None=None) -> list:
         """
         Return the open ask orders at the exchange.
 
@@ -1214,7 +1235,7 @@ class SimulatedExchange:
 
         """
 
-    def get_account(self) -> Any:
+    def get_account(self) -> Account | None:
         """
         Return the account for the registered client (if registered).
 
@@ -1224,7 +1245,7 @@ class SimulatedExchange:
 
         """
 
-    def adjust_account(self, adjustment: Any) -> None:
+    def adjust_account(self, adjustment: Money) -> None:
         """
         Adjust the account at the exchange with the given adjustment.
 
@@ -1235,7 +1256,7 @@ class SimulatedExchange:
 
         """
 
-    def update_instrument(self, instrument: Any) -> None:
+    def update_instrument(self, instrument: Instrument) -> None:
         """
         Update the venues current instrument definition with the given instrument.
 
@@ -1246,7 +1267,7 @@ class SimulatedExchange:
 
         """
 
-    def send(self, command: Any) -> None:
+    def send(self, command: TradingCommand) -> None:
         """
         Send the given trading command into the exchange.
 
@@ -1257,7 +1278,7 @@ class SimulatedExchange:
 
         """
 
-    def process_order_book_delta(self, delta: Any) -> None:
+    def process_order_book_delta(self, delta: OrderBookDelta) -> None:
         """
         Process the exchanges market for the given order book delta.
 
@@ -1268,7 +1289,7 @@ class SimulatedExchange:
 
         """
 
-    def process_order_book_deltas(self, deltas: Any) -> None:
+    def process_order_book_deltas(self, deltas: OrderBookDeltas) -> None:
         """
         Process the exchanges market for the given order book deltas.
 
@@ -1290,7 +1311,7 @@ class SimulatedExchange:
 
         """
 
-    def process_quote_tick(self, tick: Any) -> None:
+    def process_quote_tick(self, tick: QuoteTick) -> None:
         """
         Process the exchanges market for the given quote tick.
 
@@ -1303,7 +1324,7 @@ class SimulatedExchange:
 
         """
 
-    def process_trade_tick(self, tick: Any) -> None:
+    def process_trade_tick(self, tick: TradeTick) -> None:
         """
         Process the exchanges market for the given trade tick.
 
@@ -1316,7 +1337,7 @@ class SimulatedExchange:
 
         """
 
-    def process_bar(self, bar: Any) -> None:
+    def process_bar(self, bar: Bar) -> None:
         """
         Process the exchanges market for the given bar.
 
@@ -1329,7 +1350,7 @@ class SimulatedExchange:
 
         """
 
-    def process_instrument_status(self, data: Any) -> None:
+    def process_instrument_status(self, data: InstrumentStatus) -> None:
         """
         Process a specific instrument status.
 
@@ -1434,17 +1455,17 @@ class OrderMatchingEngine:
         For options, the option leg settles at this price.
 
     """
-    venue: Any
-    instrument: Any
+    venue: Venue
+    instrument: Instrument
     raw_id: int
     book_type: Any
     oms_type: Any
     account_type: Any
     market_status: Any
-    cache: Any
-    msgbus: Any
+    cache: CacheFacade
+    msgbus: MessageBus
 
-    def __init__(self, instrument: Any, raw_id: int, fill_model: Any, fee_model: Any, book_type: Any, oms_type: Any, account_type: Any, msgbus: Any, cache: Any, clock: Any, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_full_trigger: bool=False, use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, price_protection_points=None, settlement_prices: dict[Any, float] | None=None) -> None:
+    def __init__(self, instrument: Instrument, raw_id: int, fill_model: Any, fee_model: Any, book_type: Any, oms_type: Any, account_type: Any, msgbus: MessageBus, cache: CacheFacade, clock: TestClock, reject_stop_orders: bool=True, support_gtd_orders: bool=True, support_contingent_orders: bool=True, oto_full_trigger: bool=False, use_position_ids: bool=True, use_random_ids: bool=False, use_reduce_only: bool=True, use_market_order_acks: bool=False, bar_execution: bool=True, bar_adaptive_high_low_ordering: bool=False, trade_execution: bool=True, liquidity_consumption: bool=False, queue_position: bool=False, price_protection_points=None, settlement_prices: dict[InstrumentId, float] | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -1464,7 +1485,7 @@ class OrderMatchingEngine:
 
         """
 
-    def update_instrument(self, instrument: Any) -> None:
+    def update_instrument(self, instrument: Instrument) -> None:
         """
         Update the matching engines current instrument definition with the given instrument.
 
@@ -1475,7 +1496,7 @@ class OrderMatchingEngine:
 
         """
 
-    def best_bid_price(self) -> Any:
+    def best_bid_price(self) -> Price | None:
         """
         Return the best bid price for the given instrument ID (if found).
 
@@ -1485,7 +1506,7 @@ class OrderMatchingEngine:
 
         """
 
-    def best_ask_price(self) -> Any:
+    def best_ask_price(self) -> Price | None:
         """
         Return the best ask price for the given instrument ID (if found).
 
@@ -1495,7 +1516,7 @@ class OrderMatchingEngine:
 
         """
 
-    def get_book(self) -> Any:
+    def get_book(self) -> OrderBook:
         """
         Return the internal order book.
 
@@ -1535,10 +1556,10 @@ class OrderMatchingEngine:
 
         """
 
-    def order_exists(self, client_order_id: Any) -> bool:
+    def order_exists(self, client_order_id: ClientOrderId) -> bool:
         ...
 
-    def process_order_book_delta(self, delta: Any) -> None:
+    def process_order_book_delta(self, delta: OrderBookDelta) -> None:
         """
         Process the exchanges market for the given order book delta.
 
@@ -1556,7 +1577,7 @@ class OrderMatchingEngine:
 
         """
 
-    def process_order_book_deltas(self, deltas: Any) -> None:
+    def process_order_book_deltas(self, deltas: OrderBookDeltas) -> None:
         """
         Process the exchanges market for the given order book deltas.
 
@@ -1592,7 +1613,7 @@ class OrderMatchingEngine:
 
         """
 
-    def process_quote_tick(self, tick: Any) -> None:
+    def process_quote_tick(self, tick: QuoteTick) -> None:
         """
         Process the exchanges market for the given quote tick.
 
@@ -1612,7 +1633,7 @@ class OrderMatchingEngine:
 
         """
 
-    def process_trade_tick(self, tick: Any) -> None:
+    def process_trade_tick(self, tick: TradeTick) -> None:
         """
         Process the exchanges market for the given trade tick.
 
@@ -1637,7 +1658,7 @@ class OrderMatchingEngine:
 
         """
 
-    def process_bar(self, bar: Any) -> None:
+    def process_bar(self, bar: Bar) -> None:
         """
         Process the exchanges market for the given bar.
 
@@ -1679,19 +1700,19 @@ class OrderMatchingEngine:
 
         """
 
-    def process_order(self, order: Any, account_id: Any) -> None:
+    def process_order(self, order: Order, account_id: AccountId) -> None:
         ...
 
-    def process_modify(self, command: Any, account_id: Any) -> None:
+    def process_modify(self, command: ModifyOrder, account_id: AccountId) -> None:
         ...
 
-    def process_cancel(self, command: Any, account_id: Any) -> None:
+    def process_cancel(self, command: CancelOrder, account_id: AccountId) -> None:
         ...
 
-    def process_batch_cancel(self, command: Any, account_id: Any) -> None:
+    def process_batch_cancel(self, command: BatchCancelOrders, account_id: AccountId) -> None:
         ...
 
-    def process_cancel_all(self, command: Any, account_id: Any) -> None:
+    def process_cancel_all(self, command: CancelAllOrders, account_id: AccountId) -> None:
         ...
 
     def iterate(self, timestamp_ns: int, aggressor_side: Any=...) -> None:
@@ -1711,7 +1732,7 @@ class OrderMatchingEngine:
     def check_instrument_expiration(self, timestamp_ns: int) -> None:
         """Run instrument expiration at timestamp_ns (option exercise/expiry or futures close)."""
 
-    def fill_market_order(self, order: Any) -> None:
+    def fill_market_order(self, order: Order) -> None:
         """
         Fill the given *marketable* order.
 
@@ -1722,7 +1743,7 @@ class OrderMatchingEngine:
 
         """
 
-    def determine_market_price_and_volume(self, order: Any) -> list:
+    def determine_market_price_and_volume(self, order: Order) -> list:
         """
         Return the projected fills for the given *marketable* order filling
         aggressively into the opposite order side.
@@ -1740,7 +1761,7 @@ class OrderMatchingEngine:
 
         """
 
-    def fill_limit_order(self, order: Any) -> None:
+    def fill_limit_order(self, order: Order) -> None:
         """
         Fill the given limit order.
 
@@ -1756,7 +1777,7 @@ class OrderMatchingEngine:
 
         """
 
-    def determine_limit_price_and_volume(self, order: Any) -> list:
+    def determine_limit_price_and_volume(self, order: Order) -> list:
         """
         Return the projected fills for the given *limit* order filling passively
         from its limit price.
@@ -1779,7 +1800,7 @@ class OrderMatchingEngine:
 
         """
 
-    def apply_fills(self, order: Any, fills: list, liquidity_side: Any, venue_position_id: Any | None=None, position: Any | None=None, protection_price: Any | None=None) -> None:
+    def apply_fills(self, order: Order, fills: list, liquidity_side: Any, venue_position_id: PositionId | None | None=None, position: Position | None | None=None, protection_price: Price | None | None=None) -> None:
         """
         Apply the given list of fills to the given order. Optionally provide
         existing position details.
@@ -1813,7 +1834,7 @@ class OrderMatchingEngine:
 
         """
 
-    def fill_order(self, order: Any, last_px: Any, last_qty: Any, liquidity_side: Any, venue_position_id: Any | None=None, position: Any | None=None) -> None:
+    def fill_order(self, order: Order, last_px: Price, last_qty: Quantity, liquidity_side: Any, venue_position_id: PositionId | None | None=None, position: Position | None | None=None) -> None:
         """
         Apply the given list of fills to the given order. Optionally provide
         existing position details.
@@ -1844,17 +1865,17 @@ class OrderMatchingEngine:
 
         """
 
-    def accept_order(self, order: Any) -> None:
+    def accept_order(self, order: Order) -> None:
         ...
 
-    def expire_order(self, order: Any) -> None:
+    def expire_order(self, order: Order) -> None:
         ...
 
-    def cancel_order(self, order: Any, cancel_contingencies: bool=True) -> None:
+    def cancel_order(self, order: Order, cancel_contingencies: bool=True) -> None:
         ...
 
-    def update_order(self, order: Any, qty: Any, price: Any=None, trigger_price: Any=None, update_contingencies: bool=True) -> None:
+    def update_order(self, order: Order, qty: Quantity, price: Price | None=None, trigger_price: Price | None=None, update_contingencies: bool=True) -> None:
         ...
 
-    def trigger_stop_order(self, order: Any) -> None:
+    def trigger_stop_order(self, order: Order) -> None:
         ...

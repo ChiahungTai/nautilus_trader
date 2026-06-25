@@ -2,6 +2,7 @@
 from typing import Any, Callable
 from nautilus_trader.indicators.base import Indicator
 from nautilus_trader.indicators.fuzzy_enums import CandleBodySize, CandleDirection, CandleSize, CandleWickSize
+from nautilus_trader.model.data import Bar
 
 class FuzzyCandle:
     """
@@ -63,7 +64,7 @@ class FuzzyCandlesticks(Indicator):
     def __init__(self, period: int, threshold1: float=0.5, threshold2: float=1.0, threshold3: float=2.0, threshold4: float=3.0) -> None:
         ...
 
-    def handle_bar(self, bar: Any) -> None:
+    def handle_bar(self, bar: Bar) -> None:
         """
         Update the indicator with the given bar.
 

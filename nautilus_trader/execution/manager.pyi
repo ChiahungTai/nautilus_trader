@@ -1,6 +1,14 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, MessageBus
+from nautilus_trader.core.message import Command, Event
 from nautilus_trader.execution.messages import SubmitOrder, TradingCommand
+from nautilus_trader.model.events.order import OrderCanceled, OrderEvent, OrderExpired, OrderFilled, OrderRejected, OrderUpdated
+from nautilus_trader.model.events.position import PositionEvent
+from nautilus_trader.model.identifiers import ClientId, ClientOrderId, ExecAlgorithmId, PositionId
+from nautilus_trader.model.objects import Quantity
+from nautilus_trader.model.orders.base import Order
 
 class OrderManager:
     """
@@ -41,7 +49,7 @@ class OrderManager:
     log_events: bool
     log_commands: bool
 
-    def __init__(self, clock: Any, msgbus: Any, cache: Any, component_name: str, active_local: bool, submit_order_handler: Any | None=None, cancel_order_handler: Any | None=None, modify_order_handler: Any | None=None, debug: bool=False, log_events: bool=True, log_commands: bool=True) -> None:
+    def __init__(self, clock: Clock, msgbus: MessageBus, cache: Cache, component_name: str, active_local: bool, submit_order_handler: Any | None=None, cancel_order_handler: Any | None=None, modify_order_handler: Any | None=None, debug: bool=False, log_events: bool=True, log_commands: bool=True) -> None:
         ...
 
     def get_submit_order_commands(self) -> dict:
@@ -65,7 +73,7 @@ class OrderManager:
 
         """
 
-    def pop_submit_order_command(self, client_order_id: Any) -> SubmitOrder:
+    def pop_submit_order_command(self, client_order_id: ClientOrderId) -> SubmitOrder | None:
         """
         Pop the submit order command for the given `client_order_id` out of the managers
         cache (if found).
@@ -86,7 +94,7 @@ class OrderManager:
         Reset the manager, clearing all stateful values.
         """
 
-    def cancel_order(self, order: Any) -> None:
+    def cancel_order(self, order: Order) -> None:
         """
         Cancel the given `order` with the manager.
 
@@ -97,7 +105,7 @@ class OrderManager:
 
         """
 
-    def modify_order_quantity(self, order: Any, new_quantity: Any) -> None:
+    def modify_order_quantity(self, order: Order, new_quantity: Quantity) -> None:
         """
         Modify the given `order` with the manager.
 
@@ -108,7 +116,7 @@ class OrderManager:
 
         """
 
-    def create_new_submit_order(self, order: Any, position_id: Any=None, client_id: Any=None) -> None:
+    def create_new_submit_order(self, order: Order, position_id: PositionId | None=None, client_id: ClientId | None=None) -> None:
         """
         Create a new submit order command for the given `order`.
 
@@ -123,7 +131,7 @@ class OrderManager:
 
         """
 
-    def should_manage_order(self, order: Any) -> bool:
+    def should_manage_order(self, order: Order) -> bool:
         """
         Check if the given order should be managed.
 
@@ -139,7 +147,7 @@ class OrderManager:
 
         """
 
-    def handle_event(self, event: Any) -> None:
+    def handle_event(self, event: Event) -> None:
         """
         Handle the given `event`.
 
@@ -152,44 +160,44 @@ class OrderManager:
 
         """
 
-    def handle_order_rejected(self, rejected: Any) -> None:
+    def handle_order_rejected(self, rejected: OrderRejected) -> None:
         ...
 
-    def handle_order_canceled(self, canceled: Any) -> None:
+    def handle_order_canceled(self, canceled: OrderCanceled) -> None:
         ...
 
-    def handle_order_expired(self, expired: Any) -> None:
+    def handle_order_expired(self, expired: OrderExpired) -> None:
         ...
 
-    def handle_order_updated(self, updated: Any) -> None:
+    def handle_order_updated(self, updated: OrderUpdated) -> None:
         ...
 
-    def handle_order_filled(self, filled: Any) -> None:
+    def handle_order_filled(self, filled: OrderFilled) -> None:
         ...
 
-    def handle_contingencies(self, order: Any) -> None:
+    def handle_contingencies(self, order: Order) -> None:
         ...
 
-    def handle_contingencies_update(self, order: Any) -> None:
+    def handle_contingencies_update(self, order: Order) -> None:
         ...
 
-    def handle_position_event(self, event: Any) -> None:
+    def handle_position_event(self, event: PositionEvent) -> None:
         ...
 
     def send_emulator_command(self, command: TradingCommand) -> None:
         ...
 
-    def send_algo_command(self, command: TradingCommand, exec_algorithm_id: Any) -> None:
+    def send_algo_command(self, command: TradingCommand, exec_algorithm_id: ExecAlgorithmId) -> None:
         ...
 
     def send_risk_command(self, command: TradingCommand) -> None:
         ...
 
-    def send_exec_command(self, command: Any) -> None:
+    def send_exec_command(self, command: Command) -> None:
         ...
 
-    def send_risk_event(self, event: Any) -> None:
+    def send_risk_event(self, event: OrderEvent) -> None:
         ...
 
-    def send_exec_event(self, event: Any) -> None:
+    def send_exec_event(self, event: OrderEvent) -> None:
         ...

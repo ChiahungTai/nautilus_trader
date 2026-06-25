@@ -1,8 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, Component, MessageBus
 from nautilus_trader.data.messages import RequestBars, RequestData, RequestForwardPrices, RequestFundingRates, RequestInstrument, RequestInstruments, RequestOrderBookDeltas, RequestOrderBookSnapshot, RequestQuoteTicks, RequestTradeTicks, SubscribeBars, SubscribeData, SubscribeFundingRates, SubscribeIndexPrices, SubscribeInstrument, SubscribeInstrumentClose, SubscribeInstruments, SubscribeInstrumentStatus, SubscribeMarkPrices, SubscribeOptionGreeks, SubscribeOrderBook, SubscribeQuoteTicks, SubscribeTradeTicks, UnsubscribeBars, UnsubscribeData, UnsubscribeFundingRates, UnsubscribeIndexPrices, UnsubscribeInstrument, UnsubscribeInstrumentClose, UnsubscribeInstruments, UnsubscribeInstrumentStatus, UnsubscribeMarkPrices, UnsubscribeOptionGreeks, UnsubscribeOrderBook, UnsubscribeQuoteTicks, UnsubscribeTradeTicks
+from nautilus_trader.model.identifiers import ClientId, Venue
 
-class DataClient(Any):
+class DataClient(Component):
     """
     The base class for all data clients.
 
@@ -23,10 +26,10 @@ class DataClient(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    venue: Any
+    venue: Venue
     is_connected: bool
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None) -> None:
+    def __init__(self, client_id: ClientId, msgbus: MessageBus, cache: Cache, clock: Clock, venue: Venue | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -99,7 +102,7 @@ class MarketDataClient(DataClient):
     This class should not be used directly, but through a concrete subclass.
     """
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None) -> None:
+    def __init__(self, client_id: ClientId, msgbus: MessageBus, cache: Cache, clock: Clock, venue: Venue | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def subscribed_custom_data(self) -> list:

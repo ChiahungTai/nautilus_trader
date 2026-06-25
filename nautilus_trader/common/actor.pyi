@@ -4,7 +4,20 @@ from typing import Any, Callable
 import asyncio
 from concurrent.futures import Executor
 from datetime import datetime
+from nautilus_trader.cache.base import CacheFacade
 from nautilus_trader.common.component import Clock, Component, Logger, MessageBus
+from nautilus_trader.core.data import Data
+from nautilus_trader.core.message import Event
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.indicators.base import Indicator
+from nautilus_trader.model.book import OrderBook
+from nautilus_trader.model.data import Bar, BarType, DataType, InstrumentStatus, OrderBookDeltas, QuoteTick, TradeTick
+from nautilus_trader.model.events.order import OrderCanceled, OrderFilled
+from nautilus_trader.model.greeks import GreeksCalculator
+from nautilus_trader.model.identifiers import ClientId, InstrumentId, Venue
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.instruments.synthetic import SyntheticInstrument
+from nautilus_trader.portfolio.base import PortfolioFacade
 
 class Actor(Component):
     """
@@ -25,13 +38,13 @@ class Actor(Component):
     - This class should not be used directly, but through a concrete subclass.
     - Do not call components such as `clock` and `logger` in the `__init__` prior to registration.
     """
-    portfolio: Any
+    portfolio: PortfolioFacade
     config: Any
     clock: Clock
     log: Logger
     msgbus: MessageBus
-    cache: Any
-    greeks: Any
+    cache: CacheFacade
+    greeks: GreeksCalculator
 
     def __init__(self, config: Any | None | None=None) -> None:
         ...
@@ -171,7 +184,7 @@ class Actor(Component):
 
         """
 
-    def on_instrument_status(self, data: Any) -> None:
+    def on_instrument_status(self, data: InstrumentStatus) -> None:
         """
         Actions to be performed when running and receives an instrument status
         update.
@@ -203,7 +216,7 @@ class Actor(Component):
 
         """
 
-    def on_instrument(self, instrument: Any) -> None:
+    def on_instrument(self, instrument: Instrument) -> None:
         """
         Actions to be performed when running and receives an instrument.
 
@@ -218,7 +231,7 @@ class Actor(Component):
 
         """
 
-    def on_order_book(self, order_book: Any) -> None:
+    def on_order_book(self, order_book: OrderBook) -> None:
         """
         Actions to be performed when running and receives an order book.
 
@@ -263,7 +276,7 @@ class Actor(Component):
 
         """
 
-    def on_quote_tick(self, tick: Any) -> None:
+    def on_quote_tick(self, tick: QuoteTick) -> None:
         """
         Actions to be performed when running and receives a quote tick.
 
@@ -278,7 +291,7 @@ class Actor(Component):
 
         """
 
-    def on_trade_tick(self, tick: Any) -> None:
+    def on_trade_tick(self, tick: TradeTick) -> None:
         """
         Actions to be performed when running and receives a trade tick.
 
@@ -368,7 +381,7 @@ class Actor(Component):
 
         """
 
-    def on_bar(self, bar: Any) -> None:
+    def on_bar(self, bar: Bar) -> None:
         """
         Actions to be performed when running and receives a bar.
 
@@ -432,7 +445,7 @@ class Actor(Component):
 
         """
 
-    def on_order_filled(self, event: Any) -> None:
+    def on_order_filled(self, event: OrderFilled) -> None:
         """
         Actions to be performed when running and receives an order filled event.
 
@@ -447,7 +460,7 @@ class Actor(Component):
 
         """
 
-    def on_order_canceled(self, event: Any) -> None:
+    def on_order_canceled(self, event: OrderCanceled) -> None:
         """
         Actions to be performed when running and receives an order canceled event.
 
@@ -462,7 +475,7 @@ class Actor(Component):
 
         """
 
-    def on_event(self, event: Any) -> None:
+    def on_event(self, event: Event) -> None:
         """
         Actions to be performed running and receives an event.
 
@@ -499,7 +512,7 @@ class Actor(Component):
 
         """
 
-    def register_base(self, portfolio: Any, msgbus: MessageBus, cache: Any, clock: Clock) -> None:
+    def register_base(self, portfolio: PortfolioFacade, msgbus: MessageBus, cache: CacheFacade, clock: Clock) -> None:
         """
         Register with a trader.
 
@@ -560,7 +573,7 @@ class Actor(Component):
 
         """
 
-    def register_indicator_for_quote_ticks(self, instrument_id: Any, indicator: Any) -> None:
+    def register_indicator_for_quote_ticks(self, instrument_id: InstrumentId, indicator: Indicator) -> None:
         """
         Register the given indicator with the actor/strategy to receive quote tick
         data for the given instrument ID.
@@ -574,7 +587,7 @@ class Actor(Component):
 
         """
 
-    def register_indicator_for_trade_ticks(self, instrument_id: Any, indicator: Any) -> None:
+    def register_indicator_for_trade_ticks(self, instrument_id: InstrumentId, indicator: Indicator) -> None:
         """
         Register the given indicator with the actor/strategy to receive trade tick
         data for the given instrument ID.
@@ -588,7 +601,7 @@ class Actor(Component):
 
         """
 
-    def register_indicator_for_bars(self, bar_type: Any, indicator: Any) -> None:
+    def register_indicator_for_bars(self, bar_type: BarType, indicator: Indicator) -> None:
         """
         Register the given indicator with the actor/strategy to receive bar data for the
         given bar type.
@@ -636,7 +649,7 @@ class Actor(Component):
 
         """
 
-    def add_synthetic(self, synthetic: Any) -> None:
+    def add_synthetic(self, synthetic: SyntheticInstrument) -> None:
         """
         Add the created synthetic instrument to the cache.
 
@@ -656,7 +669,7 @@ class Actor(Component):
 
         """
 
-    def update_synthetic(self, synthetic: Any) -> None:
+    def update_synthetic(self, synthetic: SyntheticInstrument) -> None:
         """
         Update the synthetic instrument in the cache.
 
@@ -802,7 +815,7 @@ class Actor(Component):
         Cancel all queued and active tasks.
         """
 
-    def subscribe_data(self, data_type: Any, client_id: Any=None, instrument_id: Any=None, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_data(self, data_type: DataType, client_id: ClientId | None=None, instrument_id: InstrumentId | None=None, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to data of the given data type.
 
@@ -824,7 +837,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_instruments(self, venue: Any, client_id: Any=None, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_instruments(self, venue: Venue, client_id: ClientId | None=None, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to update `Instrument` data for the given venue.
 
@@ -846,7 +859,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_instrument(self, instrument_id: Any, client_id: Any=None, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_instrument(self, instrument_id: InstrumentId, client_id: ClientId | None=None, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to update `Instrument` data for the given instrument ID.
 
@@ -868,7 +881,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_order_book_deltas(self, instrument_id: Any, book_type: Any=..., depth: int=0, client_id: Any=None, managed: bool=True, pyo3_conversion: bool=False, params: dict | None=None) -> None:
+    def subscribe_order_book_deltas(self, instrument_id: InstrumentId, book_type: Any=..., depth: int=0, client_id: ClientId | None=None, managed: bool=True, pyo3_conversion: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to the order book data stream, being a snapshot then deltas
         for the given instrument ID.
@@ -897,7 +910,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_order_book_depth(self, instrument_id: Any, book_type: Any=..., depth: int=0, client_id: Any=None, managed: bool=True, pyo3_conversion: bool=False, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_order_book_depth(self, instrument_id: InstrumentId, book_type: Any=..., depth: int=0, client_id: ClientId | None=None, managed: bool=True, pyo3_conversion: bool=False, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to the order book depth stream for the given instrument ID.
 
@@ -926,7 +939,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_order_book_at_interval(self, instrument_id: Any, book_type: Any=..., depth: int=0, interval_ms: int=1000, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_order_book_at_interval(self, instrument_id: InstrumentId, book_type: Any=..., depth: int=0, interval_ms: int=1000, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to an `OrderBook` at a specified interval for the given instrument ID.
 
@@ -966,7 +979,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_quote_ticks(self, instrument_id: Any, client_id: Any=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, params: dict | None=None) -> None:
+    def subscribe_quote_ticks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to streaming `QuoteTick` data for the given instrument ID.
 
@@ -991,7 +1004,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_trade_ticks(self, instrument_id: Any, client_id: Any=None, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_trade_ticks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to streaming `TradeTick` data for the given instrument ID.
 
@@ -1013,7 +1026,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_mark_prices(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_mark_prices(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to streaming `MarkPriceUpdate` data for the given instrument ID.
 
@@ -1032,7 +1045,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_index_prices(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_index_prices(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to streaming `IndexPriceUpdate` data for the given instrument ID.
 
@@ -1051,7 +1064,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_funding_rates(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_funding_rates(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to streaming `FundingRateUpdate` data for the given instrument ID.
 
@@ -1070,7 +1083,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_bars(self, bar_type: Any, client_id: Any=None, update_catalog: bool=False, params: dict | None=None) -> None:
+    def subscribe_bars(self, bar_type: BarType, client_id: ClientId | None=None, update_catalog: bool=False, params: dict | None=None) -> None:
         """
         Subscribe to streaming `Bar` data for the given bar type.
 
@@ -1092,7 +1105,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_instrument_status(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_instrument_status(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to status updates for the given instrument ID.
 
@@ -1111,7 +1124,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_instrument_close(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_instrument_close(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to close updates for the given instrument ID.
 
@@ -1130,7 +1143,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_option_greeks(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_option_greeks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to streaming `OptionGreeks` data for the given instrument ID.
 
@@ -1149,7 +1162,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_option_chain(self, series_id: object, strike_range: object | None=None, snapshot_interval_ms: object | None=None, client_id: Any=None, params: dict | None=None) -> None:
+    def subscribe_option_chain(self, series_id: object, strike_range: object | None=None, snapshot_interval_ms: object | None=None, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Subscribe to `OptionChainSlice` snapshots for the given series.
 
@@ -1172,7 +1185,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_order_fills(self, instrument_id: Any) -> None:
+    def subscribe_order_fills(self, instrument_id: InstrumentId) -> None:
         """
         Subscribe to all order fills for the given instrument ID.
 
@@ -1186,7 +1199,7 @@ class Actor(Component):
 
         """
 
-    def subscribe_order_cancels(self, instrument_id: Any) -> None:
+    def subscribe_order_cancels(self, instrument_id: InstrumentId) -> None:
         """
         Subscribe to all order cancels for the given instrument ID.
 
@@ -1200,7 +1213,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_data(self, data_type: Any, client_id: Any=None, instrument_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_data(self, data_type: DataType, client_id: ClientId | None=None, instrument_id: InstrumentId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from data of the given data type.
 
@@ -1216,7 +1229,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_instruments(self, venue: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_instruments(self, venue: Venue, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from update `Instrument` data for the given venue.
 
@@ -1232,7 +1245,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_instrument(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_instrument(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from update `Instrument` data for the given instrument ID.
 
@@ -1248,7 +1261,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_order_book_deltas(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_order_book_deltas(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe the order book deltas stream for the given instrument ID.
 
@@ -1264,7 +1277,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_order_book_depth(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_order_book_depth(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe the order book depth stream for the given instrument ID.
 
@@ -1280,7 +1293,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_order_book_at_interval(self, instrument_id: Any, interval_ms: int=1000, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_order_book_at_interval(self, instrument_id: InstrumentId, interval_ms: int=1000, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from an `OrderBook` at a specified interval for the given instrument ID.
 
@@ -1300,7 +1313,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_quote_ticks(self, instrument_id: Any, client_id: Any=None, aggregate_spread_quotes: bool=False, params: dict | None=None) -> None:
+    def unsubscribe_quote_ticks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, aggregate_spread_quotes: bool=False, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `QuoteTick` data for the given instrument ID.
 
@@ -1319,7 +1332,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_trade_ticks(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_trade_ticks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `TradeTick` data for the given instrument ID.
 
@@ -1335,7 +1348,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_mark_prices(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_mark_prices(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `MarkPriceUpdate` data for the given instrument ID.
 
@@ -1351,7 +1364,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_index_prices(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_index_prices(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `IndexPriceUpdate` data for the given instrument ID.
 
@@ -1367,7 +1380,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_funding_rates(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_funding_rates(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `FundingRateUpdate` data for the given instrument ID.
 
@@ -1383,7 +1396,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_bars(self, bar_type: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_bars(self, bar_type: BarType, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `Bar` data for the given bar type.
 
@@ -1399,7 +1412,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_instrument_status(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_instrument_status(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from status updates for the given instrument ID.
 
@@ -1415,7 +1428,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_instrument_close(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_instrument_close(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from close updates for the given instrument ID.
 
@@ -1431,7 +1444,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_option_greeks(self, instrument_id: Any, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_option_greeks(self, instrument_id: InstrumentId, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from streaming `OptionGreeks` data for the given instrument ID.
 
@@ -1447,7 +1460,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_option_chain(self, series_id: object, client_id: Any=None, params: dict | None=None) -> None:
+    def unsubscribe_option_chain(self, series_id: object, client_id: ClientId | None=None, params: dict | None=None) -> None:
         """
         Unsubscribe from `OptionChainSlice` snapshots for the given series.
 
@@ -1462,7 +1475,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_order_fills(self, instrument_id: Any) -> None:
+    def unsubscribe_order_fills(self, instrument_id: InstrumentId) -> None:
         """
         Unsubscribe from all order fills for the given instrument ID.
 
@@ -1473,7 +1486,7 @@ class Actor(Component):
 
         """
 
-    def unsubscribe_order_cancels(self, instrument_id: Any) -> None:
+    def unsubscribe_order_cancels(self, instrument_id: InstrumentId) -> None:
         """
         Unsubscribe from all order cancels for the given instrument ID.
 
@@ -1484,7 +1497,7 @@ class Actor(Component):
 
         """
 
-    def publish_data(self, data_type: Any, data: Any) -> None:
+    def publish_data(self, data_type: DataType, data: Data) -> None:
         """
         Publish the given data to the message bus.
 
@@ -1532,7 +1545,7 @@ class Actor(Component):
 
         """
 
-    def request_data(self, data_type: Any, client_id: Any, instrument_id: Any=None, start: datetime | None=None, end: datetime | None=None, limit: int=0, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_data(self, data_type: DataType, client_id: ClientId, instrument_id: InstrumentId | None=None, start: datetime | None=None, end: datetime | None=None, limit: int=0, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request custom data for the given data type from the given data client.
 
@@ -1589,7 +1602,7 @@ class Actor(Component):
 
         """
 
-    def request_instrument(self, instrument_id: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_instrument(self, instrument_id: InstrumentId, start: datetime | None=None, end: datetime | None=None, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request `Instrument` data for the given instrument ID.
 
@@ -1643,7 +1656,7 @@ class Actor(Component):
 
         """
 
-    def request_instruments(self, venue: Any, start: datetime | None=None, end: datetime | None=None, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_instruments(self, venue: Venue, start: datetime | None=None, end: datetime | None=None, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request all `Instrument` data for the given venue.
 
@@ -1698,7 +1711,7 @@ class Actor(Component):
 
         """
 
-    def request_order_book_deltas(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_deltas(self, instrument_id: InstrumentId, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `OrderBookDeltas` data.
 
@@ -1746,7 +1759,7 @@ class Actor(Component):
 
         """
 
-    def request_order_book_depth(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, depth: int=10, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_depth(self, instrument_id: InstrumentId, start: datetime, end: datetime | None=None, limit: int=0, depth: int=10, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `OrderBookDepth10` snapshots.
 
@@ -1796,7 +1809,7 @@ class Actor(Component):
 
         """
 
-    def request_order_book_snapshot(self, instrument_id: Any, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_order_book_snapshot(self, instrument_id: InstrumentId, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request an order book snapshot.
 
@@ -1837,7 +1850,7 @@ class Actor(Component):
 
         """
 
-    def request_quote_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_quote_ticks(self, instrument_id: InstrumentId, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, aggregate_spread_quotes: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `QuoteTick` data.
 
@@ -1899,7 +1912,7 @@ class Actor(Component):
 
         """
 
-    def request_trade_ticks(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_trade_ticks(self, instrument_id: InstrumentId, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `TradeTick` data.
 
@@ -1958,7 +1971,7 @@ class Actor(Component):
 
         """
 
-    def request_funding_rates(self, instrument_id: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_funding_rates(self, instrument_id: InstrumentId, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `FundingRateUpdate` data.
 
@@ -2017,7 +2030,7 @@ class Actor(Component):
 
         """
 
-    def request_bars(self, bar_type: Any, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_bars(self, bar_type: BarType, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, update_catalog: bool=False, join_request: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical `Bar` data.
 
@@ -2076,7 +2089,7 @@ class Actor(Component):
 
         """
 
-    def request_aggregated_bars(self, bar_types: list, start: datetime, end: datetime | None=None, limit: int=0, client_id: Any=None, callback: Callable[[Any], None] | None | None=None, include_external_data: bool=False, update_subscriptions: bool=False, update_catalog: bool=False, aggregate_spread_quotes: bool=False, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_aggregated_bars(self, bar_types: list, start: datetime, end: datetime | None=None, limit: int=0, client_id: ClientId | None=None, callback: Callable[[UUID4], None] | None | None=None, include_external_data: bool=False, update_subscriptions: bool=False, update_catalog: bool=False, aggregate_spread_quotes: bool=False, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request historical aggregated `Bar` data for multiple bar types.
         The first bar is used to determine which market data type will be queried.
@@ -2158,7 +2171,7 @@ class Actor(Component):
 
         """
 
-    def request_join(self, request_ids: tuple, start: datetime, end: datetime | None=None, client_id: Any=None, venue: Any=None, callback: Callable[[Any], None] | None | None=None, request_id: Any=None, params: dict | None=None) -> Any:
+    def request_join(self, request_ids: tuple, start: datetime, end: datetime | None=None, client_id: ClientId | None=None, venue: Venue | None=None, callback: Callable[[UUID4], None] | None | None=None, request_id: UUID4 | None=None, params: dict | None=None) -> UUID4:
         """
         Request a join of multiple data requests.
 
@@ -2200,7 +2213,7 @@ class Actor(Component):
 
         """
 
-    def is_pending_request(self, request_id: Any) -> bool:
+    def is_pending_request(self, request_id: UUID4) -> bool:
         """
         Return whether the request for the given identifier is pending processing.
 
@@ -2237,7 +2250,7 @@ class Actor(Component):
 
         """
 
-    def handle_instrument(self, instrument: Any) -> None:
+    def handle_instrument(self, instrument: Instrument) -> None:
         """
         Handle the given instrument.
 
@@ -2254,7 +2267,7 @@ class Actor(Component):
 
         """
 
-    def handle_historical_order_book_deltas(self, deltas: Any) -> None:
+    def handle_historical_order_book_deltas(self, deltas: OrderBookDeltas) -> None:
         ...
 
     def handle_order_book_deltas(self, deltas, historical: bool=False) -> None:
@@ -2298,7 +2311,7 @@ class Actor(Component):
 
         """
 
-    def handle_order_book(self, order_book: Any) -> None:
+    def handle_order_book(self, order_book: OrderBook) -> None:
         """
         Handle the given order book.
 
@@ -2315,10 +2328,10 @@ class Actor(Component):
 
         """
 
-    def handle_historical_quote_tick(self, tick: Any) -> None:
+    def handle_historical_quote_tick(self, tick: QuoteTick) -> None:
         ...
 
-    def handle_quote_tick(self, tick: Any, historical: bool=False) -> None:
+    def handle_quote_tick(self, tick: QuoteTick, historical: bool=False) -> None:
         """
         Handle the given quote tick.
 
@@ -2335,10 +2348,10 @@ class Actor(Component):
 
         """
 
-    def handle_historical_trade_tick(self, tick: Any) -> None:
+    def handle_historical_trade_tick(self, tick: TradeTick) -> None:
         ...
 
-    def handle_trade_tick(self, tick: Any, historical: bool=False) -> None:
+    def handle_trade_tick(self, tick: TradeTick, historical: bool=False) -> None:
         """
         Handle the given trade tick.
 
@@ -2409,10 +2422,10 @@ class Actor(Component):
 
         """
 
-    def handle_historical_bar(self, bar: Any) -> None:
+    def handle_historical_bar(self, bar: Bar) -> None:
         ...
 
-    def handle_bar(self, bar: Any, historical: bool=False) -> None:
+    def handle_bar(self, bar: Bar, historical: bool=False) -> None:
         """
         Handle the given bar data.
 
@@ -2463,7 +2476,7 @@ class Actor(Component):
 
         """
 
-    def handle_instrument_status(self, data: Any) -> None:
+    def handle_instrument_status(self, data: InstrumentStatus) -> None:
         """
         Handle the given instrument status update.
 
@@ -2497,7 +2510,7 @@ class Actor(Component):
 
         """
 
-    def handle_data(self, data: Any) -> None:
+    def handle_data(self, data: Data) -> None:
         """
         Handle the given data.
 
@@ -2514,7 +2527,7 @@ class Actor(Component):
 
         """
 
-    def handle_signal(self, signal: Any) -> None:
+    def handle_signal(self, signal: Data) -> None:
         """
         Handle the given signal.
 
@@ -2546,7 +2559,7 @@ class Actor(Component):
 
         """
 
-    def handle_event(self, event: Any) -> None:
+    def handle_event(self, event: Event) -> None:
         """
         Handle the given event.
 

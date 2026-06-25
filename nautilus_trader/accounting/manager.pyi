@@ -1,5 +1,12 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.accounting.accounts.margin import MarginAccount
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.common.component import Clock, Logger
+from nautilus_trader.model.events.account import AccountState
+from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.instruments.base import Instrument
 
 class AccountsManager:
     """
@@ -15,10 +22,10 @@ class AccountsManager:
         The clock for the manager.
     """
 
-    def __init__(self, cache: Any, logger: Any, clock: Any) -> None:
+    def __init__(self, cache: CacheFacade, logger: Logger, clock: Clock) -> None:
         ...
 
-    def generate_account_state(self, account: Any, ts_event: int) -> Any:
+    def generate_account_state(self, account: Account, ts_event: int) -> AccountState:
         """
         Generate a new account state event for the given `account`.
 
@@ -35,7 +42,7 @@ class AccountsManager:
 
         """
 
-    def update_balances(self, account: Any, instrument: Any, fill: Any) -> None:
+    def update_balances(self, account: Account, instrument: Instrument, fill: OrderFilled) -> None:
         """
         Update the account balances based on the `fill` event.
 
@@ -55,7 +62,7 @@ class AccountsManager:
 
         """
 
-    def update_orders(self, account: Any, instrument: Any, orders_open: list, ts_event: int) -> bool:
+    def update_orders(self, account: Account, instrument: Instrument, orders_open: list, ts_event: int) -> bool:
         """
         Update the account states based on the given orders.
 
@@ -77,7 +84,7 @@ class AccountsManager:
 
         """
 
-    def update_positions(self, account: Any, instrument: Any, positions_open: list, ts_event: int) -> bool:
+    def update_positions(self, account: MarginAccount, instrument: Instrument, positions_open: list, ts_event: int) -> bool:
         """
         Update the maintenance (position) margin.
 

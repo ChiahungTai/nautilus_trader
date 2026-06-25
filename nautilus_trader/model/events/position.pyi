@@ -1,8 +1,13 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.message import Event
+from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.identifiers import AccountId, ClientOrderId, InstrumentId, PositionId, StrategyId, TraderId
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
+from nautilus_trader.model.position import Position
 
-class PositionEvent(Any):
+class PositionEvent(Event):
     """
     The base class for all position events.
 
@@ -65,34 +70,34 @@ class PositionEvent(Any):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    trader_id: Any
-    strategy_id: Any
-    instrument_id: Any
-    position_id: Any
-    account_id: Any
-    opening_order_id: Any
-    closing_order_id: Any
+    trader_id: TraderId
+    strategy_id: StrategyId
+    instrument_id: InstrumentId
+    position_id: PositionId
+    account_id: AccountId
+    opening_order_id: ClientOrderId
+    closing_order_id: ClientOrderId
     entry: Any
     side: Any
     signed_qty: float
-    quantity: Any
-    peak_qty: Any
-    last_qty: Any
-    last_px: Any
-    currency: Any
+    quantity: Quantity
+    peak_qty: Quantity
+    last_qty: Quantity
+    last_px: Price
+    currency: Currency
     avg_px_open: float
     avg_px_close: float
     realized_return: float
-    realized_pnl: Any
-    unrealized_pnl: Any
+    realized_pnl: Money
+    unrealized_pnl: Money
     ts_opened: int
     ts_closed: int
     duration_ns: int
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any | None, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, position_id: PositionId, account_id: AccountId, opening_order_id: ClientOrderId, closing_order_id: ClientOrderId | None, entry: Any, side: Any, signed_qty: float, quantity: Quantity, peak_qty: Quantity, last_qty: Quantity, last_px: Price, currency: Currency, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Money, unrealized_pnl: Money, event_id: UUID4, ts_opened: int, ts_closed: int, duration_ns: int, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -105,7 +110,7 @@ class PositionEvent(Any):
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -185,11 +190,11 @@ class PositionOpened(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, realized_pnl: Any, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, position_id: PositionId, account_id: AccountId, opening_order_id: ClientOrderId, entry: Any, side: Any, signed_qty: float, quantity: Quantity, peak_qty: Quantity, last_qty: Quantity, last_px: Price, currency: Currency, avg_px_open: float, realized_pnl: Money, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
     @staticmethod
-    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
+    def create(position: Position, fill: OrderFilled, event_id: UUID4, ts_init: int):
         """
         Return a position opened event from the given params.
 
@@ -293,11 +298,11 @@ class PositionChanged(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, position_id: PositionId, account_id: AccountId, opening_order_id: ClientOrderId, entry: Any, side: Any, signed_qty: float, quantity: Quantity, peak_qty: Quantity, last_qty: Quantity, last_px: Price, currency: Currency, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Money, unrealized_pnl: Money, event_id: UUID4, ts_opened: int, ts_event: int, ts_init: int) -> None:
         ...
 
     @staticmethod
-    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
+    def create(position: Position, fill: OrderFilled, event_id: UUID4, ts_init: int):
         """
         Return a position changed event from the given params.
 
@@ -403,11 +408,11 @@ class PositionClosed(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, position_id: PositionId, account_id: AccountId, opening_order_id: ClientOrderId, closing_order_id: ClientOrderId, entry: Any, side: Any, signed_qty: float, quantity: Quantity, peak_qty: Quantity, last_qty: Quantity, last_px: Price, currency: Currency, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Money, event_id: UUID4, ts_opened: int, ts_closed: int, duration_ns: int, ts_init: int) -> None:
         ...
 
     @staticmethod
-    def create(position: Any, fill: OrderFilled, event_id: Any, ts_init: int):
+    def create(position: Position, fill: OrderFilled, event_id: UUID4, ts_init: int):
         """
         Return a position closed event from the given params.
 
@@ -455,7 +460,7 @@ class PositionClosed(PositionEvent):
 
         """
 
-class PositionAdjusted(Any):
+class PositionAdjusted(Event):
     """
     Represents an adjustment to a position's quantity or realized PnL.
 
@@ -489,20 +494,20 @@ class PositionAdjusted(Any):
     ts_init : uint64_t
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
-    trader_id: Any
-    strategy_id: Any
-    instrument_id: Any
-    position_id: Any
-    account_id: Any
+    trader_id: TraderId
+    strategy_id: StrategyId
+    instrument_id: InstrumentId
+    position_id: PositionId
+    account_id: AccountId
     adjustment_type: Any
     quantity_change: object
-    pnl_change: Any
+    pnl_change: Money
     reason: str
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, adjustment_type: Any, quantity_change: object, pnl_change: Any | None, reason: str | None, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, instrument_id: InstrumentId, position_id: PositionId, account_id: AccountId, adjustment_type: Any, quantity_change: object, pnl_change: Money | None, reason: str | None, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -515,7 +520,7 @@ class PositionAdjusted(Any):
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 

@@ -1,5 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.events.order import OrderFilled
+from nautilus_trader.model.events.position import PositionAdjusted
+from nautilus_trader.model.identifiers import AccountId, ClientOrderId, InstrumentId, PositionId, StrategyId, TraderId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
 class Position:
     """
@@ -22,27 +27,27 @@ class Position:
     ValueError
         If `fill.position_id` is ``None``.
     """
-    trader_id: Any
-    strategy_id: Any
-    instrument_id: Any
-    id: Any
-    account_id: Any
-    opening_order_id: Any
-    closing_order_id: Any
+    trader_id: TraderId
+    strategy_id: StrategyId
+    instrument_id: InstrumentId
+    id: PositionId
+    account_id: AccountId
+    opening_order_id: ClientOrderId
+    closing_order_id: ClientOrderId
     entry: Any
     side: Any
     signed_qty: float
-    quantity: Any
-    peak_qty: Any
+    quantity: Quantity
+    peak_qty: Quantity
     price_precision: int
     size_precision: int
-    multiplier: Any
+    multiplier: Quantity
     is_inverse: bool
     is_spot_currency: bool
     instrument_class: Any
-    quote_currency: Any
-    base_currency: Any
-    settlement_currency: Any
+    quote_currency: Currency
+    base_currency: Currency
+    settlement_currency: Currency
     ts_init: int
     ts_opened: int
     ts_last: int
@@ -51,9 +56,9 @@ class Position:
     avg_px_open: float
     avg_px_close: float
     realized_return: float
-    realized_pnl: Any
+    realized_pnl: Money
 
-    def __init__(self, instrument: Any, fill: Any) -> None:
+    def __init__(self, instrument: Instrument, fill: OrderFilled) -> None:
         ...
 
     def __eq__(self, other: Position) -> bool:
@@ -65,7 +70,7 @@ class Position:
     def __repr__(self) -> str:
         ...
 
-    def purge_events_for_order(self, client_order_id: Any) -> None:
+    def purge_events_for_order(self, client_order_id: ClientOrderId) -> None:
         """
         Purge all order events for the given client order ID.
 
@@ -320,7 +325,7 @@ class Position:
 
         """
 
-    def apply(self, fill: Any) -> None:
+    def apply(self, fill: OrderFilled) -> None:
         """
         Applies the given order fill event to the position.
 
@@ -339,7 +344,7 @@ class Position:
 
         """
 
-    def apply_adjustment(self, adjustment: Any) -> None:
+    def apply_adjustment(self, adjustment: PositionAdjusted) -> None:
         """
         Applies a position adjustment event.
 
@@ -357,7 +362,7 @@ class Position:
 
         """
 
-    def notional_value(self, price: Any, target_currency: Any=None, conversion_price: Any=None) -> Any:
+    def notional_value(self, price: Price, target_currency: Currency | None=None, conversion_price: Price | None=None) -> Money:
         """
         Return the current notional value of the position, using a reference
         price for the calculation (e.g., bid, ask, mid, last, or mark).
@@ -386,7 +391,7 @@ class Position:
 
         """
 
-    def cross_notional_value(self, price: Any, quote_price: Any, base_price: Any, target_currency: Any) -> Any:
+    def cross_notional_value(self, price: Price, quote_price: Price, base_price: Price, target_currency: Currency) -> Money:
         """
         Return the current notional value of the position in a cross/target currency.
 
@@ -410,7 +415,7 @@ class Position:
 
         """
 
-    def calculate_pnl(self, avg_px_open: float, avg_px_close: float, quantity: Any) -> Any:
+    def calculate_pnl(self, avg_px_open: float, avg_px_close: float, quantity: Quantity) -> Money:
         """
         Return a calculated PnL in the instrument's settlement currency.
 
@@ -430,7 +435,7 @@ class Position:
 
         """
 
-    def unrealized_pnl(self, price: Any) -> Any:
+    def unrealized_pnl(self, price: Price) -> Money:
         """
         Return the unrealized PnL for the position, using a reference
         price for the calculation (e.g., bid, ask, mid, last, or mark).
@@ -448,7 +453,7 @@ class Position:
 
         """
 
-    def total_pnl(self, price: Any) -> Any:
+    def total_pnl(self, price: Price) -> Money:
         """
         Return the total PnL for the position, using a reference
         price for the calculation (e.g., bid, ask, mid, last, or mark).

@@ -1,7 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.message import Command, Event
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.identifiers import Identifier, TraderId
 
-class ShutdownSystem(Any):
+class ShutdownSystem(Command):
     """
     Represents a command to shut down a system and terminate the process.
 
@@ -18,14 +21,14 @@ class ShutdownSystem(Any):
     reason : str, optional
         The reason for the shutdown command (can be None).
     """
-    trader_id: Any
-    component_id: Any
+    trader_id: TraderId
+    component_id: Identifier
     reason: str
 
-    def __init__(self, trader_id: Any, component_id: Any, command_id: Any, ts_init: int, reason: str | None=None, correlation_id: Any=None) -> None:
+    def __init__(self, trader_id: TraderId, component_id: Identifier, command_id: UUID4, ts_init: int, reason: str | None=None, correlation_id: UUID4 | None=None) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Command) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -64,7 +67,7 @@ class ShutdownSystem(Any):
 
         """
 
-class ComponentStateChanged(Any):
+class ComponentStateChanged(Event):
     """
     Represents an event which includes information on the state of a component.
 
@@ -87,16 +90,16 @@ class ComponentStateChanged(Any):
     ts_init : uint64_t
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
-    trader_id: Any
-    component_id: Any
+    trader_id: TraderId
+    component_id: Identifier
     component_type: str
     state: Any
     config: dict
 
-    def __init__(self, trader_id: Any, component_id: Any, component_type: str, state: Any, config: dict, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, component_id: Identifier, component_type: str, state: Any, config: dict, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
@@ -109,7 +112,7 @@ class ComponentStateChanged(Any):
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -168,7 +171,7 @@ class ComponentStateChanged(Any):
 
         """
 
-class RiskEvent(Any):
+class RiskEvent(Event):
     """
     The base class for all risk events.
 
@@ -183,19 +186,19 @@ class RiskEvent(Any):
     ts_init : uint64_t
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
-    trader_id: Any
+    trader_id: TraderId
 
-    def __init__(self, trader_id: Any, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: Event) -> bool:
         ...
 
     def __hash__(self) -> int:
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -249,7 +252,7 @@ class TradingStateChanged(RiskEvent):
     state: Any
     config: dict
 
-    def __init__(self, trader_id: Any, state: Any, config: dict, event_id: Any, ts_event: int, ts_init: int) -> None:
+    def __init__(self, trader_id: TraderId, state: Any, config: dict, event_id: UUID4, ts_event: int, ts_init: int) -> None:
         ...
 
     def __str__(self) -> str:
@@ -259,7 +262,7 @@ class TradingStateChanged(RiskEvent):
         ...
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 

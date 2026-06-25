@@ -1,12 +1,15 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Money, Price, Quantity
+from nautilus_trader.model.orders.base import Order
 
 class FeeModel:
     """
     Provides an abstract fee model for trades.
     """
 
-    def get_commission(self, order: Any, fill_qty: Any, fill_px: Any, instrument: Any) -> Any:
+    def get_commission(self, order: Order, fill_qty: Quantity, fill_px: Price, instrument: Instrument) -> Money:
         """
         Return the commission for a trade.
 
@@ -41,7 +44,7 @@ class MakerTakerFeeModel(FeeModel):
     def __init__(self, config=None) -> None:
         ...
 
-    def get_commission(self, order: Any, fill_qty: Any, fill_px: Any, instrument: Any) -> Any:
+    def get_commission(self, order: Order, fill_qty: Quantity, fill_px: Price, instrument: Instrument) -> Money:
         ...
 
 class FixedFeeModel(FeeModel):
@@ -65,10 +68,10 @@ class FixedFeeModel(FeeModel):
         If `commission` is not a positive amount.
     """
 
-    def __init__(self, commission: Any=None, charge_commission_once: bool=True, config=None) -> None:
+    def __init__(self, commission: Money | None=None, charge_commission_once: bool=True, config=None) -> None:
         ...
 
-    def get_commission(self, order: Any, fill_qty: Any, fill_px: Any, instrument: Any) -> Any:
+    def get_commission(self, order: Order, fill_qty: Quantity, fill_px: Price, instrument: Instrument) -> Money:
         ...
 
 class PerContractFeeModel(FeeModel):
@@ -90,8 +93,8 @@ class PerContractFeeModel(FeeModel):
         If `commission` is negative (< 0).
     """
 
-    def __init__(self, commission: Any=None, config=None) -> None:
+    def __init__(self, commission: Money | None=None, config=None) -> None:
         ...
 
-    def get_commission(self, order: Any, fill_qty: Any, fill_px: Any, instrument: Any) -> Any:
+    def get_commission(self, order: Order, fill_qty: Quantity, fill_px: Price, instrument: Instrument) -> Money:
         ...

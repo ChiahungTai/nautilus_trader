@@ -1,6 +1,8 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Money, Price, Quantity
 
 class MarginModel:
     """
@@ -11,7 +13,7 @@ class MarginModel:
     margin calculation strategies.
     """
 
-    def calculate_margin_init(self, instrument: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_init(self, instrument: Instrument, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the initial (order) margin requirement.
 
@@ -34,7 +36,7 @@ class MarginModel:
             The initial margin requirement.
         """
 
-    def calculate_margin_maint(self, instrument: Any, side: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_maint(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate the maintenance (position) margin requirement.
 
@@ -72,12 +74,12 @@ class StandardMarginModel(MarginModel):
     - Maintenance Margin = notional_value * instrument.margin_maint
     """
 
-    def calculate_margin_init(self, instrument: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_init(self, instrument: Instrument, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate initial margin using fixed percentage of notional value.
         """
 
-    def calculate_margin_maint(self, instrument: Any, side: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_maint(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate maintenance margin using fixed percentage of notional value.
         """
@@ -95,12 +97,12 @@ class LeveragedMarginModel(MarginModel):
     - Maintenance Margin = (notional_value / leverage) * instrument.margin_maint
     """
 
-    def calculate_margin_init(self, instrument: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_init(self, instrument: Instrument, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate initial margin with leverage division.
         """
 
-    def calculate_margin_maint(self, instrument: Any, side: Any, quantity: Any, price: Any, leverage: Decimal, use_quote_for_inverse: bool=False) -> Any:
+    def calculate_margin_maint(self, instrument: Instrument, side: Any, quantity: Quantity, price: Price, leverage: Decimal, use_quote_for_inverse: bool=False) -> Money:
         """
         Calculate maintenance margin with leverage division.
         """

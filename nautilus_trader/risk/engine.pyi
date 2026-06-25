@@ -1,7 +1,12 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import Clock, Component, MessageBus
+from nautilus_trader.core.message import Command, Event
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.portfolio.base import PortfolioFacade
 
-class RiskEngine(Any):
+class RiskEngine(Component):
     """
     Provides a high-performance risk engine.
 
@@ -38,10 +43,10 @@ class RiskEngine(Any):
     command_count: int
     event_count: int
 
-    def __init__(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
+    def __init__(self, portfolio: PortfolioFacade, msgbus: MessageBus, cache: Cache, clock: Clock, config: Any | None | None=None) -> None:
         ...
 
-    def execute(self, command: Any) -> None:
+    def execute(self, command: Command) -> None:
         """
         Execute the given command.
 
@@ -52,7 +57,7 @@ class RiskEngine(Any):
 
         """
 
-    def process(self, event: Any) -> None:
+    def process(self, event: Event) -> None:
         """
         Process the given event.
 
@@ -74,7 +79,7 @@ class RiskEngine(Any):
 
         """
 
-    def set_max_notional_per_order(self, instrument_id: Any, new_value) -> None:
+    def set_max_notional_per_order(self, instrument_id: InstrumentId, new_value) -> None:
         """
         Set the maximum notional value per order for the given instrument ID.
 
@@ -129,7 +134,7 @@ class RiskEngine(Any):
 
         """
 
-    def max_notional_per_order(self, instrument_id: Any) -> object:
+    def max_notional_per_order(self, instrument_id: InstrumentId) -> object | None:
         """
         Return the current maximum notional per order for the given instrument ID.
 

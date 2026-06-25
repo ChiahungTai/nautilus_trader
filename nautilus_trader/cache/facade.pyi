@@ -1,6 +1,15 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from datetime import datetime
+from nautilus_trader.accounting.accounts.base import Account
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, ComponentId, InstrumentId, PositionId, StrategyId, VenueOrderId
+from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.instruments.synthetic import SyntheticInstrument
+from nautilus_trader.model.objects import Currency, Money
+from nautilus_trader.model.orders.base import Order
+from nautilus_trader.model.position import Position
+from nautilus_trader.trading.strategy import Strategy
 
 class CacheDatabaseFacade:
     """
@@ -58,91 +67,91 @@ class CacheDatabaseFacade:
     def load_index_order_client(self) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def load_currency(self, code: str) -> Any:
+    def load_currency(self, code: str) -> Currency:
         """Abstract method (implement in subclass)."""
 
-    def load_instrument(self, instrument_id: Any) -> Any:
+    def load_instrument(self, instrument_id: InstrumentId) -> Instrument:
         """Abstract method (implement in subclass)."""
 
-    def load_synthetic(self, instrument_id: Any) -> Any:
+    def load_synthetic(self, instrument_id: InstrumentId) -> SyntheticInstrument:
         """Abstract method (implement in subclass)."""
 
-    def load_account(self, account_id: Any) -> Any:
+    def load_account(self, account_id: AccountId) -> Account:
         """Abstract method (implement in subclass)."""
 
-    def load_order(self, client_order_id: Any) -> Any:
+    def load_order(self, client_order_id: ClientOrderId) -> Order:
         """Abstract method (implement in subclass)."""
 
-    def load_position(self, position_id: Any) -> Any:
+    def load_position(self, position_id: PositionId) -> Position:
         """Abstract method (implement in subclass)."""
 
-    def load_actor(self, component_id: Any) -> dict:
+    def load_actor(self, component_id: ComponentId) -> dict:
         """Abstract method (implement in subclass)."""
 
-    def load_strategy(self, strategy_id: Any) -> dict:
+    def load_strategy(self, strategy_id: StrategyId) -> dict:
         """Abstract method (implement in subclass)."""
 
     def add(self, key: str, value: bytes) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_currency(self, currency: Any) -> None:
+    def add_currency(self, currency: Currency) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_instrument(self, instrument: Any) -> None:
+    def add_instrument(self, instrument: Instrument) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_synthetic(self, synthetic: Any) -> None:
+    def add_synthetic(self, synthetic: SyntheticInstrument) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_account(self, account: Any) -> None:
+    def add_account(self, account: Account) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_order(self, order: Any, position_id: Any=None, client_id: Any=None) -> None:
+    def add_order(self, order: Order, position_id: PositionId | None=None, client_id: ClientId | None=None) -> None:
         """Abstract method (implement in subclass)."""
 
-    def add_position(self, position: Any) -> None:
+    def add_position(self, position: Position) -> None:
         """Abstract method (implement in subclass)."""
 
-    def index_venue_order_id(self, client_order_id: Any, venue_order_id: Any) -> None:
+    def index_venue_order_id(self, client_order_id: ClientOrderId, venue_order_id: VenueOrderId) -> None:
         """Abstract method (implement in subclass)."""
 
-    def index_order_position(self, client_order_id: Any, position_id: Any) -> None:
+    def index_order_position(self, client_order_id: ClientOrderId, position_id: PositionId) -> None:
         """Abstract method (implement in subclass)."""
 
-    def update_account(self, event: Any) -> None:
+    def update_account(self, event: Account) -> None:
         """Abstract method (implement in subclass)."""
 
-    def update_order(self, order: Any) -> None:
+    def update_order(self, order: Order) -> None:
         """Abstract method (implement in subclass)."""
 
-    def update_position(self, position: Any) -> None:
+    def update_position(self, position: Position) -> None:
         """Abstract method (implement in subclass)."""
 
-    def update_actor(self, actor: Any) -> None:
+    def update_actor(self, actor: Actor) -> None:
         """Abstract method (implement in subclass)."""
 
-    def update_strategy(self, strategy: Any) -> None:
+    def update_strategy(self, strategy: Strategy) -> None:
         """Abstract method (implement in subclass)."""
 
-    def snapshot_order_state(self, order: Any) -> None:
+    def snapshot_order_state(self, order: Order) -> None:
         """Abstract method (implement in subclass)."""
 
-    def snapshot_position_state(self, position: Any, ts_snapshot: int, unrealized_pnl: Any=None) -> None:
+    def snapshot_position_state(self, position: Position, ts_snapshot: int, unrealized_pnl: Money | None=None) -> None:
         """Abstract method (implement in subclass)."""
 
-    def delete_order(self, client_order_id: Any) -> None:
+    def delete_order(self, client_order_id: ClientOrderId) -> None:
         """Abstract method (implement in subclass)."""
 
-    def delete_position(self, position_id: Any) -> None:
+    def delete_position(self, position_id: PositionId) -> None:
         """Abstract method (implement in subclass)."""
 
-    def delete_account_event(self, account_id: Any, event_id: str) -> None:
+    def delete_account_event(self, account_id: AccountId, event_id: str) -> None:
         """Abstract method (implement in subclass)."""
 
-    def delete_actor(self, component_id: Any) -> None:
+    def delete_actor(self, component_id: ComponentId) -> None:
         """Abstract method (implement in subclass)."""
 
-    def delete_strategy(self, strategy_id: Any) -> None:
+    def delete_strategy(self, strategy_id: StrategyId) -> None:
         """Abstract method (implement in subclass)."""
 
     def heartbeat(self, timestamp: datetime) -> None:

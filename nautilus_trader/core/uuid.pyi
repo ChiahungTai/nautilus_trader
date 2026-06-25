@@ -1,23 +1,58 @@
-# -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2026 Nautech Systems Pty Ltd. All rights reserved.
-#  https://nautechsystems.io
-#
-#  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
-#  You may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-# -------------------------------------------------------------------------------------------------
+# Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
+from typing import Any, Callable
 
 class UUID4:
-    def __init__(self) -> None: ...
-    def __eq__(self, other: object) -> bool: ...
-    def __hash__(self) -> int: ...
+    """
+    Represents a Universally Unique Identifier (UUID)
+    version 4 based on a 128-bit label as specified in RFC 4122.
+
+    References
+    ----------
+    https://en.wikipedia.org/wiki/Universally_unique_identifier
+    """
+
+    def __init__(self) -> None:
+        ...
+
+    def __getstate__(self):
+        ...
+
+    def __setstate__(self, state):
+        ...
+
+    def __eq__(self, other: UUID4) -> bool:
+        ...
+
+    def __hash__(self) -> int:
+        ...
+
+    def __str__(self) -> str:
+        ...
+
+    def __repr__(self) -> str:
+        ...
+
     @property
-    def value(self) -> str: ...
+    def value(self) -> str:
+        ...
+
     @staticmethod
-    def from_str(value: str) -> UUID4: ...
+    def from_str(value: str) -> UUID4:
+        """
+        Create a new UUID4 from the given string value.
+
+        Parameters
+        ----------
+        value : str
+            The UUID value.
+
+        Returns
+        -------
+        UUID4
+
+        Raises
+        ------
+        ValueError
+            If `value` is not a valid UUID version 4 RFC 4122 string.
+
+        """

@@ -1,7 +1,10 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.core.data import Data
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
+from nautilus_trader.model.objects import Price
 
-class SyntheticInstrument(Any):
+class SyntheticInstrument(Data):
     """
     Represents a synthetic instrument with prices derived from component instruments using a
     formula.
@@ -42,9 +45,9 @@ class SyntheticInstrument(Any):
     a new synthetic instrument.
 
     """
-    id: Any
+    id: InstrumentId
 
-    def __init__(self, symbol: Any, price_precision: int, components: list, formula: str, ts_event: int, ts_init: int) -> None:
+    def __init__(self, symbol: Symbol, price_precision: int, components: list, formula: str, ts_event: int, ts_init: int) -> None:
         ...
 
     def __del__(self) -> None:
@@ -68,7 +71,7 @@ class SyntheticInstrument(Any):
         """
 
     @property
-    def price_increment(self) -> Any:
+    def price_increment(self) -> Price:
         """
         Return the minimum price increment (tick size) for the synthetic instrument.
 
@@ -79,7 +82,7 @@ class SyntheticInstrument(Any):
         """
 
     @property
-    def components(self) -> list[Any]:
+    def components(self) -> list[InstrumentId]:
         """
         Return the components of the synthetic instrument.
 
@@ -140,7 +143,7 @@ class SyntheticInstrument(Any):
 
         """
 
-    def calculate(self, inputs: list) -> Any:
+    def calculate(self, inputs: list) -> Price:
         """
         Calculate the price of the synthetic instrument from the given `inputs`.
 

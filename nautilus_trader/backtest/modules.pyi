@@ -1,8 +1,11 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from nautilus_trader.backtest.engine import SimulatedExchange
+from nautilus_trader.common.actor import Actor
+from nautilus_trader.common.component import Logger
+from nautilus_trader.core.data import Data
 
-class SimulationModule(Any):
+class SimulationModule(Actor):
     """
     The base class for all simulation modules.
 
@@ -29,13 +32,13 @@ class SimulationModule(Any):
 
         """
 
-    def pre_process(self, data: Any) -> None:
+    def pre_process(self, data: Data) -> None:
         """Abstract method `pre_process` (implement in subclass)."""
 
     def process(self, ts_now: int) -> None:
         """Abstract method (implement in subclass)."""
 
-    def log_diagnostics(self, logger: Any) -> None:
+    def log_diagnostics(self, logger: Logger) -> None:
         """Abstract method (implement in subclass)."""
 
     def reset(self) -> None:
@@ -64,7 +67,7 @@ class FXRolloverInterestModule(SimulationModule):
 
         """
 
-    def log_diagnostics(self, logger: Any) -> None:
+    def log_diagnostics(self, logger: Logger) -> None:
         """
         Log diagnostics out to the `BacktestEngine` logger.
 

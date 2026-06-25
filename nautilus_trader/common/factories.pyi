@@ -2,6 +2,20 @@
 from typing import Any, Callable
 from decimal import Decimal
 from datetime import datetime
+from nautilus_trader.cache.base import CacheFacade
+from nautilus_trader.common.component import Clock
+from nautilus_trader.model.identifiers import ClientOrderId, ExecAlgorithmId, InstrumentId, OrderListId, StrategyId, TraderId
+from nautilus_trader.model.objects import Price, Quantity
+from nautilus_trader.model.orders.limit import LimitOrder
+from nautilus_trader.model.orders.limit_if_touched import LimitIfTouchedOrder
+from nautilus_trader.model.orders.list import OrderList
+from nautilus_trader.model.orders.market import MarketOrder
+from nautilus_trader.model.orders.market_if_touched import MarketIfTouchedOrder
+from nautilus_trader.model.orders.market_to_limit import MarketToLimitOrder
+from nautilus_trader.model.orders.stop_limit import StopLimitOrder
+from nautilus_trader.model.orders.stop_market import StopMarketOrder
+from nautilus_trader.model.orders.trailing_stop_limit import TrailingStopLimitOrder
+from nautilus_trader.model.orders.trailing_stop_market import TrailingStopMarketOrder
 
 class OrderFactory:
     """
@@ -25,12 +39,12 @@ class OrderFactory:
         If hyphens should be used in generated client order ID values.
 
     """
-    trader_id: Any
-    strategy_id: Any
+    trader_id: TraderId
+    strategy_id: StrategyId
     use_uuid_client_order_ids: bool
     use_hyphens_in_client_order_ids: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, clock: Any, cache: Any | None | None=None, use_uuid_client_order_ids: bool=False, use_hyphens_in_client_order_ids: bool=True) -> None:
+    def __init__(self, trader_id: TraderId, strategy_id: StrategyId, clock: Clock, cache: CacheFacade | None | None=None, use_uuid_client_order_ids: bool=False, use_hyphens_in_client_order_ids: bool=True) -> None:
         ...
 
     def get_client_order_id_count(self):
@@ -83,7 +97,7 @@ class OrderFactory:
 
         """
 
-    def generate_client_order_id(self) -> Any:
+    def generate_client_order_id(self) -> ClientOrderId:
         """
         Generate and return a new client order ID.
 
@@ -95,7 +109,7 @@ class OrderFactory:
 
         """
 
-    def generate_order_list_id(self) -> Any:
+    def generate_order_list_id(self) -> OrderListId:
         """
         Generate and return a new order list ID.
 
@@ -114,7 +128,7 @@ class OrderFactory:
         All stateful fields are reset to their initial value.
         """
 
-    def create_list(self, orders: list) -> Any:
+    def create_list(self, orders: list) -> OrderList:
         """
         Return a new order list containing the given `orders`.
 
@@ -138,7 +152,7 @@ class OrderFactory:
 
         """
 
-    def market(self, instrument_id: Any, order_side: Any, quantity: Any, time_in_force: Any=..., reduce_only: bool=False, quote_quantity: bool=False, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def market(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, time_in_force: Any=..., reduce_only: bool=False, quote_quantity: bool=False, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> MarketOrder:
         """
         Create a new ``MARKET`` order.
 
@@ -179,7 +193,7 @@ class OrderFactory:
 
         """
 
-    def limit(self, instrument_id: Any, order_side: Any, quantity: Any, price: Any, time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def limit(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, price: Price, time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> LimitOrder:
         """
         Create a new ``LIMIT`` order.
 
@@ -237,7 +251,7 @@ class OrderFactory:
 
         """
 
-    def stop_market(self, instrument_id: Any, order_side: Any, quantity: Any, trigger_price: Any, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def stop_market(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, trigger_price: Price, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> StopMarketOrder:
         """
         Create a new ``STOP_MARKET`` conditional order.
 
@@ -295,7 +309,7 @@ class OrderFactory:
 
         """
 
-    def stop_limit(self, instrument_id: Any, order_side: Any, quantity: Any, price: Any, trigger_price: Any, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def stop_limit(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, price: Price, trigger_price: Price, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> StopLimitOrder:
         """
         Create a new ``STOP_LIMIT`` conditional order.
 
@@ -361,7 +375,7 @@ class OrderFactory:
 
         """
 
-    def market_to_limit(self, instrument_id: Any, order_side: Any, quantity: Any, time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def market_to_limit(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> MarketToLimitOrder:
         """
         Create a new ``MARKET`` order.
 
@@ -406,7 +420,7 @@ class OrderFactory:
 
         """
 
-    def market_if_touched(self, instrument_id: Any, order_side: Any, quantity: Any, trigger_price: Any, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def market_if_touched(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, trigger_price: Price, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> MarketIfTouchedOrder:
         """
         Create a new ``MARKET_IF_TOUCHED`` (MIT) conditional order.
 
@@ -464,7 +478,7 @@ class OrderFactory:
 
         """
 
-    def limit_if_touched(self, instrument_id: Any, order_side: Any, quantity: Any, price: Any, trigger_price: Any, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def limit_if_touched(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, price: Price, trigger_price: Price, trigger_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> LimitIfTouchedOrder:
         """
         Create a new ``LIMIT_IF_TOUCHED`` (LIT) conditional order.
 
@@ -530,7 +544,7 @@ class OrderFactory:
 
         """
 
-    def trailing_stop_market(self, instrument_id: Any, order_side: Any, quantity: Any, trailing_offset: Decimal, activation_price: Any=None, trigger_price: Any=None, trigger_type: Any=..., trailing_offset_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def trailing_stop_market(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, trailing_offset: Decimal, activation_price: Price | None=None, trigger_price: Price | None=None, trigger_type: Any=..., trailing_offset_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, reduce_only: bool=False, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> TrailingStopMarketOrder:
         """
         Create a new ``TRAILING_STOP_MARKET`` conditional order.
 
@@ -595,7 +609,7 @@ class OrderFactory:
 
         """
 
-    def trailing_stop_limit(self, instrument_id: Any, order_side: Any, quantity: Any, limit_offset: Decimal, trailing_offset: Decimal, price: Any=None, activation_price: Any=None, trigger_price: Any=None, trigger_type: Any=..., trailing_offset_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: Any=None) -> Any:
+    def trailing_stop_limit(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, limit_offset: Decimal, trailing_offset: Decimal, price: Price | None=None, activation_price: Price | None=None, trigger_price: Price | None=None, trigger_type: Any=..., trailing_offset_type: Any=..., time_in_force: Any=..., expire_time: datetime | None=None, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Quantity | None=None, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, exec_algorithm_id: ExecAlgorithmId | None=None, exec_algorithm_params: dict | None=None, tags: list | None=None, client_order_id: ClientOrderId | None=None) -> TrailingStopLimitOrder:
         """
         Create a new ``TRAILING_STOP_LIMIT`` conditional order.
 
@@ -673,7 +687,7 @@ class OrderFactory:
 
         """
 
-    def bracket(self, instrument_id: Any, order_side: Any, quantity: Any, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., entry_order_type: Any=..., entry_price: Any=None, entry_trigger_price: Any=None, expire_time: datetime | None=None, time_in_force: Any=..., entry_post_only: bool=False, entry_exec_algorithm_id: Any=None, entry_exec_algorithm_params: dict | None=None, entry_tags: list | None=None, entry_client_order_id: Any=None, tp_order_type: Any=..., tp_price: Any=None, tp_trigger_price: Any=None, tp_trigger_type: Any=..., tp_activation_price: Any=None, tp_trailing_offset: Decimal | None=None, tp_trailing_offset_type: Any=..., tp_limit_offset: Decimal | None=None, tp_time_in_force: Any=..., tp_post_only: bool=True, tp_exec_algorithm_id: Any=None, tp_exec_algorithm_params: dict | None=None, tp_tags: list | None=None, tp_client_order_id: Any=None, sl_order_type: Any=..., sl_trigger_price: Any=None, sl_trigger_type: Any=..., sl_activation_price: Any=None, sl_trailing_offset: Decimal | None=None, sl_trailing_offset_type: Any=..., sl_time_in_force: Any=..., sl_exec_algorithm_id: Any=None, sl_exec_algorithm_params: dict | None=None, sl_tags: list | None=None, sl_client_order_id: Any=None) -> Any:
+    def bracket(self, instrument_id: InstrumentId, order_side: Any, quantity: Quantity, quote_quantity: bool=False, emulation_trigger: Any=..., trigger_instrument_id: InstrumentId | None=None, contingency_type: Any=..., entry_order_type: Any=..., entry_price: Price | None=None, entry_trigger_price: Price | None=None, expire_time: datetime | None=None, time_in_force: Any=..., entry_post_only: bool=False, entry_exec_algorithm_id: ExecAlgorithmId | None=None, entry_exec_algorithm_params: dict | None=None, entry_tags: list | None=None, entry_client_order_id: ClientOrderId | None=None, tp_order_type: Any=..., tp_price: Price | None=None, tp_trigger_price: Price | None=None, tp_trigger_type: Any=..., tp_activation_price: Price | None=None, tp_trailing_offset: Decimal | None=None, tp_trailing_offset_type: Any=..., tp_limit_offset: Decimal | None=None, tp_time_in_force: Any=..., tp_post_only: bool=True, tp_exec_algorithm_id: ExecAlgorithmId | None=None, tp_exec_algorithm_params: dict | None=None, tp_tags: list | None=None, tp_client_order_id: ClientOrderId | None=None, sl_order_type: Any=..., sl_trigger_price: Price | None=None, sl_trigger_type: Any=..., sl_activation_price: Price | None=None, sl_trailing_offset: Decimal | None=None, sl_trailing_offset_type: Any=..., sl_time_in_force: Any=..., sl_exec_algorithm_id: ExecAlgorithmId | None=None, sl_exec_algorithm_params: dict | None=None, sl_tags: list | None=None, sl_client_order_id: ClientOrderId | None=None) -> OrderList:
         """
         Create a bracket order with optional entry of take-profit order types.
 

@@ -1,7 +1,9 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 from decimal import Decimal
+from nautilus_trader.model.identifiers import InstrumentId, Symbol
 from nautilus_trader.model.instruments.base import Instrument
+from nautilus_trader.model.objects import Currency, Money, Price, Quantity
 
 class Commodity(Instrument):
     """
@@ -94,7 +96,7 @@ class Commodity(Instrument):
     """
     isin: str
 
-    def __init__(self, instrument_id: Any, raw_symbol: Any, asset_class: Any, quote_currency: Any, price_precision: int, size_precision: int, price_increment: Any, size_increment: Any, ts_event: int, ts_init: int, base_currency: Any | None | None=None, lot_size: Any | None | None=None, max_quantity: Any | None | None=None, min_quantity: Any | None | None=None, max_notional: Any | None | None=None, min_notional: Any | None | None=None, max_price: Any | None | None=None, min_price: Any | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
+    def __init__(self, instrument_id: InstrumentId, raw_symbol: Symbol, asset_class: Any, quote_currency: Currency, price_precision: int, size_precision: int, price_increment: Price, size_increment: Quantity, ts_event: int, ts_init: int, base_currency: Currency | None | None=None, lot_size: Quantity | None | None=None, max_quantity: Quantity | None | None=None, min_quantity: Quantity | None | None=None, max_notional: Money | None | None=None, min_notional: Money | None | None=None, max_price: Price | None | None=None, min_price: Price | None | None=None, margin_init: Decimal | None | None=None, margin_maint: Decimal | None | None=None, maker_fee: Decimal | None | None=None, taker_fee: Decimal | None | None=None, tick_scheme_name: str | None=None, info: dict | None=None) -> None:
         ...
 
     @staticmethod
