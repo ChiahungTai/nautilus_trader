@@ -217,7 +217,7 @@ class OrderInitialized(OrderEvent):
     exec_spawn_id: Any
     tags: list
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, order_type: Any, quantity: Any, time_in_force: Any, post_only: bool, reduce_only: bool, quote_quantity: bool, options: dict, emulation_trigger: Any, trigger_instrument_id: Any | None, contingency_type: Any, order_list_id: Any | None, linked_order_ids: list[Any] | None, parent_order_id: Any | None, exec_algorithm_id: Any | None, exec_algorithm_params: dict[str, object] | None, exec_spawn_id: Any | None, tags: list[str] | None, event_id: Any, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, order_type: Any, quantity: Any, time_in_force: Any, post_only: bool, reduce_only: bool, quote_quantity: bool, options: dict, emulation_trigger: Any, trigger_instrument_id: Any | None, contingency_type: Any, order_list_id: Any | None, linked_order_ids: list[Any] | None, parent_order_id: Any | None, exec_algorithm_id: Any | None, exec_algorithm_params: dict[str, object] | None, exec_spawn_id: Any | None, tags: list[str] | None, event_id: Any, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -398,7 +398,7 @@ class OrderDenied(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, reason: str, event_id: Any, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, reason: str, event_id: Any, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -585,7 +585,7 @@ class OrderEmulated(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, event_id: Any, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, event_id: Any, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -763,7 +763,7 @@ class OrderReleased(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, released_price: Any, event_id: Any, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, released_price: Any, event_id: Any, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -954,7 +954,7 @@ class OrderSubmitted(OrderEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -1143,7 +1143,7 @@ class OrderAccepted(OrderEvent):
     https://www.onixs.biz/fix-dictionary/5.0.SP2/tagNum_39.html
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -1329,7 +1329,7 @@ class OrderRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, due_post_only: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, account_id: Any, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, due_post_only: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -1534,7 +1534,7 @@ class OrderCanceled(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -1717,7 +1717,7 @@ class OrderExpired(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -1902,7 +1902,7 @@ class OrderTriggered(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -2086,7 +2086,7 @@ class OrderPendingUpdate(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -2270,7 +2270,7 @@ class OrderPendingCancel(OrderEvent):
         If the event was generated during reconciliation.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -2457,7 +2457,7 @@ class OrderModifyRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -2655,7 +2655,7 @@ class OrderCancelRejected(OrderEvent):
 
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, reason: str, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -2866,7 +2866,7 @@ class OrderUpdated(OrderEvent):
     trigger_price: Any
     is_quote_quantity: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, quantity: Any, price: Any | None, trigger_price: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, is_quote_quantity: bool=False):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any | None, account_id: Any | None, quantity: Any, price: Any | None, trigger_price: Any | None, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, is_quote_quantity: bool=False) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -3086,7 +3086,7 @@ class OrderFilled(OrderEvent):
     liquidity_side: Any
     info: dict
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, trade_id: Any, position_id: Any | None, order_side: Any, order_type: Any, last_qty: Any, last_px: Any, currency: Any, commission: Any, liquidity_side: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, info: dict | None=None):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, venue_order_id: Any, account_id: Any, trade_id: Any, position_id: Any | None, order_side: Any, order_type: Any, last_qty: Any, last_px: Any, currency: Any, commission: Any, liquidity_side: Any, event_id: Any, ts_event: int, ts_init: int, reconciliation: bool=False, info: dict | None=None) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:

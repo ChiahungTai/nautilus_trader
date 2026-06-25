@@ -25,7 +25,7 @@ class MatchingCore:
     is_ask_initialized: bool
     is_last_initialized: bool
 
-    def __init__(self, instrument_id: Any, price_increment: Any, trigger_stop_order: Callable, fill_market_order: Callable, fill_limit_order: Callable):
+    def __init__(self, instrument_id: Any, price_increment: Any, trigger_stop_order: Callable, fill_market_order: Callable, fill_limit_order: Callable) -> None:
         ...
 
     @property

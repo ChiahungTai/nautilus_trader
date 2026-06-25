@@ -10,7 +10,7 @@ class TopicCache:
     that were previously scattered across the data engine and other components.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         ...
 
     def get_instrument_topic(self, instrument_id: Any, historical: bool=False) -> str:

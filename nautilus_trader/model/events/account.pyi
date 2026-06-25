@@ -36,7 +36,7 @@ class AccountState(Any):
     is_reported: bool
     info: dict
 
-    def __init__(self, account_id: Any, account_type: Any, base_currency: Any, reported: bool, balances: list, margins: list, info: dict, event_id: Any, ts_event: int, ts_init: int):
+    def __init__(self, account_id: Any, account_type: Any, base_currency: Any, reported: bool, balances: list, margins: list, info: dict, event_id: Any, ts_event: int, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:

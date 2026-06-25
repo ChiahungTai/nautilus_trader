@@ -1,5 +1,5 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 
 class Account:
     """
@@ -12,7 +12,7 @@ class Account:
     is_margin_account: bool
     calculate_account_state: bool
 
-    def __init__(self, event: Any, calculate_account_state: bool):
+    def __init__(self, event: Any, calculate_account_state: bool) -> None:
         ...
 
     def __eq__(self, other: Account) -> bool:
@@ -344,7 +344,7 @@ class Account:
     def calculate_commission(self, instrument: Any, last_qty: Any, last_px: Any, liquidity_side: Any, use_quote_for_inverse: bool=False) -> Any:
         ...
 
-    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None=None) -> list:
+    def calculate_pnls(self, instrument: Any, fill: Any, position: Any | None | None=None) -> list:
         ...
 
     def balance_impact(self, instrument: Any, quantity: Any, price: Any, order_side: Any) -> Any:

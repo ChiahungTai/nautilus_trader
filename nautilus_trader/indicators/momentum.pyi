@@ -10,9 +10,10 @@ signatures in momentum.pyx.
 """
 
 from typing import Any
+from nautilus_trader.indicators.base import Indicator
 
 
-class RelativeStrengthIndex:
+class RelativeStrengthIndex(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -20,7 +21,7 @@ class RelativeStrengthIndex:
     def __init__(self, period: int, ma_type: Any = ...) -> None: ...
 
 
-class RateOfChange:
+class RateOfChange(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -28,7 +29,7 @@ class RateOfChange:
     def __init__(self, period: int, use_log: bool = ...) -> None: ...
 
 
-class ChandeMomentumOscillator:
+class ChandeMomentumOscillator(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -36,7 +37,7 @@ class ChandeMomentumOscillator:
     def __init__(self, period: int, ma_type: Any = ...) -> None: ...
 
 
-class Stochastics:
+class Stochastics(Indicator):
     period_k: int
     period_d: int
     slowing: int
@@ -56,7 +57,7 @@ class Stochastics:
     ) -> None: ...
 
 
-class CommodityChannelIndex:
+class CommodityChannelIndex(Indicator):
     period: int
     scalar: float
     value: float
@@ -70,7 +71,7 @@ class CommodityChannelIndex:
     ) -> None: ...
 
 
-class EfficiencyRatio:
+class EfficiencyRatio(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -78,7 +79,7 @@ class EfficiencyRatio:
     def __init__(self, period: int) -> None: ...
 
 
-class RelativeVolatilityIndex:
+class RelativeVolatilityIndex(Indicator):
     period: int
     scalar: float
     value: float
@@ -92,7 +93,7 @@ class RelativeVolatilityIndex:
     ) -> None: ...
 
 
-class PsychologicalLine:
+class PsychologicalLine(Indicator):
     period: int
     value: float
     has_inputs: bool

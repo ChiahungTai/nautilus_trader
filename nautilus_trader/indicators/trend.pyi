@@ -9,9 +9,10 @@ reading the real `def __init__` signatures in trend.pyx.
 """
 
 from typing import Any
+from nautilus_trader.indicators.base import Indicator
 
 
-class ArcherMovingAveragesTrends:
+class ArcherMovingAveragesTrends(Indicator):
     fast_period: int
     slow_period: int
     signal_period: int
@@ -29,7 +30,7 @@ class ArcherMovingAveragesTrends:
     ) -> None: ...
 
 
-class AroonOscillator:
+class AroonOscillator(Indicator):
     period: int
     value: float
     aroon_up: float
@@ -40,7 +41,7 @@ class AroonOscillator:
     def __init__(self, period: int) -> None: ...
 
 
-class DirectionalMovement:
+class DirectionalMovement(Indicator):
     period: int
     value: float
     pos: float
@@ -55,7 +56,7 @@ class DirectionalMovement:
     ) -> None: ...
 
 
-class MovingAverageConvergenceDivergence:
+class MovingAverageConvergenceDivergence(Indicator):
     fast_period: int
     slow_period: int
     value: float
@@ -71,7 +72,7 @@ class MovingAverageConvergenceDivergence:
     ) -> None: ...
 
 
-class IchimokuCloud:
+class IchimokuCloud(Indicator):
     tenkan_period: int
     kijun_period: int
     senkou_period: int
@@ -93,7 +94,7 @@ class IchimokuCloud:
     ) -> None: ...
 
 
-class LinearRegression:
+class LinearRegression(Indicator):
     period: int
     slope: float
     intercept: float
@@ -107,7 +108,7 @@ class LinearRegression:
     def __init__(self, period: int = ...) -> None: ...
 
 
-class Bias:
+class Bias(Indicator):
     period: int
     value: float
     count: int
@@ -120,7 +121,7 @@ class Bias:
     ) -> None: ...
 
 
-class Swings:
+class Swings(Indicator):
     period: int
     direction: int
     changed: bool

@@ -12,7 +12,7 @@ class SimulationModule(Any):
     """
     exchange: SimulatedExchange
 
-    def __init__(self, config: Any):
+    def __init__(self, config: Any) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -50,7 +50,7 @@ class FXRolloverInterestModule(SimulationModule):
     config  : FXRolloverInterestConfig
     """
 
-    def __init__(self, config: Any):
+    def __init__(self, config: Any) -> None:
         ...
 
     def process(self, ts_now: int) -> None:

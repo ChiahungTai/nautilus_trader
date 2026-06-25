@@ -107,7 +107,7 @@ class TrailingStopLimitOrder(Order):
     is_triggered: bool
     ts_triggered: int
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, price: Any | None, trigger_price: Any | None, trigger_type: Any, limit_offset: Decimal, trailing_offset: Decimal, trailing_offset_type: Any, init_id: Any, ts_init: int, activation_price: Any | None | None=None, time_in_force: Any=..., expire_time_ns: int=0, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, price: Any | None, trigger_price: Any | None, trigger_type: Any, limit_offset: Decimal, trailing_offset: Decimal, trailing_offset_type: Any, init_id: Any, ts_init: int, activation_price: Any | None | None=None, time_in_force: Any=..., expire_time_ns: int=0, post_only: bool=False, reduce_only: bool=False, quote_quantity: bool=False, display_qty: Any=None, emulation_trigger: Any=..., trigger_instrument_id: Any=None, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None) -> None:
         ...
 
     @property

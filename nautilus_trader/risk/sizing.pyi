@@ -17,7 +17,7 @@ class PositionSizer:
     """
     instrument: Any
 
-    def __init__(self, instrument: Any):
+    def __init__(self, instrument: Any) -> None:
         ...
 
     def update_instrument(self, instrument: Any) -> None:
@@ -49,7 +49,7 @@ class FixedRiskSizer(PositionSizer):
         The instrument for position sizing.
     """
 
-    def __init__(self, instrument: Any):
+    def __init__(self, instrument: Any) -> None:
         ...
 
     def calculate(self, entry: Any, stop_loss: Any, equity: Any, risk: Decimal, commission_rate: Decimal=..., exchange_rate: Decimal=..., hard_limit: Decimal | None | None=None, unit_batch_size: Decimal=..., units: int=1) -> Any:

@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.execution.messages import SubmitOrder, TradingCommand
 
 class OrderManager:
     """
@@ -40,7 +41,7 @@ class OrderManager:
     log_events: bool
     log_commands: bool
 
-    def __init__(self, clock: Any, msgbus: Any, cache: Any, component_name: str, active_local: bool, submit_order_handler: Any | None=None, cancel_order_handler: Any | None=None, modify_order_handler: Any | None=None, debug: bool=False, log_events: bool=True, log_commands: bool=True):
+    def __init__(self, clock: Any, msgbus: Any, cache: Any, component_name: str, active_local: bool, submit_order_handler: Any | None=None, cancel_order_handler: Any | None=None, modify_order_handler: Any | None=None, debug: bool=False, log_events: bool=True, log_commands: bool=True) -> None:
         ...
 
     def get_submit_order_commands(self) -> dict:
@@ -53,7 +54,7 @@ class OrderManager:
 
         """
 
-    def cache_submit_order_command(self, command: Any) -> None:
+    def cache_submit_order_command(self, command: SubmitOrder) -> None:
         """
         Cache the given submit order `command` with the manager.
 
@@ -64,7 +65,7 @@ class OrderManager:
 
         """
 
-    def pop_submit_order_command(self, client_order_id: Any) -> Any:
+    def pop_submit_order_command(self, client_order_id: Any) -> SubmitOrder:
         """
         Pop the submit order command for the given `client_order_id` out of the managers
         cache (if found).
@@ -175,13 +176,13 @@ class OrderManager:
     def handle_position_event(self, event: Any) -> None:
         ...
 
-    def send_emulator_command(self, command: Any) -> None:
+    def send_emulator_command(self, command: TradingCommand) -> None:
         ...
 
-    def send_algo_command(self, command: Any, exec_algorithm_id: Any) -> None:
+    def send_algo_command(self, command: TradingCommand, exec_algorithm_id: Any) -> None:
         ...
 
-    def send_risk_command(self, command: Any) -> None:
+    def send_risk_command(self, command: TradingCommand) -> None:
         ...
 
     def send_exec_command(self, command: Any) -> None:

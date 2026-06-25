@@ -45,7 +45,7 @@ class ExecutionClient(Any):
     base_currency: Any
     is_connected: bool
 
-    def __init__(self, client_id: Any, venue: Any | None, oms_type: Any, account_type: Any, base_currency: Any | None, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None):
+    def __init__(self, client_id: Any, venue: Any | None, oms_type: Any, account_type: Any, base_currency: Any | None, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:

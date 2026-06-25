@@ -1,6 +1,7 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
 import cython
+from nautilus_trader.core.uuid import UUID4
 
 class Command:
     """
@@ -19,11 +20,11 @@ class Command:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    id: Any
+    id: UUID4
     ts_init: int
-    correlation_id: Any
+    correlation_id: UUID4
 
-    def __init__(self, command_id: Any, ts_init: int, correlation_id: Any=None):
+    def __init__(self, command_id: UUID4, ts_init: int, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __getstate__(self):
@@ -56,10 +57,10 @@ class Document:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    id: Any
+    id: UUID4
     ts_init: int
 
-    def __init__(self, document_id: Any, ts_init: int):
+    def __init__(self, document_id: UUID4, ts_init: int) -> None:
         ...
 
     def __getstate__(self):
@@ -88,7 +89,7 @@ class Event:
     """
 
     @property
-    def id(self) -> Any:
+    def id(self) -> UUID4:
         """
         The event message identifier.
 
@@ -139,12 +140,12 @@ class Request:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    id: Any
+    id: UUID4
     ts_init: int
     callback: object
-    correlation_id: Any
+    correlation_id: UUID4
 
-    def __init__(self, callback: Callable[[Any], None] | None, request_id: Any, ts_init: int, correlation_id: Any=None):
+    def __init__(self, callback: Callable[[Any], None] | None, request_id: UUID4, ts_init: int, correlation_id: UUID4 | None=None) -> None:
         ...
 
     def __getstate__(self):
@@ -179,11 +180,11 @@ class Response:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
-    id: Any
+    id: UUID4
     ts_init: int
-    correlation_id: Any
+    correlation_id: UUID4
 
-    def __init__(self, correlation_id: Any, response_id: Any, ts_init: int):
+    def __init__(self, correlation_id: UUID4, response_id: UUID4, ts_init: int) -> None:
         ...
 
     def __getstate__(self):

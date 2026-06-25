@@ -210,7 +210,7 @@ class MarketHoursFillModel(FillModel):
 
     """
 
-    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None):
+    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None) -> None:
         ...
 
     def is_low_liquidity_period(self) -> bool:
@@ -237,7 +237,7 @@ class VolumeSensitiveFillModel(FillModel):
 
     """
 
-    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None):
+    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None) -> None:
         ...
 
     def set_recent_volume(self, volume: float) -> None:
@@ -259,7 +259,7 @@ class CompetitionAwareFillModel(FillModel):
 
     """
 
-    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None, liquidity_factor: float=0.3):
+    def __init__(self, prob_fill_on_limit: float=1.0, prob_slippage: float=0.0, random_seed=None, liquidity_factor: float=0.3) -> None:
         ...
 
     def get_orderbook_for_fill_simulation(self, instrument: Any, order: Any, best_bid: Any, best_ask: Any) -> Any:

@@ -391,7 +391,7 @@ class TestClock(Clock):
     """
     __test__ = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         ...
 
     def __del__(self) -> None:
@@ -487,7 +487,7 @@ class LiveClock(Clock):
         The event loop for the clocks timers.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         ...
 
     def __del__(self) -> None:
@@ -553,7 +553,7 @@ class TimeEvent(Any):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, name: str, event_id: Any, ts_event: int, ts_init: int):
+    def __init__(self, name: str, event_id: Any, ts_event: int, ts_init: int) -> None:
         ...
 
     def __getstate__(self):
@@ -818,7 +818,7 @@ class Component:
     id: Any
     type: type
 
-    def __init__(self, clock: Clock, trader_id: Any=None, component_id: Any=None, component_name: str | None=None, msgbus: MessageBus | None=None, config: Any | None | None=None):
+    def __init__(self, clock: Clock, trader_id: Any=None, component_id: Any=None, component_name: str | None=None, msgbus: MessageBus | None=None, config: Any | None | None=None) -> None:
         ...
 
     def __eq__(self, other: Component) -> bool:
@@ -1444,7 +1444,7 @@ class Subscription:
     handler: object
     priority: int
 
-    def __init__(self, topic: str, handler: Callable[[Any], None], priority: int=0):
+    def __init__(self, topic: str, handler: Callable[[Any], None], priority: int=0) -> None:
         ...
 
     def __eq__(self, other: Subscription) -> bool:

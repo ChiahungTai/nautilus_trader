@@ -25,7 +25,7 @@ class OrderEmulator(Any):
     command_count: int
     event_count: int
 
-    def __init__(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None):
+    def __init__(self, portfolio: Any, msgbus: Any, cache: Any, clock: Any, config: Any | None | None=None) -> None:
         ...
 
     @property

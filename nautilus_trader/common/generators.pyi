@@ -1,5 +1,6 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from nautilus_trader.common.component import Clock
 
 class IdentifierGenerator:
     """
@@ -13,7 +14,7 @@ class IdentifierGenerator:
         The internal clock.
     """
 
-    def __init__(self, trader_id: Any, clock: Any):
+    def __init__(self, trader_id: Any, clock: Clock) -> None:
         ...
 
 class ClientOrderIdGenerator(IdentifierGenerator):
@@ -44,7 +45,7 @@ class ClientOrderIdGenerator(IdentifierGenerator):
     use_uuids: bool
     use_hyphens: bool
 
-    def __init__(self, trader_id: Any, strategy_id: Any, clock: Any, initial_count: int=0, use_uuids: bool=False, use_hyphens: bool=True):
+    def __init__(self, trader_id: Any, strategy_id: Any, clock: Clock, initial_count: int=0, use_uuids: bool=False, use_hyphens: bool=True) -> None:
         ...
 
     def set_count(self, count: int) -> None:
@@ -97,7 +98,7 @@ class OrderListIdGenerator(IdentifierGenerator):
     """
     count: int
 
-    def __init__(self, trader_id: Any, strategy_id: Any, clock: Any, initial_count: int=0):
+    def __init__(self, trader_id: Any, strategy_id: Any, clock: Clock, initial_count: int=0) -> None:
         ...
 
     def set_count(self, count: int) -> None:
@@ -138,7 +139,7 @@ class PositionIdGenerator(IdentifierGenerator):
         The trader ID tag for the generator.
     """
 
-    def __init__(self, trader_id: Any, clock: Any):
+    def __init__(self, trader_id: Any, clock: Clock) -> None:
         ...
 
     def set_count(self, strategy_id: Any, count: int) -> None:

@@ -89,7 +89,7 @@ class PositionEvent(Any):
     ts_closed: int
     duration_ns: int
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any | None, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_event: int, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any | None, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_event: int, ts_init: int) -> None:
         ...
 
     def __eq__(self, other: Any) -> bool:
@@ -185,7 +185,7 @@ class PositionOpened(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, realized_pnl: Any, event_id: Any, ts_event: int, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, realized_pnl: Any, event_id: Any, ts_event: int, ts_init: int) -> None:
         ...
 
     @staticmethod
@@ -293,7 +293,7 @@ class PositionChanged(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_event: int, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, unrealized_pnl: Any, event_id: Any, ts_opened: int, ts_event: int, ts_init: int) -> None:
         ...
 
     @staticmethod
@@ -403,7 +403,7 @@ class PositionClosed(PositionEvent):
         UNIX timestamp (nanoseconds) when the object was initialized.
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_init: int):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, position_id: Any, account_id: Any, opening_order_id: Any, closing_order_id: Any, entry: Any, side: Any, signed_qty: float, quantity: Any, peak_qty: Any, last_qty: Any, last_px: Any, currency: Any, avg_px_open: float, avg_px_close: float, realized_return: float, realized_pnl: Any, event_id: Any, ts_opened: int, ts_closed: int, duration_ns: int, ts_init: int) -> None:
         ...
 
     @staticmethod

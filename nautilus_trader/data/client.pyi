@@ -26,7 +26,7 @@ class DataClient(Any):
     venue: Any
     is_connected: bool
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None):
+    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def __repr__(self) -> str:
@@ -99,7 +99,7 @@ class MarketDataClient(DataClient):
     This class should not be used directly, but through a concrete subclass.
     """
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None):
+    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any, venue: Any | None | None=None, config: Any | None | None=None) -> None:
         ...
 
     def subscribed_custom_data(self) -> list:

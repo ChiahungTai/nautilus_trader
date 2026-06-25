@@ -22,7 +22,7 @@ class MarginAccount(Account):
     """
     default_leverage: Any
 
-    def __init__(self, event: Any, calculate_account_state: bool=False):
+    def __init__(self, event: Any, calculate_account_state: bool=False) -> None:
         ...
 
     @staticmethod

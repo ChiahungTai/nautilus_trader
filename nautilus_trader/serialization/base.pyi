@@ -10,7 +10,7 @@ class Serializer:
     This class should not be used directly, but through a concrete subclass.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         ...
 
     def serialize(self, obj: object) -> bytes:

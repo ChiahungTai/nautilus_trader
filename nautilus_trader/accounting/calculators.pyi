@@ -1,5 +1,5 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
-from typing import Any
+from typing import Any, Callable
 import pandas as pd
 from datetime import date
 
@@ -16,7 +16,7 @@ class RolloverInterestCalculator:
         The short term interest rate data.
     """
 
-    def __init__(self, data: pd.DataFrame):
+    def __init__(self, data: pd.DataFrame) -> None:
         ...
 
     def get_rate_data(self) -> object:

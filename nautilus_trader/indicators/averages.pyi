@@ -11,6 +11,7 @@ reading the real `def __init__` signatures in averages.pyx.
 
 from enum import IntFlag
 from typing import Any
+from nautilus_trader.indicators.base import Indicator
 
 
 class MovingAverageType(IntFlag):
@@ -24,7 +25,7 @@ class MovingAverageType(IntFlag):
     VARIABLE_INDEX_DYNAMIC = 7
 
 
-class MovingAverage:
+class MovingAverage(Indicator):
     period: int
     value: float
     count: int

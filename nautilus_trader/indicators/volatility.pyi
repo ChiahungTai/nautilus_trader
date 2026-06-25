@@ -9,9 +9,10 @@ reading the real `def __init__` signatures in volatility.pyx.
 """
 
 from typing import Any
+from nautilus_trader.indicators.base import Indicator
 
 
-class AverageTrueRange:
+class AverageTrueRange(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -25,7 +26,7 @@ class AverageTrueRange:
     ) -> None: ...
 
 
-class BollingerBands:
+class BollingerBands(Indicator):
     period: int
     k: float
     upper: float
@@ -41,7 +42,7 @@ class BollingerBands:
     ) -> None: ...
 
 
-class DonchianChannel:
+class DonchianChannel(Indicator):
     period: int
     upper: float
     middle: float
@@ -51,7 +52,7 @@ class DonchianChannel:
     def __init__(self, period: int) -> None: ...
 
 
-class KeltnerChannel:
+class KeltnerChannel(Indicator):
     period: int
     k_multiplier: float
     upper: float
@@ -70,7 +71,7 @@ class KeltnerChannel:
     ) -> None: ...
 
 
-class VerticalHorizontalFilter:
+class VerticalHorizontalFilter(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -82,7 +83,7 @@ class VerticalHorizontalFilter:
     ) -> None: ...
 
 
-class VolatilityRatio:
+class VolatilityRatio(Indicator):
     fast_period: int
     slow_period: int
     value: float
@@ -98,7 +99,7 @@ class VolatilityRatio:
     ) -> None: ...
 
 
-class KeltnerPosition:
+class KeltnerPosition(Indicator):
     period: int
     k_multiplier: float
     value: float

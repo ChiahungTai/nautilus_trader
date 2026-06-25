@@ -18,7 +18,7 @@ class Indicator:
     has_inputs: bool
     initialized: bool
 
-    def __init__(self, params: list):
+    def __init__(self, params: list) -> None:
         ...
 
     def __repr__(self) -> str:

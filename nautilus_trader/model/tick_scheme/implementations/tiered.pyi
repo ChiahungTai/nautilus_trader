@@ -23,7 +23,7 @@ class TieredTickScheme(Any):
     """
     ticks: np.ndarray
 
-    def __init__(self, name: str, tiers: list, price_precision: int, max_ticks_per_tier: int=100):
+    def __init__(self, name: str, tiers: list, price_precision: int, max_ticks_per_tier: int=100) -> None:
         ...
 
     def find_tick_index(self, value: float) -> int:

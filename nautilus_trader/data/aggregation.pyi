@@ -593,7 +593,7 @@ class SpreadQuoteAggregator:
     historical_mode: bool
     is_running: bool
 
-    def __init__(self, spread_instrument: Any, handler: Callable[[Any], None], greeks_calculator: Any, clock: Any, historical: bool, update_interval_seconds: object | None=None, quote_build_delay: int=0):
+    def __init__(self, spread_instrument: Any, handler: Callable[[Any], None], greeks_calculator: Any, clock: Any, historical: bool, update_interval_seconds: object | None=None, quote_build_delay: int=0) -> None:
         ...
 
     def set_historical_mode(self, historical_mode: bool, handler: Callable[[Any], None], greeks_calculator: Any) -> None:

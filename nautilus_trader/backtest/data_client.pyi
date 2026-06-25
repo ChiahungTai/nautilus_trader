@@ -48,7 +48,7 @@ class BacktestMarketDataClient(Any):
         The clock for the client.
     """
 
-    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any):
+    def __init__(self, client_id: Any, msgbus: Any, cache: Any, clock: Any) -> None:
         ...
 
     def subscribe(self, command: Any) -> None:

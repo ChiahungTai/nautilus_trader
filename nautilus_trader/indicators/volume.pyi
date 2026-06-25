@@ -9,9 +9,10 @@ reading the real `def __init__` signatures in volume.pyx.
 """
 
 from typing import Any
+from nautilus_trader.indicators.base import Indicator
 
 
-class OnBalanceVolume:
+class OnBalanceVolume(Indicator):
     period: int
     value: float
     has_inputs: bool
@@ -19,14 +20,14 @@ class OnBalanceVolume:
     def __init__(self, period: int = ...) -> None: ...
 
 
-class VolumeWeightedAveragePrice:
+class VolumeWeightedAveragePrice(Indicator):
     value: float
     has_inputs: bool
     initialized: bool
     def __init__(self) -> None: ...
 
 
-class KlingerVolumeOscillator:
+class KlingerVolumeOscillator(Indicator):
     fast_period: int
     slow_period: int
     signal_period: int
@@ -42,7 +43,7 @@ class KlingerVolumeOscillator:
     ) -> None: ...
 
 
-class Pressure:
+class Pressure(Indicator):
     period: int
     value: float
     value_cumulative: float

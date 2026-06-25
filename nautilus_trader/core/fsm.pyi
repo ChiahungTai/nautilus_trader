@@ -38,7 +38,7 @@ class FiniteStateMachine:
     """
     state: int
 
-    def __init__(self, state_transition_table: dict, initial_state: int, trigger_parser: Callable[[int], str]=str, state_parser: Callable[[int], str]=str):
+    def __init__(self, state_transition_table: dict, initial_state: int, trigger_parser: Callable[[int], str]=str, state_parser: Callable[[int], str]=str) -> None:
         ...
 
     @property

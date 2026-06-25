@@ -70,7 +70,7 @@ class MarketOrder(Order):
     https://www.interactivebrokers.com/en/trading/orders/market.php
     """
 
-    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, init_id: Any, ts_init: int, time_in_force: Any=..., reduce_only: bool=False, quote_quantity: bool=False, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None):
+    def __init__(self, trader_id: Any, strategy_id: Any, instrument_id: Any, client_order_id: Any, order_side: Any, quantity: Any, init_id: Any, ts_init: int, time_in_force: Any=..., reduce_only: bool=False, quote_quantity: bool=False, contingency_type: Any=..., order_list_id: Any=None, linked_order_ids: list | None=None, parent_order_id: Any=None, exec_algorithm_id: Any=None, exec_algorithm_params: dict | None=None, exec_spawn_id: Any=None, tags: list | None=None) -> None:
         ...
 
     def info(self) -> str:

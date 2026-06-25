@@ -24,7 +24,7 @@ class ExecAlgorithm(Any):
     This class should not be used directly, but through a concrete subclass.
     """
 
-    def __init__(self, config: Any | None | None=None):
+    def __init__(self, config: Any | None | None=None) -> None:
         ...
 
     def to_importable_config(self) -> Any:

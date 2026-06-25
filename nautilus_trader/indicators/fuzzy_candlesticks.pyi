@@ -26,7 +26,7 @@ class FuzzyCandle:
     upper_wick_size: CandleWickSize
     lower_wick_size: CandleWickSize
 
-    def __init__(self, direction: CandleDirection, size: CandleSize, body_size: CandleBodySize, upper_wick_size: CandleWickSize, lower_wick_size: CandleWickSize):
+    def __init__(self, direction: CandleDirection, size: CandleSize, body_size: CandleBodySize, upper_wick_size: CandleWickSize, lower_wick_size: CandleWickSize) -> None:
         ...
 
     def __eq__(self, other: FuzzyCandle) -> bool:
@@ -60,7 +60,7 @@ class FuzzyCandlesticks(Indicator):
     vector: list
     value: FuzzyCandle
 
-    def __init__(self, period: int, threshold1: float=0.5, threshold2: float=1.0, threshold3: float=2.0, threshold4: float=3.0):
+    def __init__(self, period: int, threshold1: float=0.5, threshold2: float=1.0, threshold3: float=2.0, threshold4: float=3.0) -> None:
         ...
 
     def handle_bar(self, bar: Any) -> None:

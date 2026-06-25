@@ -57,7 +57,7 @@ class Order:
     ts_closed: int
     ts_last: int
 
-    def __init__(self, init: Any):
+    def __init__(self, init: Any) -> None:
         ...
 
     def __eq__(self, other: Order) -> bool:

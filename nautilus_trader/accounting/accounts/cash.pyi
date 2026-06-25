@@ -25,7 +25,7 @@ class CashAccount(Account):
     ACCOUNT_TYPE = Any
     allow_borrowing: bool
 
-    def __init__(self, event: Any, calculate_account_state: bool=False, allow_borrowing: bool=False):
+    def __init__(self, event: Any, calculate_account_state: bool=False, allow_borrowing: bool=False) -> None:
         ...
 
     @staticmethod

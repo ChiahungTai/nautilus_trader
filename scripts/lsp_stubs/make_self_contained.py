@@ -109,6 +109,10 @@ class SelfContainedTransformer(ast.NodeTransformer):
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> ast.AST:
         self.generic_visit(node)
+        # __init__ always returns None; stubgen-pyx omits the annotation when the
+        # .pyx declares no return type, tripping downstream disallow_untyped_calls.
+        if node.name == "__init__" and node.returns is None:
+            node.returns = ast.Constant(value=None)
         args = node.args
         positional = list(args.posonlyargs) + list(args.args)
         n_defaultless = len(positional) - len(args.defaults)

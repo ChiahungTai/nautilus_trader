@@ -20,7 +20,7 @@ class MsgSpecSerializer(Serializer):
     timestamps_as_str: bool
     timestamps_as_iso8601: bool
 
-    def __init__(self, encoding, timestamps_as_str: bool=False, timestamps_as_iso8601: bool=False):
+    def __init__(self, encoding, timestamps_as_str: bool=False, timestamps_as_iso8601: bool=False) -> None:
         ...
 
     def serialize(self, obj: object) -> bytes:

@@ -25,7 +25,7 @@ class TickScheme:
     min_price: Any
     max_price: Any
 
-    def __init__(self, name: str, min_tick: Any, max_tick: Any):
+    def __init__(self, name: str, min_tick: Any, max_tick: Any) -> None:
         ...
 
     def next_ask_price(self, value: float, n: int=0) -> Any:
