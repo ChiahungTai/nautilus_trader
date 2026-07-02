@@ -8,7 +8,7 @@ from typing import Any
 
 
 class Bar:
-    bar_type: Any  # BarType
+    bar_type: BarType
     open: Any  # Price
     high: Any  # Price
     low: Any  # Price
@@ -19,7 +19,7 @@ class Bar:
     is_revision: bool
     def __init__(
         self,
-        bar_type: Any,
+        bar_type: BarType,
         open: Any,
         high: Any,
         low: Any,

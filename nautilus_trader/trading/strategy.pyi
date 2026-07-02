@@ -407,6 +407,15 @@ class Strategy:
         params: dict[str, Any] | None = ...,
     ) -> _UUID4: ...
 
+    def register(
+        self,
+        trader_id: TraderId,
+        portfolio: Any,
+        msgbus: Any,
+        cache: Any,
+        clock: Any,
+    ) -> None: ...
+
     # -- Indicator Registration (inherited from Actor) -----------------------
 
     def register_indicator_for_bars(
