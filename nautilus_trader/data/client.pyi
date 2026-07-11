@@ -1,9 +1,14 @@
 # Self-contained stub: cross-Cython types -> Any (auto-postprocessed from stubgen-pyx)
 from typing import Any, Callable
+from datetime import datetime
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import Clock, Component, MessageBus
+from nautilus_trader.core.data import Data
+from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.data.messages import RequestBars, RequestData, RequestForwardPrices, RequestFundingRates, RequestInstrument, RequestInstruments, RequestOrderBookDeltas, RequestOrderBookSnapshot, RequestQuoteTicks, RequestTradeTicks, SubscribeBars, SubscribeData, SubscribeFundingRates, SubscribeIndexPrices, SubscribeInstrument, SubscribeInstrumentClose, SubscribeInstruments, SubscribeInstrumentStatus, SubscribeMarkPrices, SubscribeOptionGreeks, SubscribeOrderBook, SubscribeQuoteTicks, SubscribeTradeTicks, UnsubscribeBars, UnsubscribeData, UnsubscribeFundingRates, UnsubscribeIndexPrices, UnsubscribeInstrument, UnsubscribeInstrumentClose, UnsubscribeInstruments, UnsubscribeInstrumentStatus, UnsubscribeMarkPrices, UnsubscribeOptionGreeks, UnsubscribeOrderBook, UnsubscribeQuoteTicks, UnsubscribeTradeTicks
-from nautilus_trader.model.identifiers import ClientId, Venue
+from nautilus_trader.model.data import BarType, DataType
+from nautilus_trader.model.identifiers import ClientId, InstrumentId, Venue
+from nautilus_trader.model.instruments.base import Instrument
 
 class DataClient(Component):
     """
@@ -26,6 +31,7 @@ class DataClient(Component):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
+    _cache: Cache
     venue: Venue
     is_connected: bool
 
@@ -34,6 +40,17 @@ class DataClient(Component):
 
     def __repr__(self) -> str:
         ...
+
+    def _set_connected(self, value: bool=True) -> None:
+        """
+        Setter for Python implementations to change the readonly property.
+
+        Parameters
+        ----------
+        value : bool
+            The value to set for is_connected.
+
+        """
 
     def subscribed_custom_data(self) -> list:
         """
@@ -67,6 +84,12 @@ class DataClient(Component):
 
         """
 
+    def _add_subscription(self, data_type: DataType) -> None:
+        ...
+
+    def _remove_subscription(self, data_type: DataType) -> None:
+        ...
+
     def request(self, request: RequestData) -> None:
         """
         Request data for the given data type.
@@ -77,6 +100,18 @@ class DataClient(Component):
             The message for the data request.
 
         """
+
+    def _handle_data_py(self, data: Data):
+        ...
+
+    def _handle_data_response_py(self, data_type: DataType, data, correlation_id: UUID4, start: datetime, end: datetime, params: dict):
+        ...
+
+    def _handle_data(self, data: Data) -> None:
+        ...
+
+    def _handle_data_response(self, data_type: DataType, data, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
 
 class MarketDataClient(DataClient):
     """
@@ -595,6 +630,84 @@ class MarketDataClient(DataClient):
 
         """
 
+    def _add_subscription(self, data_type: DataType) -> None:
+        ...
+
+    def _add_subscription_instrument(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_order_book_deltas(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_order_book_depth(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_quote_ticks(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_trade_ticks(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_mark_prices(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_index_prices(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_funding_rates(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_bars(self, bar_type: BarType) -> None:
+        ...
+
+    def _add_subscription_instrument_status(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_instrument_close(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _add_subscription_option_greeks(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription(self, data_type: DataType) -> None:
+        ...
+
+    def _remove_subscription_instrument(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_order_book_deltas(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_order_book_depth(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_quote_ticks(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_trade_ticks(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_mark_prices(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_index_prices(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_funding_rates(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_bars(self, bar_type: BarType) -> None:
+        ...
+
+    def _remove_subscription_instrument_status(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_instrument_close(self, instrument_id: InstrumentId) -> None:
+        ...
+
+    def _remove_subscription_option_greeks(self, instrument_id: InstrumentId) -> None:
+        ...
+
     def request_instrument(self, request: RequestInstrument) -> None:
         """
         Request `Instrument` data for the given instrument ID.
@@ -693,3 +806,66 @@ class MarketDataClient(DataClient):
             The message for the data request.
 
         """
+
+    def _handle_data_py(self, data: Data):
+        ...
+
+    def _handle_instrument_py(self, instrument: Instrument, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_instruments_py(self, venue: Venue, instruments: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_quote_ticks_py(self, instrument_id: InstrumentId, ticks: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_trade_ticks_py(self, instrument_id: InstrumentId, ticks: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_funding_rates_py(self, instrument_id: InstrumentId, funding_rates: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_bars_py(self, bar_type: BarType, bars: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_order_book_depths_py(self, instrument_id: InstrumentId, depths: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_order_book_deltas_py(self, instrument_id: InstrumentId, deltas: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_forward_prices_py(self, forward_prices: list, correlation_id: UUID4, params: dict | None=None):
+        ...
+
+    def _handle_data_response_py(self, data_type: DataType, data, correlation_id: UUID4, start: datetime, end: datetime, params: dict | None=None):
+        ...
+
+    def _handle_data(self, data: Data) -> None:
+        ...
+
+    def _handle_instrument(self, instrument: Instrument, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_instruments(self, venue: Venue, instruments: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_quote_ticks(self, instrument_id: InstrumentId, ticks: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_trade_ticks(self, instrument_id: InstrumentId, ticks: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_funding_rates(self, instrument_id: InstrumentId, funding_rates: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_bars(self, bar_type: BarType, bars: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_order_book_depths(self, instrument_id: InstrumentId, depths: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_order_book_deltas(self, instrument_id: InstrumentId, deltas: list, correlation_id: UUID4, start: datetime, end: datetime, params: dict) -> None:
+        ...
+
+    def _handle_forward_prices(self, forward_prices: list, correlation_id: UUID4, params: dict) -> None:
+        ...

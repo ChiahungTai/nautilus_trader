@@ -5,6 +5,8 @@ from nautilus_trader.core.message import Event, Request, Response
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.model.identifiers import Identifier, TraderId
 from nautilus_trader.serialization.base import Serializer
+_COMPONENT_CLOCKS = {}
+_FORCE_STOP = False
 RECV = '<--'
 SENT = '-->'
 CMD = '[CMD]'
@@ -818,6 +820,9 @@ class Component:
     --------
     This class should not be used directly, but through a concrete subclass.
     """
+    _clock: Clock
+    _log: Logger
+    _msgbus: MessageBus
     trader_id: TraderId
     id: Identifier
     type: type
@@ -928,6 +933,27 @@ class Component:
         bool
 
         """
+
+    def _start(self) -> None:
+        ...
+
+    def _stop(self) -> None:
+        ...
+
+    def _resume(self) -> None:
+        ...
+
+    def _reset(self) -> None:
+        ...
+
+    def _dispose(self) -> None:
+        ...
+
+    def _degrade(self) -> None:
+        ...
+
+    def _fault(self) -> None:
+        ...
 
     def start(self) -> None:
         """
@@ -1567,6 +1593,12 @@ class Throttler:
             The message to send.
 
         """
+
+    def _process(self, event: TimeEvent) -> None:
+        ...
+
+    def _resume(self, event: TimeEvent) -> None:
+        ...
 
 def register_component_clock(instance_id: UUID4, clock: Clock) -> None:
     ...

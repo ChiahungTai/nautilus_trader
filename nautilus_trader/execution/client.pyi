@@ -4,6 +4,8 @@ from nautilus_trader.accounting.accounts.base import Account
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import Clock, Component, MessageBus
 from nautilus_trader.execution.messages import BatchCancelOrders, CancelAllOrders, CancelOrder, ModifyOrder, QueryAccount, QueryOrder, SubmitOrder, SubmitOrderList
+from nautilus_trader.model.events.account import AccountState
+from nautilus_trader.model.events.order import OrderEvent
 from nautilus_trader.model.identifiers import AccountId, ClientId, ClientOrderId, InstrumentId, PositionId, StrategyId, TradeId, Venue, VenueOrderId
 from nautilus_trader.model.instruments.base import Instrument
 from nautilus_trader.model.objects import Currency, Money, Price, Quantity
@@ -44,6 +46,7 @@ class ExecutionClient(Component):
     --------
     This class should not be used directly, but through a concrete subclass.
     """
+    _cache: Cache
     oms_type: Any
     venue: Venue
     account_id: AccountId
@@ -55,6 +58,12 @@ class ExecutionClient(Component):
         ...
 
     def __repr__(self) -> str:
+        ...
+
+    def _set_connected(self, value: bool=True) -> None:
+        ...
+
+    def _set_account_id(self, account_id: AccountId) -> None:
         ...
 
     def get_account(self) -> Account | None:
@@ -445,3 +454,21 @@ class ExecutionClient(Component):
             The additional fill information.
 
         """
+
+    def _send_account_state(self, account_state: AccountState) -> None:
+        ...
+
+    def _send_order_event(self, event: OrderEvent) -> None:
+        ...
+
+    def _send_mass_status_report(self, report: Any) -> None:
+        ...
+
+    def _send_order_status_report(self, report: Any) -> None:
+        ...
+
+    def _send_fill_report(self, report: Any) -> None:
+        ...
+
+    def _send_position_status_report(self, report: Any) -> None:
+        ...

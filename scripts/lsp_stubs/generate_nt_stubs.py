@@ -8,7 +8,12 @@ upgrade, rebase upstream, or when a covered module changes.
 This script only orchestrates three independent CLIs (no cross-imports, so
 pyright stays clean):
   1. patch_stubgen_pyx.py   — ensure stubgen-pyx collects `cdef readonly`
-  2. stubgen-pyx            — read .pyx -> raw .pyi (types/sigs/attrs/docstrings)
+  2. stubgen-pyx            — read .pyx -> raw .pyi (types/sigs/attrs/docstrings).
+                              --include-private emits underscore-prefixed cpdef
+                              methods and cdef attrs that downstream subclasses
+                              call (e.g. _handle_data, _add_subscription_*,
+                              _cache, _log). Without it stubgen-pyx's builder
+                              drops every name matching `_xxx` (not `__xxx__`).
   3. make_self_contained.py — Any-ify cross-Cython, normalize typing aliases,
                               cpython->stdlib, None-default Optional
 
@@ -46,7 +51,7 @@ def main(pyx_rels: list[str], skip_existing: bool = False) -> int:
         try:
             _run(
                 "uv", "run", "stubgen-pyx", str(pyx.parent), "--file", pyx.name,
-                "--output-file", str(raw), "--continue-on-error",
+                "--output-file", str(raw), "--include-private", "--continue-on-error",
             )
             _run("uv", "run", "python", str(SD / "make_self_contained.py"), str(raw), str(dst))
             print(f"[DONE] {pyx_rel} -> {dst.relative_to(ROOT)}")
