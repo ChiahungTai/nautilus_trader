@@ -1,13 +1,16 @@
 """Minimal type stubs for nautilus_trader.model.data.
 
-Self-contained: no imports from other Cython modules.
 Cross-module types (Price, Quantity, InstrumentId, etc.) are annotated as Any.
+Data is imported from core.data so that Bar/QuoteTick/TradeTick/etc. are
+recognized as Data subtypes (matches runtime `cdef class Bar(Data)`).
 """
 
 from typing import Any
 
+from nautilus_trader.core.data import Data
 
-class Bar:
+
+class Bar(Data):
     bar_type: BarType
     open: Any  # Price
     high: Any  # Price
@@ -67,7 +70,7 @@ class BookOrder:
     def __init__(self, side: Any, price: Any, size: Any, order_id: int) -> None: ...
 
 
-class QuoteTick:
+class QuoteTick(Data):
     instrument_id: Any  # InstrumentId
     bid_price: Any  # Price
     ask_price: Any  # Price
@@ -87,7 +90,7 @@ class QuoteTick:
     ) -> None: ...
 
 
-class TradeTick:
+class TradeTick(Data):
     instrument_id: Any  # InstrumentId
     price: Any  # Price
     size: Any  # Quantity
@@ -107,7 +110,7 @@ class TradeTick:
     ) -> None: ...
 
 
-class OrderBookDelta:
+class OrderBookDelta(Data):
     action: Any  # BookAction
     flags: int
     instrument_id: Any  # InstrumentId
@@ -131,7 +134,7 @@ class OrderBookDelta:
     ) -> None: ...
 
 
-class OrderBookDeltas:
+class OrderBookDeltas(Data):
     deltas: list[OrderBookDelta]
     flags: int
     instrument_id: Any  # InstrumentId
@@ -142,7 +145,7 @@ class OrderBookDeltas:
     def __init__(self, instrument_id: Any, deltas: list[Any]) -> None: ...
 
 
-class InstrumentStatus:
+class InstrumentStatus(Data):
     instrument_id: Any  # InstrumentId
     action: Any  # MarketStatusAction
     is_trading: bool
